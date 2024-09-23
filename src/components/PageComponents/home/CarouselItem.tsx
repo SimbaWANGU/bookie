@@ -1,0 +1,94 @@
+import Animated, { SharedValue, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
+import { View } from '@components/styled/Themed'
+import { Book } from '@models/book.type'
+import { Pressable } from 'react-native'
+import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
+import { light, dark } from '@constants/Color'
+import { LinearGradient } from 'expo-linear-gradient'
+import { router } from 'expo-router'
+import { QuickSandText, MonoText } from '@components/styled/StyledText'
+import { ImageBackground } from 'expo-image'
+
+interface ItemProps {
+  index: number
+  animationValue: SharedValue<number>
+  book: Book
+}
+
+const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
+	const maskStyle = useAnimatedStyle(() => {
+		const backgroundColor = interpolateColor(
+			animationValue.value,
+			[-1, 0, 1],
+			['#000000dd', 'transparent', '#000000dd'],
+		)
+ 
+		return {
+			backgroundColor,
+		}
+	}, [animationValue])
+ 
+	return (
+		<View style={{ flex: 1 }}>
+			<Animated.View
+        className='w-full h-full rounded absolute'
+				style={[
+					maskStyle,
+				]}
+			>
+				<ImageBackground
+					source={{ uri: book.synopsisBgImage as string }}
+					className='w-full h-full rounded'
+          contentFit='cover'
+				>
+					<LinearGradient
+						colors={['transparent', 'black']}
+						className='w-full h-full absolute rounded'
+						locations={[0.2, 0.9]}
+					>
+
+						<MonoText
+							className='absolute px-6 my-2 text-sm italic bottom-22 z-10'
+							lightColor={dark.activeIconColor}
+							darkColor={dark.activeIconColor}
+						>Suggested Books</MonoText>
+						<QuickSandText
+							className='absolute px-6 my-2 text-xl bottom-16 z-10'
+							lightColor={dark.text}
+							darkColor={dark.text}
+						>{book.title}</QuickSandText>
+						<View
+							className='absolute bottom-0 flex flex-row items-center justify-between w-full p-4 absolute z-10'
+							lightColor={'tranparent'}
+							darkColor={'transparent'}
+						>
+							<Pressable
+								className='flex flex-row py-3 px-4 items-center justify-between w-5/12 rounded-full'
+                style={{
+									backgroundColor: dark.text
+								}}
+								onPress={() => {
+									router.push(`/book/${book.id}`)
+								}}
+							>
+								<QuickSandText
+                  className='text-base'
+									lightColor={light.activeIconColor}
+                  darkColor={dark.activeIconColor}
+							  >View Book</QuickSandText>
+								<FontAwesomeSixIcons name="arrow-right" color={light.activeIconColor} />
+							</Pressable>
+							{/* <FontAwesomeSixIcons
+                name="share-nodes"
+                style={tw`text-3xl`}
+                color={light.activeIconColor}
+              /> */}
+						</View>
+					</LinearGradient>
+				</ImageBackground>
+			</Animated.View>
+		</View>
+	)
+}
+
+export default CarouselItem
