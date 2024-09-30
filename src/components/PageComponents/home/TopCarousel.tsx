@@ -4,6 +4,8 @@ import { interpolate } from 'react-native-reanimated'
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel'
 import { Book } from '@models/book.type'
 import CarouselItem from './CarouselItem'
+import { getDynamicValue } from '@constants/Functions'
+import tw from 'twrnc'
  
 const PAGE_WIDTH = Dimensions.get('window').width
 
@@ -33,18 +35,16 @@ const TopCarousel: React.FC<TopCarouselProps> = ({ books }) => {
 	)
  
 	return (
-		<View style={{
-			height: '40%'
-		}}>
+		<View
+			style={[tw`self-center`, {
+				height: getDynamicValue(400),
+			}]}
+		>
 			<Carousel
 				ref={ref}
 				loop={true}
 				autoPlay={true}
-				style={{
-          marginBottom: 10,
-          borderRadius: 20,
-          height: '100%',
-        }}
+				style={[tw`self-center rounded-xl`]}
 				width={PAGE_WIDTH * 11/12}
 				data={[...books]}
 				renderItem={({ index, animationValue, item }) => 

@@ -11,6 +11,7 @@ import useReadingTimeAchievement from '@hooks/useAchievements'
 import useStory from '@hooks/useStory'
 import { getDynamicValue } from '@constants/Functions'
 import StoryCarousel from '@components/PageComponents/story/StoryCarousel'
+import tw from 'twrnc'
 
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()
@@ -77,7 +78,7 @@ const story = () => {
 
 	if (isLoading) {
 		return (
-			<View className='h-full w-full items-center justify-center'>
+			<View style={tw`h-full w-full items-center justify-center`}>
 				<ShimmerPlaceHolder style={{
 					height: '10%',
 					width: '90%',

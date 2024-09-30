@@ -4,6 +4,7 @@ import { light } from '@constants/Color'
 import { QuickSandText } from '@components/styled/StyledText'
 import { achievementTimeThresholds } from '@constants/Achievements'
 import useUser from '@hooks/useUser'
+import tw from 'twrnc'
 
 const Achievements = () => {
 	const [user] = useUser()
@@ -12,23 +13,22 @@ const Achievements = () => {
 
 	return (
 		<View
-			className='h-2/12 w-11/12 m-2 rounded bg-transparent self-center justify-end border-2'
-			style={{
+			style={[tw`h-2/12 w-11/12 m-2 rounded bg-transparent self-center justify-end border-2`, {
 				borderColor: light.activeIconColor
-			}}
+			}]}
 		>
 			<QuickSandText
-				className='text-2xl p-2'
+				style={tw`text-2xl p-2`}
 				lightColor={light.activeIconColor}
 				darkColor={light.activeIconColor}
 			>Latest Achievement</QuickSandText>
 			<QuickSandText
-				className='text-4xl p-2'
+				style={tw`text-4xl p-2`}
 				lightColor={light.activeIconColor}
 				darkColor={light.activeIconColor}
 			>{latestAchievementTitle?.title}</QuickSandText>
 			<QuickSandText
-				className='text-xl p-2'
+				style={tw`text-xl p-2`}
 				lightColor={light.activeIconColor}
 				darkColor={light.activeIconColor}
 			>{latestAchievementTitle?.description}</QuickSandText>

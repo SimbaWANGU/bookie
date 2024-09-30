@@ -1,27 +1,31 @@
 import React from 'react'
 import { View } from '@components/styled/Themed'
 import { getDynamicValue } from '@constants/Functions'
-import { Image, Pressable } from 'react-native'
+import { Pressable } from 'react-native'
 import { light, dark } from '@constants/Color'
 import { MonoText } from '@components/styled/StyledText'
 import { router } from 'expo-router'
+import tw from 'twrnc'
+import icon from '@images/bookworms-logo.png'
+import { Image } from 'expo-image'
 
 interface HeaderProps {
   username: string
   avatarUrl: string
 }
 
-const Header:React.FC<HeaderProps> = ({ username, avatarUrl }) => {
+const Header:React.FC<HeaderProps> = ({ username }) => {
 	return (
 		<View
-			className={`flex w-full flex-row justify-between items-center px-4 mt-6`}
-			style={{ height: getDynamicValue(120) }}
+			style={[tw`flex w-full flex-row justify-between items-end pb-2 px-4`, {
+				height: getDynamicValue(140)
+			}]}
 			
 			lightColor={light.background}
 			darkColor={dark.background}
 		>
 			<MonoText
-				className='text-xl'
+				style={tw`text-xl`}
 				lightColor={light.text}
 				darkColor={dark.text}
 			>{`@${username}`}</MonoText>
@@ -29,8 +33,12 @@ const Header:React.FC<HeaderProps> = ({ username, avatarUrl }) => {
 				onPress={() => router.push('/profile')}
 			>
 				<Image
-					source={{ uri : avatarUrl }}
-					className='aspect-square p-4 rounded-full h-6/12'
+					source={
+						// avatarUrl ? { uri : avatarUrl } : 
+						icon
+					}
+					style={tw`aspect-square rounded-full h-5/12`}
+					contentFit='contain'
 				/>
 			</Pressable>
 		</View>

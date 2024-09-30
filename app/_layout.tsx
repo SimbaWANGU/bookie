@@ -11,7 +11,9 @@ import { StatusBar } from 'expo-status-bar'
 import App from '@components/app/App'
 import { dark, light } from '@constants/Color'
 import { useFonts } from 'expo-font'
+import 'react-native-reanimated'
 import SpaceMono from '@fonts/SpaceMono-Regular.ttf'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useEffect } from 'react'
 import * as Sentry from '@sentry/react-native'
 import useAsyncStorage from '@hooks/useAsyncStorage'
@@ -94,13 +96,15 @@ const RootLayout = () => {
   // console.log('runTypeMessage', runTypeMessage)
 
   return (
-    <QueryClientProvider client={client}>
-      <App />
-      <StatusBar
-				style="auto"
-				backgroundColor={theme === 'light' ? light.background : dark.background}
-			/>
-    </QueryClientProvider>
+    <GestureHandlerRootView>
+      <QueryClientProvider client={client}>
+        <App />
+        <StatusBar
+          style="auto"
+          backgroundColor={theme === 'light' ? light.background : dark.background}
+          />
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   )
 }
 

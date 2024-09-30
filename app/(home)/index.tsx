@@ -5,9 +5,8 @@ import { getDynamicValue, getRandomItems } from '@constants/Functions'
 import TopCarousel from '@components/PageComponents/home/TopCarousel'
 import BookContainer from '@components/styled/BookContainer'
 import { useBooks } from '@hooks/useBooks'
-import { StatusBar } from 'expo-status-bar'
 import { useColorScheme } from 'react-native'
-import { dark, light } from '@constants/Color'
+import tw from 'twrnc'
 
 const index = () => {
 	const theme = useColorScheme()
@@ -15,17 +14,14 @@ const index = () => {
   
 	if (isLoading || books.length === 0) {
 		return (
-			<View className={'h-full w-full items-center justify-center'}>
+			<View style={tw`h-full w-full items-center justify-center`}>
 				<ShimmerPlaceholder
-					style={{
+					style={[tw`rounded w-11/12`, {
 						height: '40%',
-						borderRadius: 20,
-						width: '90%',
-						marginBottom: 10,
-					}}
+					}]}
 				/>
 				<View
-					className='my-auto w-11/12 flex flex-row flex-wrap items-center justify-around'
+					style={tw`mt-4 w-11/12 flex flex-row flex-wrap items-center justify-around`}
 				>
 					{Array.from({ length: 4 }).map((_, index) => (
 						<ShimmerPlaceholder
@@ -54,10 +50,10 @@ const index = () => {
 	const booksOnDisplay = books.filter((book) => book.onDisplayPage)
 
 	return (
-		<View className='h-full w-full items-center justify-center'>
+		<View style={tw`h-full w-full items-center justify-center`}>
 			<TopCarousel books={randomBooks}/>
 			<View 
-				className='my-auto w-11/12 flex flex-row flex-wrap items-center justify-around'
+				style={tw`mt-4 w-11/12 flex flex-row flex-wrap items-center justify-around`}
 			>
 				{booksOnDisplay!.map((book, index) => (
 					<BookContainer key={index} book={book}/>

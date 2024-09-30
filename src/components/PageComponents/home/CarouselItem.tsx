@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { router } from 'expo-router'
 import { QuickSandText, MonoText } from '@components/styled/StyledText'
 import { ImageBackground } from 'expo-image'
+import tw from 'twrnc'
 
 interface ItemProps {
   index: number
@@ -29,50 +30,49 @@ const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 	}, [animationValue])
  
 	return (
-		<View style={{ flex: 1 }}>
 			<Animated.View
-        className='w-full h-full rounded absolute'
 				style={[
+					tw`flex-1 rounded`,
 					maskStyle,
 				]}
 			>
 				<ImageBackground
 					source={{ uri: book.synopsisBgImage as string }}
-					className='w-full h-full rounded'
           contentFit='cover'
+					style={tw`flex-1 rounded`}
 				>
 					<LinearGradient
 						colors={['transparent', 'black']}
-						className='w-full h-full absolute rounded'
+						style={tw`w-full h-full absolute rounded`}
 						locations={[0.2, 0.9]}
 					>
 
 						<MonoText
-							className='absolute px-6 my-2 text-sm italic bottom-22 z-10'
+							style={tw`absolute px-6 my-2 text-sm italic bottom-22 z-10`}
 							lightColor={dark.activeIconColor}
 							darkColor={dark.activeIconColor}
 						>Suggested Books</MonoText>
 						<QuickSandText
-							className='absolute px-6 my-2 text-xl bottom-16 z-10'
+							style={tw`absolute px-6 my-2 text-xl bottom-16 z-10`}
 							lightColor={dark.text}
 							darkColor={dark.text}
 						>{book.title}</QuickSandText>
 						<View
-							className='absolute bottom-0 flex flex-row items-center justify-between w-full p-4 absolute z-10'
+							style={tw`absolute bottom-0 flex flex-row items-center justify-between w-full p-4 absolute z-10`}
 							lightColor={'tranparent'}
 							darkColor={'transparent'}
 						>
 							<Pressable
-								className='flex flex-row py-3 px-4 items-center justify-between w-5/12 rounded-full'
-                style={{
+                style={[
+									tw`flex flex-row py-3 px-4 items-center justify-between w-5/12 rounded-full`, {
 									backgroundColor: dark.text
-								}}
+								}]}
 								onPress={() => {
 									router.push(`/book/${book.id}`)
 								}}
 							>
 								<QuickSandText
-                  className='text-base'
+                  style={tw`text-base`}
 									lightColor={light.activeIconColor}
                   darkColor={dark.activeIconColor}
 							  >View Book</QuickSandText>
@@ -87,7 +87,6 @@ const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 					</LinearGradient>
 				</ImageBackground>
 			</Animated.View>
-		</View>
 	)
 }
 

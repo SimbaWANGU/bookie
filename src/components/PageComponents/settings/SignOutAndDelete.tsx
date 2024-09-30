@@ -6,6 +6,7 @@ import { supabase } from '@utils/supabase'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pressable } from 'react-native'
 import useUser from '@hooks/useUser'
+import tw from 'twrnc'
 
 const SignOutAndDelete = () => {
   const [user] = useUser()
@@ -39,27 +40,26 @@ const SignOutAndDelete = () => {
 	})
 
 	return (
-		<View className='absolute bottom-0 justify-evenly items-center flex flex-row h-1/12 w-12/12 m-8'>
+		<View style={tw`absolute bottom-0 justify-evenly items-center flex flex-row h-1/12 w-12/12 m-8`}>
 			<Pressable
-        className='p-2 w-5/12 rounded-lg bg-transparent'
-				style={{
+        style={[tw`p-2 w-5/12 rounded-lg bg-transparent`, {
 					backgroundColor: light.activeIconColor,
-				}}
+				}]}
 				onPress={() => signOutMutation.mutate()}
 			>
 				<MonoText
-					className='text-center text-lg p-1'
+					style={tw`text-center text-lg p-1`}
 					lightColor={dark.text}  
 					darkColor={dark.text}
 				>Sign Out</MonoText>
 			</Pressable>
 
 			<Pressable
-				className='p-2 w-5/12 rounded-lg bg-red-500'
+				style={tw`p-2 w-5/12 rounded-lg bg-red-500`}
 				onPress={() => {}}
 			>
 				<MonoText
-					className='text-center text-lg p-1'
+					style={tw`text-center text-lg p-1`}
 					lightColor={dark.text}  
 					darkColor={dark.text}
 				>Delete Account</MonoText>

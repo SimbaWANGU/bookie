@@ -6,15 +6,15 @@ import { light, dark } from '@constants/Color'
 import { router } from 'expo-router'
 import Logo from '@assets/images/bookworms-logo.png'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
+import tw from 'twrnc'
 
 const ProfileHeader = () => {
 	const theme = useColorScheme()
 	return (
 		<View
-			className='flex w-full flex-row justify-between items-center px-4 mt-6'
-			style={{
+			style={[tw`flex w-full flex-row justify-between items-center px-4 mt-6`, {
 				height: getDynamicValue(80)
-			}}
+			}]}
 			lightColor={light.background}
 			darkColor={dark.background}
 		>
@@ -23,7 +23,7 @@ const ProfileHeader = () => {
 			>
 				<Image
 					source={Logo}
-					className='aspect-square h-2 p-4 rounded-full'
+					style={tw`aspect-square h-2 p-4 rounded-full`}
 				/>
 			</Pressable>
 			<Pressable

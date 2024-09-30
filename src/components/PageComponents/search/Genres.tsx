@@ -3,6 +3,7 @@ import useGenre from '@hooks/useGenre'
 import React, { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import Genre from './Genre'
+import tw from 'twrnc'
 
 const Genres: React.FC = () => {
 	const [genres, setGenres] = useGenre()
@@ -15,7 +16,7 @@ const Genres: React.FC = () => {
 	return (
 		<>
 			<FlatList
-				className='my-2 w-11/12 self-center'
+				style={tw`my-2 w-11/12 self-center`}
 				horizontal={true}
 				showsHorizontalScrollIndicator={false}
 				data={genres}

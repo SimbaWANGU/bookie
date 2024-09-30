@@ -3,10 +3,10 @@ import React, { useCallback, useRef } from 'react'
 import { Dimensions } from 'react-native'
 import { interpolate } from 'react-native-reanimated'
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel'
-// import OnboardImageOne from '@Images/onboardone.png'
-// import OnboardImageTwo from '@Images/onboardtwo.png'
-// import OnboardImageThree from '@Images/onboardthree.png'
-import splash from '@images/splash.png'
+import OnboardImageOne from '@images/onboardone.png'
+import OnboardImageTwo from '@images/onboardtwo.png'
+import OnboardImageThree from '@images/onboardthree.png'
+//import splash from '@images/splash.png'
 import { getDynamicValue } from '@constants/Functions'
  
 const PAGE_WIDTH = Dimensions.get('window').width
@@ -14,9 +14,9 @@ const PAGE_WIDTH = Dimensions.get('window').width
 const onboard = () => {
 	const ref = useRef<ICarouselInstance>(null)
 	const slideText = {
-		slideOne: [splash, 'Hello, this is', 'Book Worms', 'Read books designed to entertain you...'],
-		slideTwo: [splash, 'What you can do at', 'Book Worms', 'Set your reading targets and track your progress...'],
-		slideThree: [splash, 'Sign In', 'Book Worms', 'Start your journey here']
+		slideOne: [OnboardImageOne, 'Hello, this is', 'Book Worms', 'Read books designed to entertain you...'],
+		slideTwo: [OnboardImageTwo, 'What you can do at', 'Book Worms', 'Set your reading targets and track your progress...'],
+		slideThree: [OnboardImageThree, 'Sign In', 'Book Worms', 'Start your journey here']
 	}
 
 	const animationStyle = useCallback(

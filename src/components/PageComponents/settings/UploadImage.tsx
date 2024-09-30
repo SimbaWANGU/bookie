@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message'
 import useUser from '@hooks/useUser'
 import { getDynamicValue } from '@constants/Functions'
 import ProfilePicture from '@components/PageComponents/profile/ProfilePicture'
+import tw from 'twrnc'
 
 const UploadImage = () => {
 	const [user] = useUser()
@@ -64,7 +65,7 @@ const UploadImage = () => {
 
 	return (
 		<Pressable
-			className='h-1/4'
+			style={tw`h-1/4`}
 			onPress={pickImage}
 		>
 			<ProfilePicture />

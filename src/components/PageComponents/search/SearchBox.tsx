@@ -5,6 +5,7 @@ import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
 import { useForm, Controller } from 'react-hook-form'
 import useSearch from '@hooks/useSearch'
 import useDebounce from '@hooks/useDebounce'
+import tw from 'twrnc'
 
 interface FormData {
   searchTerm: string
@@ -33,12 +34,14 @@ const SearchBox = (): JSX.Element => {
 				name='searchTerm'
 				render={({ field: { onChange, onBlur, value } }) => (
 					<View
-            className={`flex flex-row w-11/12 self-center h-10 items-center justify-center my-1 px-4 ${isFocused ? 'border-b' : ''}`}
-            style={{ borderColor: isFocused ? light.activeIconColor : dark.activeIconColor }}
+            style={[tw`flex flex-row w-11/12 self-center h-10 items-center justify-center my-1 px-4 ${isFocused ? 'border-b' : ''}`, {
+							borderColor: isFocused ? light.activeIconColor : dark.activeIconColor
+						}]}
           >
 						<TextInput
-							style={{ color: theme === 'light' ? light.text : dark.text }}
-              className={`w-11/12 h-full text-lg text-left`}
+              style={[tw`w-11/12 h-full text-lg text-left`, {
+								color: theme === 'light' ? light.text : dark.text
+							}]}
 							onBlur={onBlur}
 							onFocus={() => {
 								console.log('focused')
@@ -53,7 +56,7 @@ const SearchBox = (): JSX.Element => {
 							placeholderTextColor={theme === 'light' ? light.tint : dark.tint}
 							testID='search-box'
 						/>
-						<FontAwesomeSixIcons name="magnifying-glass" color={isFocused ? light.activeIconColor : light.iconsColor} className='text-xl' />
+						<FontAwesomeSixIcons name="magnifying-glass" color={isFocused ? light.activeIconColor : light.iconsColor} style={tw`text-xl`} />
 					</View>
 				)}
 			/>

@@ -9,6 +9,7 @@ import { supabase } from '@utils/supabase'
 import Toast from 'react-native-toast-message'
 import useUser from '@hooks/useUser'
 import { getDynamicValue } from '@constants/Functions'
+import tw from 'twrnc'
 
 interface storySwiperProps {
   text: string
@@ -77,23 +78,23 @@ const Page: React.FC<storySwiperProps> = ({ text, bookId }): JSX.Element => {
 
 	return (
 		<View
-			className='h-full w-full justify-center'
+			style={tw`h-full w-full justify-center`}
 			lightColor={light.background}
 			darkColor={dark.background}
 		>
 			{(regexImageLink.test(text as string))
 				? <ImageBackground
 					source={{ uri: text as string }}
-					className='flex-1'
+					style={tw`flex-1`}
 				/>
 				: (text.length < 50)
 					? <QuickSandText
-						className='text-center text-4xl w-11/12 shadow'
+						style={tw`text-center text-4xl w-11/12 shadow`}
 						lightColor={light.activeIconColor}
 						darkColor={dark.activeIconColor}
 					>{text}</QuickSandText>
 					: <MonoText
-						className='text-center w-full p-2 text-2xl'
+						style={tw`text-center w-full p-2 text-2xl`}
 						lightColor={light.text}
 						darkColor={dark.text}
 					>{text}</MonoText>

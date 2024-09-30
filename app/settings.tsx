@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message'
 import useSession from '@hooks/useSession'
 import useUser from '@hooks/useUser'
 import { getDynamicValue } from '@constants/Functions'
+import tw from 'twrnc'
 
 const settings = () => {
   const [session] = useSession()
@@ -84,7 +85,7 @@ const settings = () => {
 
 	return (
 		<View
-			className='h-full w-full justify-center items-center'
+			style={tw`h-full w-full justify-center items-center`}
 			lightColor={light.background}
 			darkColor={dark.background}
 		>
@@ -96,34 +97,32 @@ const settings = () => {
 			/> */}
 			<UploadImage />
 			<View
-        className='flex flex-col h-1/12 w-11/12 p-2 border-b'
-        style={{
+        style={[tw`flex flex-col h-1/12 w-11/12 p-2 border-b`, {
 				  borderColor: light.iconsColor,
-			  }}
+			  }]}
       >
 				<MonoText
-					className='text-sm text-left'
+					style={tw`text-sm text-left`}
 					lightColor={light.activeIconColor}
 					darkColor={dark.activeIconColor}
 				>Email</MonoText>
 				<TextInput
 					placeholder="Email"
 					placeholderTextColor={theme === 'light' ? light.tint : dark.tint}
-          className='w-11/12 h-full text-lg text-left'
-					style={{
+          style={[tw`w-11/12 h-full text-lg text-left`, {
 						color: theme === 'light' ? light.tint : dark.tint,
-					}}
+					}]}
 					value={session?.user?.email}
 					editable={false}
 				/>
 			</View>
 			<View
-        className='flex flex-col h-1/12 w-11/12 p-2 border-b'
-				style={{
+        style={[tw`flex flex-col h-1/12 w-11/12 p-2 border-b`, {
 					borderColor: usernameFocused ? light.activeIconColor : light.iconsColor,
-				}}>
+				}]}
+			>
 				<MonoText
-					className='text-sm text-left'
+					style={tw`text-sm text-left`}
 					lightColor={light.activeIconColor}
 					darkColor={dark.activeIconColor}
 				>Username</MonoText>
@@ -131,10 +130,9 @@ const settings = () => {
 					placeholder={'Username'}
 					placeholderTextColor={theme === 'light' ? light.tint : dark.tint}
 					value={username || ''}
-          className='w-11/12 h-full text-lg text-left'
-					style={{
+          style={[tw`w-11/12 h-full text-lg text-left`, {
 						color: theme === 'light' ? light.text : dark.text,
-					}}
+					}]}
 					onBlur={() => setUsernameFocused(false)}
 					onFocus={() => setUsernameFocused(true)}
 					onChangeText={(text) => setUsername(text)}
@@ -142,17 +140,16 @@ const settings = () => {
 				/>
 			</View>
 			
-			<View className='h-1/12 w-6/12 m-8'>
+			<View style={tw`h-1/12 w-6/12 m-8'`}>
 				<Pressable
-          className='p-2 rounded-full bg-transparent border'
-					style={{
+          style={[tw`p-2 rounded-full bg-transparent border`, {
 						borderColor: light.activeIconColor,
-					}}
+					}]}
 					onPress={() => updateProfileMutation.mutate()}
 					disabled={loading}
 				>
 					<MonoText
-						className='text-center text-lg p-1'
+						style={tw`text-center text-lg p-1`}
 						lightColor={light.activeIconColor}  
 						darkColor={dark.activeIconColor}
 					>Update</MonoText>

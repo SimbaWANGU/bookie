@@ -13,6 +13,8 @@ import useTimer from '@hooks/useTimer'
 import useUser from '@hooks/useUser'
 import { useBooks } from '@hooks/useBooks'
 import SynopsisHeader from '@components/headers/synopsisHeader'
+import tw from 'twrnc'
+import * as Sentry from '@sentry/react-native'
 
 const synopsis = () => {
 	const { synopsis } = useLocalSearchParams()
@@ -30,8 +32,7 @@ const synopsis = () => {
 					row_id: user?.id
 				})
 			if (error) {
-				// Sentry.Native.captureMessage('Error returned from incrementing cumulative time')
-				// Sentry.Native.captureException(error)
+				Sentry.captureException(error)
 			}
 		}
 
@@ -48,42 +49,40 @@ const synopsis = () => {
 	}, [timer])
 
 	return (
-		<View className='flex-1 items-center justify-center'>
+		<View style={tw`flex-1 items-center justify-center`}>
 			<ImageBackground
 				source={{ uri: selectedBook!.synopsisBgImage as string}}
-				className='h-full w-full'
+				style={tw`h-full w-full`}
 			>
 				<LinearGradient
 					colors={['#00000022', dark.background]}
 					locations={[0.2, 0.9]}
-					className='h-full w-full'
+					style={tw`h-full w-full`}
 				>
 					<SynopsisHeader />
-					<View className='bg-transparent justify-end p-4 pb-40 absolute w-full h-full' >
+					<View style={tw`bg-transparent justify-end p-4 pb-40 absolute w-full h-full`}>
 						<QuickSandText
-							className='text-3xl p-2'
+							style={tw`text-3xl p-2`}
 							lightColor={light.activeIconColor}
 							darkColor={dark.activeIconColor}
 						>{selectedBook!.title}</QuickSandText>
 						<MonoText
-							className='text-xl p-2'
+							style={tw`text-xl p-2`}
 							lightColor={dark.text}
 							darkColor={dark.text}
 						>{selectedBook!.synopsis}</MonoText>
 						<Pressable
-							className='flex flex-row mt-6 p-4 px-4 items-center justify-between w-5/12 rounded-full'
-							style={{
+							style={[tw`flex flex-row mt-6 p-4 px-4 items-center justify-between w-5/12 rounded-full`, {
 								backgroundColor: dark.text
-							}}
+							}]}
 							onPress={() => {
 								router.push('/book/story')
 							}}
 						>
 							<QuickSandText
-								className='text-base'
-								style={{
-								color: light.activeIconColor
-								}}
+								style={[tw`text-base`, {
+									color: light.activeIconColor
+									}]}
 							>Read Story</QuickSandText>
 							<FontAwesomeSixIcons name="arrow-right" color={light.activeIconColor} />
 						</Pressable>
