@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import React, { useEffect, useState } from 'react'
 import { supabase } from '@utils/supabase'
-import { SplashScreen, Stack } from 'expo-router'
-import useSession from '@hooks/useSession'
 import SettingHeader from '@components/headers/settingHeader'
+import { Stack } from 'expo-router'
 
 const App = () => {
-	const [, setSession] = useSession()
+	const [, setSession] = useState()
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange((_, session) => {
-			setSession(session)
+			console.log(session)
 		})
 	}, [])
 

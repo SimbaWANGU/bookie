@@ -56,7 +56,7 @@ const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
 							onPress={() => {
 								void setFirstTimeOnAppAsync(false, 'firstTimeOnApp')
 								setFirstTimeOnApp(false)
-								router.push('/')
+								router.push('/auth/signin')
 							}}
 						>
 							<QuickSandText

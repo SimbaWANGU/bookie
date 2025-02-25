@@ -3,7 +3,6 @@ import { View, TextInput, useColorScheme } from 'react-native'
 import {light, dark } from '@constants/Color'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
 import { useForm, Controller } from 'react-hook-form'
-import useSearch from '@hooks/useSearch'
 import useDebounce from '@hooks/useDebounce'
 import tw from 'twrnc'
 
@@ -15,7 +14,7 @@ const SearchBox = (): JSX.Element => {
 	const theme = useColorScheme()
 	const [isFocused, setIsFocused] = useState(false)
 	const [searchTermState, setSearchTermState] = useState('')
-	const [searchTerm, setSearchTerm] = useSearch()
+	const [searchTerm, setSearchTerm] = useState('')
 	const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
 		defaultValues: {
 			searchTerm: ''
@@ -23,7 +22,6 @@ const SearchBox = (): JSX.Element => {
 	})
 
 	useDebounce(() => {
-		console.log('searchTermState', searchTermState)
 		setSearchTerm(searchTermState)
 	}, 1000, [searchTermState])
 
@@ -44,7 +42,6 @@ const SearchBox = (): JSX.Element => {
 							}]}
 							onBlur={onBlur}
 							onFocus={() => {
-								console.log('focused')
 								setIsFocused(true)
 							}}
 							onChangeText={(value) => {

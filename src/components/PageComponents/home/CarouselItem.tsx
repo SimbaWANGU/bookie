@@ -9,6 +9,7 @@ import { router } from 'expo-router'
 import { QuickSandText, MonoText } from '@components/styled/StyledText'
 import { ImageBackground } from 'expo-image'
 import tw from 'twrnc'
+import useFirstTimeOnApp from '@hooks/useFirstTimeOnApp'
 
 interface ItemProps {
   index: number
@@ -17,6 +18,7 @@ interface ItemProps {
 }
 
 const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
+	const [firstTimeOnApp, setFirstTimeonApp] = useFirstTimeOnApp()
 	const maskStyle = useAnimatedStyle(() => {
 		const backgroundColor = interpolateColor(
 			animationValue.value,
@@ -37,7 +39,7 @@ const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 				]}
 			>
 				<ImageBackground
-					source={{ uri: book.synopsisBgImage as string }}
+					source={{ uri: book.cover_image_url as string }}
           contentFit='cover'
 					style={tw`flex-1 rounded`}
 				>
@@ -68,6 +70,7 @@ const CarouselItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 									backgroundColor: dark.text
 								}]}
 								onPress={() => {
+									setFirstTimeonApp(false)
 									router.push(`/book/${book.id}`)
 								}}
 							>

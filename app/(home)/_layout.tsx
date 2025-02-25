@@ -6,54 +6,47 @@ import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
 import Header from '@components/headers/header'
 import ProfileHeader from '@components/headers/profileHeader'
-import useSession from '@hooks/useSession'
 import { userProfile } from '@models/userProfile.type'
 import { getDynamicValue } from '@constants/Functions'
 import TabsIcons from '@components/icons/TabIcons'
 import useFirstTimeOnApp from '@hooks/useFirstTimeOnApp'
-import useUser from '@hooks/useUser'
-import useProfilePicture from '@hooks/useProfilePicture'
 
 export default function TabLayout() {
 	const theme = useColorScheme()
 	const [firstTimeOnApp] = useFirstTimeOnApp()
-	const [session] = useSession()
-	const [user, setUser] = useUser()
-	const [profilePicture, setProfilePicture] = useProfilePicture()
 
-	if (firstTimeOnApp) {
-		console.log(firstTimeOnApp)
-		return <Redirect href="/auth/onboard" />
-	}
+	return <Redirect href="/auth/onboard" />
+	// if (firstTimeOnApp) {
+	// }
 
-	const { isLoading, data, error } = useQuery({
-		queryKey: [`user-${session?.user.id}`],
-		queryFn: async () => {
-			const { data, error } = await supabase.from('profiles').select('*').eq('id', session?.user.id).single()
-			if (error) {
-				// Sentry.Native.captureMessage('Error catched from get user profile')
-				// Sentry.Native.captureException(error)
-				return {} as userProfile
-			}
-			return data as userProfile
-		}
-	})
+	// const { isLoading, data, error } = useQuery({
+	// 	queryKey: [`user-${session?.user.id}`],
+	// 	queryFn: async () => {
+	// 		const { data, error } = await supabase.from('profiles').select('*').eq('id', session?.user.id).single()
+	// 		if (error) {
+	// 			// Sentry.Native.captureMessage('Error catched from get user profile')
+	// 			// Sentry.Native.captureException(error)
+	// 			return {} as userProfile
+	// 		}
+	// 		return data as userProfile
+	// 	}
+	// })
 
-	useEffect(() => {
-		if (data) setUser(data)
-		const fetchProfilePicture = async () => {  
-			const blob = await supabase.storage.from('avatars').download(`${session?.user?.id}/pp`)
-			const fr = new FileReader()
-			if (blob.data){
-				fr.readAsDataURL(blob.data!)
-				fr.onload = () => {
-					setProfilePicture(fr.result as string)
-				}	
-			}
-		}
+	// useEffect(() => {
+	// 	if (data) setUser(data)
+	// 	const fetchProfilePicture = async () => {  
+	// 		const blob = await supabase.storage.from('avatars').download(`${session?.user?.id}/pp`)
+	// 		const fr = new FileReader()
+	// 		if (blob.data){
+	// 			fr.readAsDataURL(blob.data!)
+	// 			fr.onload = () => {
+	// 				setProfilePicture(fr.result as string)
+	// 			}	
+	// 		}
+	// 	}
 
-		fetchProfilePicture()
-	}, [isLoading, error])
+	// 	fetchProfilePicture()
+	// }, [isLoading, error])
 
 	return (
 		<Tabs
@@ -73,8 +66,8 @@ export default function TabLayout() {
 					headerShown: true,
 					header: () => (
 						<Header
-							username={user?.username ?? 'username'}
-							avatarUrl={profilePicture === '' ? 'https://ui-avatars.com/api/?name=U+N' : profilePicture}
+							username={'username'}
+							avatarUrl={'https://ui-avatars.com/api/?name=U+N'}
 						/>
 					),
 					tabBarIcon: ({ color }) => <TabsIcons name="house" color={color} />,
@@ -88,8 +81,8 @@ export default function TabLayout() {
 					headerShown: true,
 					header: () => (
 						<Header
-							username={user?.username ?? 'username'}
-							avatarUrl={profilePicture === '' ? 'https://ui-avatars.com/api/?name=U+N' : profilePicture}
+							username={'username'}
+							avatarUrl={'https://ui-avatars.com/api/?name=U+N'}
 						/>
 					),
 					tabBarIcon: ({ color }) => <TabsIcons name="magnifying-glass" color={color} />,

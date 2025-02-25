@@ -6,7 +6,6 @@ export const storiesApi = {
     const result = await axios.get<getStoryResponse>(
       `${process.env.EXPO_PUBLIC_API as string}/stories/${id}`
     )
-
     return result
   },
 }

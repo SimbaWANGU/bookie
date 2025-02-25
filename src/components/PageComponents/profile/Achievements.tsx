@@ -1,15 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from '@components/styled/Themed'
 import { light } from '@constants/Color'
 import { QuickSandText } from '@components/styled/StyledText'
 import { achievementTimeThresholds } from '@constants/Achievements'
-import useUser from '@hooks/useUser'
 import tw from 'twrnc'
 
 const Achievements = () => {
-	const [user] = useUser()
-	const latestAchievement = user?.achievements?.[user?.achievements?.length - 1]
-	const latestAchievementTitle = achievementTimeThresholds.find(achievement => achievement.title === latestAchievement)
+	const [user] = useState()
 
 	return (
 		<View
@@ -26,12 +23,12 @@ const Achievements = () => {
 				style={tw`text-4xl p-2`}
 				lightColor={light.activeIconColor}
 				darkColor={light.activeIconColor}
-			>{latestAchievementTitle?.title}</QuickSandText>
+			>{''}</QuickSandText>
 			<QuickSandText
 				style={tw`text-xl p-2`}
 				lightColor={light.activeIconColor}
 				darkColor={light.activeIconColor}
-			>{latestAchievementTitle?.description}</QuickSandText>
+			>{''}</QuickSandText>
 		</View>
 	)
 }

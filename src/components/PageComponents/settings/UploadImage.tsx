@@ -5,13 +5,13 @@ import * as FileSystem from 'expo-file-system'
 import { decode } from 'base64-arraybuffer'
 import { supabase } from '@utils/supabase'
 import Toast from 'react-native-toast-message'
-import useUser from '@hooks/useUser'
 import { getDynamicValue } from '@constants/Functions'
 import ProfilePicture from '@components/PageComponents/profile/ProfilePicture'
 import tw from 'twrnc'
 
 const UploadImage = () => {
-	const [user] = useUser()
+	// const [user] = useUser()
+	// ! change filepath
 	const pickImage = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -29,7 +29,8 @@ const UploadImage = () => {
 			encoding: 'base64',
 		})
 		const contentType = `image/${img.uri.split('.').pop()}`
-		const filePath = `${user!.id}/pp`
+			// ! change filepath
+		const filePath = `${'user'}/pp`
     
 		try {
 			await supabase.storage.from('avatars').upload(filePath, decode(base64), {contentType})

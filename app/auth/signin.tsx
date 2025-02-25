@@ -1,33 +1,24 @@
-import React, { useState } from 'react'
-import { Alert, Pressable, TextInput, useColorScheme } from 'react-native'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'expo-router'
-import { makeRedirectUri } from 'expo-auth-session'
-import { supabase } from '@utils/supabase'
-import { View } from '@components/styled/Themed'
-import { dark, light } from '@constants/Color'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import Toast from 'react-native-toast-message'
-import tw from 'twrnc'
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import Logo from '@assets/images/bookworms-logo.png'
+import tw from '@utils/tailwind';
+import { supabase } from '@utils/supabase';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { router } from 'expo-router';
 
-const redirectTo = makeRedirectUri()
-
-const signin = () => {
-	const theme = useColorScheme()
-	const router = useRouter()
+const AuthScreen = () => {
+  const [isSignUp, setIsSignUp] = useState(false);
 	const queryClient = useQueryClient()
-	const[isEmailFocused, setIsEmailFocused] = useState(false)
-	const [email, setEmail] = useState('')
-	const [isPasswordFocused, setIsPasswordFocused] = useState(false)
-	const [password, setPassword] = useState('')
-	const [loading, setLoading] = useState(false)
-
 	const signInWithEmailMutation = useMutation({
 		mutationFn: async () => {
-			await supabase.auth.signInWithPassword({ email, password })
+			await supabase.auth.signInWithPassword({
+				email: 'simba@email.com',
+				password: 'pass'
+			})
 		},
 		onSuccess: () => {
-			setLoading(false)
 			queryClient.invalidateQueries({
 				queryKey: ['session'],
 			})
@@ -44,148 +35,83 @@ const signin = () => {
 			)
 		},
 		onError: (error) => {
-			// Sentry.Native.captureMessage('Error returned from signing in')
-			// Sentry.Native.captureException(error)
-			setLoading(false)
 			Alert.alert(error.message)
 		},
 	})
 
-	const signUpWithEmailMutation = useMutation({
-		mutationFn: () => supabase.auth.signUp({
-			email,
-			password,
-			// options: {
-			// 	emailRedirectTo: redirectTo
-			// },
-		}),
-		onSuccess: () => {
-			setLoading(false)
-			Alert.alert('Check your email for email verification!')
-		},
-		onError: (error) => {
-			// Sentry.Native.captureMessage('Error returned from signing up')
-			// Sentry.Native.captureException(error)
-			setLoading(false)
-			Alert.alert(error.message)
-		},
-	})
-
-
-	return (
-		<View
-			style={tw`'h-full w-full items-center justify-center`}
-			lightColor={light.background}
-			darkColor={dark.background}
-		>
-			<QuickSandText
-				style={tw`'text-2xl text-center mb-8`}
-				lightColor={light.activeIconColor}
-				darkColor={dark.text}
-			>Create Account or Sign In</QuickSandText>
-			<TextInput
-				style={[tw`w-10/12 h-14 text-lg text-left px-4 ${isEmailFocused ? 'border-b' : ''}`, {
-					color: theme === 'light' ? light.text : dark.text,
-					borderBottomColor: isEmailFocused ? light.activeIconColor : dark.activeIconColor,
-				}]}
-				onFocus={() => setIsEmailFocused(true)}
-				onBlur={() => setIsEmailFocused(false)}
-				onChangeText={(text) => setEmail(text)}
-				value={email}
-				placeholder="email@address.com"
-				placeholderTextColor={theme === 'light' ? light.tint : dark.tint}
-				autoCapitalize={'none'}
+  return (
+    <View style={tw`flex-1 items-center justify-center px-6 bg-primary-color`}> 
+			<Image
+				source={Logo}
+				style={tw`aspect-square ios:h-24 android:h-30 rounded-full`}
 			/>
-			<TextInput
-				style={[tw`w-10/12 h-14 text-lg text-left px-4 ${isPasswordFocused ? 'border-b' : ''}`, {
-					color: theme === 'light' ? light.text : dark.text,
-					borderBottomColor: isPasswordFocused ? light.activeIconColor : dark.activeIconColor,
-				}]}
-				onFocus={() => setIsPasswordFocused(true)}
-				onBlur={() => setIsPasswordFocused(false)}
-				onChangeText={(text) => setPassword(text)}
-				value={password}
-				secureTextEntry={true}
-				placeholder="password"
-				placeholderTextColor={theme === 'light' ? light.tint : dark.tint}
-				autoCapitalize={'none'}
-			/>
-			<View style={tw`w-10/12 py-2`}>
-				<Pressable
-					disabled={loading}
-					onPress={async () => {
-						setLoading(true)
-						const res = await supabase.auth.signInWithPassword({ email, password })
-						console.log(res)
-						if (res.data) {
-							Toast.show({
-								type: 'success',
-								text1: 'Signed in',
-								text2: 'You have successfully signed in',
-							})
-						} else {
-							Toast.show({
-								type: 'error',
-								text1: 'Error',
-								text2: 'There was an error signing in',
-							})
-						}
-						setLoading(false)
-					}}
-					style={[tw`rounded-full w-full p-2 border`, {
-						borderColor: theme === 'light' ? light.activeIconColor : dark.activeIconColor,
-						backgroundColor: loading ? light.tint : 'transparent'
-					}]}
-				>
-					<MonoText
-						lightColor={light.activeIconColor}
-						darkColor={dark.activeIconColor}
-						style={tw`text-center text-lg`}
-					>Sign in</MonoText>
-				</Pressable>
-			</View>
-			<View style={tw`w-10/12 py-2`}>
-				<Pressable
-					disabled={loading}
-					onPress={async () => {
-						setLoading(true)
-						const res = await supabase.auth.signUp({
-							email,
-							password,
-							options: {
-								emailRedirectTo: redirectTo
-							}
+      <Text style={tw`text-3xl text-center mb-8`}>
+        {isSignUp ? 'Create an Account' : 'Welcome Back'}
+      </Text>
+      
+      {isSignUp && (
+        <TextInput
+          placeholder="Full Name"
+          style={tw`border border-gray-300 w-3/4 p-4 rounded-lg mb-4`}
+        />
+      )}
+      
+      <TextInput
+        placeholder="Email"
+        keyboardType="email-address"
+        style={tw`border border-gray-300 w-3/4 p-4 rounded-lg mb-4`}
+      />
+      
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
+        style={tw`border border-gray-300 w-3/4 p-4 rounded-lg mb-4`}
+      />
+      
+      <TouchableOpacity
+        style={tw`bg-accent btn-primary`}
+				activeOpacity={.8}
+				onPress={async () => {
+					if (isSignUp) {
+						// signInWithEmailMutation.mutate()
+						const { data , error } = await supabase.auth.signInWithPassword({
+							email: 'simba@email.com',
+							password: 'pass'
 						})
-						console.log(res)
-						if (res.data) {
-							Toast.show({
-								type: 'success',
-								text1: 'Signed in',
-								text2: 'You have successfully signed in',
-							})
-						} else {
-							Toast.show({
-								type: 'error',
-								text1: 'Error',
-								text2: 'There was an error signing in',
-							})
-						}
-						setLoading(false)
-					}}
-					style={[tw`rounded-full w-full p-2 border`, {
-						borderColor: theme === 'light' ? light.activeIconColor : dark.activeIconColor,
-						backgroundColor: loading ? light.tint : 'transparent'
-					}]}
-				>
-					<MonoText
-						lightColor={light.activeIconColor}
-						darkColor={dark.activeIconColor}
-						style={tw`text-center text-lg`}
-					>Sign up</MonoText>
-				</Pressable>
-			</View>
-		</View>
-	)
-}
+						console.log(data, error)
+					} else {
+						const { data , error } = await supabase.auth.signInWithPassword({
+							email: 'simba@email.com',
+							password: 'pass'
+						})
+						console.log(data, error)
+					}
+				}}
+      >
+        <Text style={tw`text-white text-center font-semibold`}>
+          {isSignUp ? 'Sign Up' : 'Sign In'}
+        </Text>
+      </TouchableOpacity>
+      
+      <Text style={tw`text-center text-gray-500 mb-4`}>or continue with</Text>
+      
+      <View style={tw`flex-row justify-center mb-4`}> 
+        <TouchableOpacity style={tw`p-3 mx-2 border border-gray-300 rounded-full`}>
+					<Ionicons name="logo-google" size={24} color="red" />
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={tw`p-3 mx-2 border border-gray-300 rounded-full`}>
+          <Ionicons name="logo-apple" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      
+      <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
+        <Text style={tw`text-center text-accent`}>
+          {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-export default signin
+export default AuthScreen;

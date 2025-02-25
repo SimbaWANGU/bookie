@@ -7,7 +7,7 @@ import { dark, light } from '@constants/Color'
 import { getDynamicValue } from '@constants/Functions'
 import { router } from 'expo-router'
 import { ImageBackground } from 'expo-image'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
 
 interface BookProps {
   book: Book
@@ -25,7 +25,7 @@ const BookContainer: React.FC<BookProps> = ({ book }) => {
 			}]}
 		>
 			<ImageBackground
-				source={{ uri: book.synopsisBgImage as string }}
+				source={{ uri: 'https://ui-avatars.com/api/?name=U+N' }}
         style={tw`w-full h-full rounded-xl`}
         contentFit='cover'
 			>
@@ -43,20 +43,24 @@ const BookContainer: React.FC<BookProps> = ({ book }) => {
 							lightColor={dark.text}
 							darkColor={dark.text}
 						>{book.title}</QuickSandText>
-						<View style={tw`flex flex-row`}>
+						{/* <View style={tw`flex flex-row flex-wrap`}>
 							{book.genre.map((genre, index) => (
-								<QuickSandText
+								<View
 									key={index}
-									lightColor={light.activeIconColor}
-									darkColor={light.activeIconColor}
-									style={[tw`text-xs bottom-0 z-10 p-1 mr-1 rounded-lg`, {
+									style={[tw`bottom-0 z-10 p-1 m-1 rounded-lg`, {
 										backgroundColor: dark.lightTintColor
 									}]}
 								>
-									{genre}
-								</QuickSandText>
+									<QuickSandText
+										lightColor={light.activeIconColor}
+										darkColor={light.activeIconColor}
+										style={[tw`text-xs`]}
+										>
+										{genre}
+									</QuickSandText>
+								</View>
 							))}
-						</View>
+						</View> */}
 					</View>
 				</LinearGradient>
 			</ImageBackground>

@@ -42,7 +42,7 @@ const StoryCarousel: React.FC<StoryCarouselProps> = ({ story }) => {
         height: '100%',
       }}
 			width={PAGE_WIDTH}
-			data={[...story.storyContent]}
+			data={story.storyContent}
 			renderItem={({index, item }) => 
 				<Page
 					key={index}

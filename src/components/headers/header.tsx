@@ -14,7 +14,7 @@ interface HeaderProps {
   avatarUrl: string
 }
 
-const Header:React.FC<HeaderProps> = ({ username }) => {
+const Header:React.FC<HeaderProps> = ({ username = 'lol' }) => {
 	return (
 		<View
 			style={[tw`flex w-full flex-row justify-between items-end pb-2 px-4`, {

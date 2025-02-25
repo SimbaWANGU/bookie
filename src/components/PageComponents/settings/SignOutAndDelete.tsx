@@ -1,43 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MonoText } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { light, dark } from '@constants/Color'
 import { supabase } from '@utils/supabase'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pressable } from 'react-native'
-import useUser from '@hooks/useUser'
 import tw from 'twrnc'
+import * as Sentry from '@sentry/react-native'
 
 const SignOutAndDelete = () => {
-  const [user] = useUser()
+  const [user] = useState()
 	const queryClient = useQueryClient()
-	const signOutMutation = useMutation({
-		mutationFn: async () => {
-			await supabase.auth.signOut()
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['session'],
-			})
-		},
-		onError: (error) => {
-			console.log(error)
-		}
-	})
+	// const signOutMutation = useMutation({
+	// 	mutationFn: async () => {
+	// 		await supabase.auth.signOut()
+	// 	},
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({
+	// 			queryKey: ['session'],
+	// 		})
+	// 	},
+	// 	onError: (error) => {
+	// 		Sentry.captureException(error)
+	// 	}
+	// })
 
-	const deleteAccountMutation = useMutation({
-		mutationFn: async () => {
-			await supabase.from('profiles').delete().eq('id', user?.id)
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['session'],
-			})
-		},
-		onError: (error) => {
-			console.log(error)
-		}
-	})
+	// const deleteAccountMutation = useMutation({
+	// 	mutationFn: async () => {
+	// 		await supabase.from('profiles').delete().eq('id', user?.id)
+	// 	},
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({
+	// 			queryKey: ['session'],
+	// 		})
+	// 	},
+	// 	onError: (error) => {
+	// 		Sentry.captureException(error)
+	// 	}
+	// })
 
 	return (
 		<View style={tw`absolute bottom-0 justify-evenly items-center flex flex-row h-1/12 w-12/12 m-8`}>
@@ -45,7 +45,7 @@ const SignOutAndDelete = () => {
         style={[tw`p-2 w-5/12 rounded-lg bg-transparent`, {
 					backgroundColor: light.activeIconColor,
 				}]}
-				onPress={() => signOutMutation.mutate()}
+				onPress={() => {}}
 			>
 				<MonoText
 					style={tw`text-center text-lg p-1`}

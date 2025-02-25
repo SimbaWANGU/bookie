@@ -1,27 +1,23 @@
-import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { View } from '@components/styled/Themed'
+import { FontAwesome6 } from '@expo/vector-icons'
 import { light, dark } from '@constants/Color'
 import { getDynamicValue } from '@constants/Functions'
+import tw from '@utils/tailwind'
 import { router } from 'expo-router'
 import React from 'react'
-import { Pressable, useColorScheme } from 'react-native'
-import tw from 'twrnc'
+import { Pressable, View } from 'react-native'
 
-const SettingHeader = () => {
-	const theme = useColorScheme()
+const SettingHeader = () => {	
 	return (
 		<View
-			style={[tw`flex w-full flex-row justify-between items-center px-4 mt-6`, {
+			style={[tw`flex w-full flex-row px-4 mt-6 bg-primary-color justify-between items-center`, {
         height: getDynamicValue(120)
       }]}
-			lightColor={light.background}
-			darkColor={dark.background}
 		>
 			<Pressable
 				style={tw`p-2 h-10`}
 				onPress={() => router.back()}
 			>
-				<FontAwesomeSixIcons name={'arrow-left'} style={tw`text-xl`} color={theme === 'light' ? light.text : dark.text} />
+				<FontAwesome6 name={'arrow-left'} style={tw`back-icon`} />
 			</Pressable>
 		</View>
 	)

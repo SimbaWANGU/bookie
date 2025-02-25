@@ -1,24 +1,42 @@
+import { Story } from "./story.type";
+
+// Represents a Genre object
+interface Genre {
+  name: string;
+}
+
+// Represents the junction table object for book_genres
+interface BookGenre {
+  genres: Genre;
+}
+
+// Represents a Creator object
+interface Creator {
+  name: string;
+}
+
+// Represents the junction table object for creator_books
+interface CreatorBook {
+  creators: Creator;
+}
+
+// Represents a Book with its nested relationships
 interface Book {
-  id: string
-  genre: string[]
-  onDisplayPage: boolean
-  synopsis: string
-  synopsisBgImage: string
-  title: string
-  reactions: Reactions[]
-  readCount: number
+  id: string;
+  title: string;
+  description: string;
+  cover_image_url: string
+  // Include any additional book columns as needed
+  book_genres?: BookGenre[];
+  creator_books?: CreatorBook[];
+  user_likes_book?: []
+  user_reviews_book?: []
+  user_reading_progress: []
+  story_paragraphs: Story[]
+  created_at: string
 }
 
-interface Reactions {
-  username: string
-  emoji: string
-}
-
-interface getBooksResponse {
-  books: Book[]
-}
-
-export {
-	Book,
-	getBooksResponse
+export type {
+  Book,
+  BookGenre
 }

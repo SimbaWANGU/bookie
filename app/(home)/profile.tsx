@@ -10,23 +10,21 @@ import ReadingTime from '@components/PageComponents/profile/ReadingTime'
 import Achievements from '@components/PageComponents/profile/Achievements'
 import ProfilePicture from '@components/PageComponents/profile/ProfilePicture'
 import { useQueryClient } from '@tanstack/react-query'
-import { useBooks } from '@hooks/useBooks'
-import useUser from '@hooks/useUser'
 import tw from 'twrnc'
 
 const profile = () => {
 	const theme = useColorScheme()
 	const queryClient = useQueryClient()
-	const { books } = useBooks()
-	const [user] = useUser()
-	const presentedBooks = getRandomItems(books!)
-	presentedBooks.pop()
+	const [books] = useState()
+	const [user] = useState()
+	// const presentedBooks = getRandomItems(books!)
+	// presentedBooks.pop()
 
-	useEffect(() => {
-		queryClient.invalidateQueries({
-			queryKey: [`user-${user?.id}`],
-		})
-	}, [])
+	// useEffect(() => {
+	// 	queryClient.invalidateQueries({
+	// 		queryKey: [`user-${user?.id}`],
+	// 	})
+	// }, [])
 
 
 	return (
@@ -42,24 +40,24 @@ const profile = () => {
 				style={tw`text-2xl`}
 				lightColor={light.activeIconColor}
 				darkColor={dark.activeIconColor}
-			>{`@${user?.username ?? 'username'}`}</QuickSandText>
+			>{`@${'username'}`}</QuickSandText>
 
 			<View style={tw`flex flex-row w-auto p-2 items-center justify-evenly`}>
 				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
 					<FontAwesomeSixIcons name={'star'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{user?.favorites?.length ?? 0}</MonoText>
+					<MonoText style={tw`text-xl`}>{0}</MonoText>
 				</View>
 				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
 					<FontAwesomeSixIcons name={'bookmark'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{user?.queue?.length ?? 0}</MonoText>
+					<MonoText style={tw`text-xl`}>{0}</MonoText>
 				</View>
 				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
 					<FontAwesomeSixIcons name={'book-bookmark'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{user?.completed?.length ?? 0}</MonoText>
+					<MonoText style={tw`text-xl`}>{0}</MonoText>
 				</View>
 			</View>
 
-			<View
+			{/* <View
 				style={tw`flex flex-row flex-wrap w-full items-center justify-evenly`}
 			>
 				{presentedBooks.map((book, index) => (
@@ -68,7 +66,7 @@ const profile = () => {
 						book={book}
 					/>
 				))}
-			</View>
+			</View> */}
 
 			<ReadingTime />
 			<Achievements />

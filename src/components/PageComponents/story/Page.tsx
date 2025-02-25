@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ImageBackground } from 'react-native'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import useBookCompletedAchievement from '@hooks/useBookCompletedAchievements'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
 import Toast from 'react-native-toast-message'
-import useUser from '@hooks/useUser'
 import { getDynamicValue } from '@constants/Functions'
 import tw from 'twrnc'
 
@@ -16,65 +14,66 @@ interface storySwiperProps {
   bookId: string
 }
 
-const Page: React.FC<storySwiperProps> = ({ text, bookId }): JSX.Element => {
-	const [user] = useUser()
+const Page: React.FC<storySwiperProps> = ({ text }): JSX.Element => {
+	const [user] = useState()
 	const queryClient = useQueryClient()
 	const regexImageLink = /^https:\/\/drive\.google\.com\/uc\?export=view&id=\S+$/
 	const regexTheEnd = /^The End$/i
-	const [achievement, setAchievement] = useBookCompletedAchievement()
+	const [achievement, setAchievement] = useState()
 
-	const updateAchievementMutation = useMutation({
-		mutationFn: async ({ bookId, achievement }: { bookId: string, achievement?: string | null }) => {
-			let updateObject: { completed: string[]; achievements?: string[] } = {
-				completed: user?.completed ? [...user.completed, bookId] : [bookId],
-			}
+	// const updateAchievementMutation = useMutation({
+	// 	mutationFn: async ({ bookId, achievement }: { bookId: string, achievement?: string | null }) => {
+	// 		let updateObject: { completed: string[]; achievements?: string[] } = {
+	// 			// completed: user?.completed ? [...user.completed, bookId] : [bookId],
+	// 			1
+	// 		}
   
-			if (achievement) {
-				updateObject = {
-					...updateObject,
-					achievements: user?.achievements ? [...user.achievements, achievement] : [achievement],
-				}
-			}
+	// 		if (achievement) {
+	// 			updateObject = {
+	// 				...updateObject,
+	// 				achievements: user?.achievements ? [...user.achievements, achievement] : [achievement],
+	// 			}
+	// 		}
 
-			const { data, error } = await supabase.from('profiles').update(updateObject).eq('id', user?.id).single()
-			if (error) {
-				return error
-			}
-			return data
-		},
-		onSuccess: () => {
-			if (achievement !== null && achievement !== undefined) {
-				Toast.show({
-					type: 'info',
-					text1: achievement.title,
-					text1Style: {
-            fontSize: getDynamicValue(20),
-            fontWeight: 'bold',
-          },
-					text2: achievement.description,
-					text2Style: {
-            fontSize: getDynamicValue(16),
-          },
-				})
-				setAchievement(null)
-			}
-			queryClient.invalidateQueries({
-				queryKey: [`user-${user?.id}`]
-			})
-		},
-		onError: (_) => {
-			// Sentry.Native.captureMessage('Error updating user achievements')
-			// Sentry.Native.captureException(error)
-		}
-	})
+	// 		const { data, error } = await supabase.from('profiles').update(updateObject).eq('id', user?.id).single()
+	// 		if (error) {
+	// 			return error
+	// 		}
+	// 		return data
+	// 	},
+	// 	onSuccess: () => {
+	// 		if (achievement !== null && achievement !== undefined) {
+	// 			Toast.show({
+	// 				type: 'info',
+	// 				text1: achievement.title,
+	// 				text1Style: {
+  //           fontSize: getDynamicValue(20),
+  //           fontWeight: 'bold',
+  //         },
+	// 				text2: achievement.description,
+	// 				text2Style: {
+  //           fontSize: getDynamicValue(16),
+  //         },
+	// 			})
+	// 			setAchievement(null)
+	// 		}
+	// 		queryClient.invalidateQueries({
+	// 			queryKey: [`user-${user?.id}`]
+	// 		})
+	// 	},
+	// 	onError: (_) => {
+	// 		// Sentry.Native.captureMessage('Error updating user achievements')
+	// 		// Sentry.Native.captureException(error)
+	// 	}
+	// })
 
-	useEffect(() => {
-		if (regexTheEnd.test(text as string)) {
-			if (!user?.completed?.includes(bookId as string) || achievement !== null) {
-				void updateAchievementMutation.mutate({ bookId: bookId as string, achievement: achievement?.title })
-			}
-		}
-	}, [text, achievement])
+	// useEffect(() => {
+	// 	if (regexTheEnd.test(text as string)) {
+	// 		if (!user?.completed?.includes(bookId as string) || achievement !== null) {
+	// 			void updateAchievementMutation.mutate({ bookId: bookId as string, achievement: achievement?.title })
+	// 		}
+	// 	}
+	// }, [text, achievement])
 
 	return (
 		<View

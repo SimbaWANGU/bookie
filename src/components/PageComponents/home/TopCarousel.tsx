@@ -13,7 +13,7 @@ interface TopCarouselProps {
   books: Book[]
 }
 
-const TopCarousel: React.FC<TopCarouselProps> = ({ books }) => {
+const TopCarousel: React.FC<TopCarouselProps> = () => {
 	const ref = React.useRef<ICarouselInstance>(null)
 	const animationStyle = useCallback(
 		(value: number) => {
@@ -40,7 +40,7 @@ const TopCarousel: React.FC<TopCarouselProps> = ({ books }) => {
 				height: getDynamicValue(400),
 			}]}
 		>
-			<Carousel
+			{/* <Carousel
 				ref={ref}
 				loop={true}
 				autoPlay={true}
@@ -58,7 +58,7 @@ const TopCarousel: React.FC<TopCarouselProps> = ({ books }) => {
 				customAnimation={animationStyle}
 				autoPlayInterval={7000}
 				scrollAnimationDuration={2500}
-			/>
+			/> */}
 		</View>
 	)
 }

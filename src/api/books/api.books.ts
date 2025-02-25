@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { getBooksResponse } from '@models/book.type'
+import { supabase } from '@utils/supabase'
+
+interface T {}
 
 export const booksApi = {
   getBooks: async () => {
-    const result = await axios.get<getBooksResponse>(
-      `${process.env.EXPO_PUBLIC_API as string}/books/getBooks`
-    )
-
-    return result
+    const { data, error } = await supabase.from("books").select("*")
+    // console.log(data, error)
+    return data
   },
 }

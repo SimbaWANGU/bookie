@@ -1,11 +1,33 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
-type AppState = {
-  firstTimeOnApp: boolean
-  setFirstTimeOnApp: (firstTimeOnApp: boolean) => void
-};
+export const useAppStore = create(
+  persist(
+    (set) => ({
+      firstTimeOnApp: true,
+      setFirstTimeOnApp: (firstTimeOnApp: boolean) => set({ firstTimeOnApp }),
+      }),
+      {
+        name: 'firstTimeonApp-Storage',
+        storage: createJSONStorage(() => AsyncStorage),
+        onRehydrateStorage: () => {
+          async function startRemote () {
+            setTimeout(() => {
+              console.log('first time on app:')
+            }, 2000)
+          }
 
-export const useAppStore = create<AppState>((set) => ({
-  firstTimeOnApp: true,
-  setFirstTimeOnApp: (firstTimeOnApp: boolean) => set({ firstTimeOnApp }),
-}))
+          startRemote()
+
+          return (_, error) => {
+            if (error) {
+              console.log('failed')
+            } else {
+              console.log('remote state updated')
+            }
+          }
+        }
+      }
+  )
+)
