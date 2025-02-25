@@ -9,7 +9,7 @@ import tw from 'twrnc'
 import { Image } from 'expo-image'
 import { supabase } from '@utils/supabase'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const index = () => {
 	const theme = useColorScheme()
@@ -20,19 +20,19 @@ const index = () => {
   //   console.log(data, error)
   // }, [])
 
-	const categories = ['Trending', 'Staff Picks', 'Top Rated', 'New Arrivals'];
-  const genres = ['Sci-Fi', 'Romance', 'Mystery', 'Fantasy'];
+	const categories = ['Trending', 'Staff Picks', 'Top Rated', 'New Arrivals']
+  const genres = ['Sci-Fi', 'Romance', 'Mystery', 'Fantasy']
   const friends = [
     { name: 'Anna', book: 'Dune', avatar: 'https://via.placeholder.com/40' },
     { name: 'Ben', book: '1984', avatar: 'https://via.placeholder.com/40' },
-  ];
+  ]
   const events = [
     { title: 'Author Talk: J.K. Rowling', date: 'Jan 20th' },
     { title: 'New Book Launch: Thrill Zone', date: 'Jan 25th' },
-  ];
+  ]
   const authors = [
     { name: 'Agatha Christie', bio: 'Queen of Mystery', books: ['Murder on the Orient Express'] },
-  ];
+  ]
 
   // console.log(data, isLoading, error)
   
@@ -284,6 +284,6 @@ const styles = StyleSheet.create({
     color: '#555555',
     marginTop: 4,
   },
-});
+})
 
 export default index

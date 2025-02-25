@@ -7,7 +7,7 @@ export const bookKeys = createQueryKeyStore({
   book: {
     list: () => ({
       queryKey: ['all-books'],
-      queryFn: supabase.from("books").select("*")
+      queryFn: supabase.from('books').select('*')
     })
   },
 })

@@ -1,4 +1,4 @@
-import { useAppStore } from "@stores/useAppStore"
+import { useAppStore } from '@stores/useAppStore'
 
 const useFirstTimeOnApp = (): [boolean, (firstTimeOnApp: boolean) => void] => {
   const [firstTimeOnApp, setFirstTimeOnApp] = useAppStore((state) => [state.firstTimeOnApp, state.setFirstTimeOnApp])

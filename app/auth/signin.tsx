@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+import React, { useState } from 'react'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { Image } from 'expo-image'
 import Logo from '@assets/images/bookworms-logo.png'
-import tw from '@utils/tailwind';
-import { supabase } from '@utils/supabase';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { router } from 'expo-router';
+import tw from '@utils/tailwind'
+import { supabase } from '@utils/supabase'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { router } from 'expo-router'
 
 const AuthScreen = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false)
 	const queryClient = useQueryClient()
 	const signInWithEmailMutation = useMutation({
 		mutationFn: async () => {
@@ -107,11 +107,11 @@ const AuthScreen = () => {
       
       <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
         <Text style={tw`text-center text-accent`}>
-          {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+          {isSignUp ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up'}
         </Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default AuthScreen;
+export default AuthScreen
