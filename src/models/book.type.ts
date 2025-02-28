@@ -34,6 +34,7 @@ interface Book {
   user_reading_progress: []
   story_paragraphs: Story[]
   created_at: string
+  updated_at: string
 }
 
 export type {
