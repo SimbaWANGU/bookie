@@ -17,7 +17,7 @@ const _layout = () => {
 				getId={() => String(Date.now())}	
 			/>
 			<Stack.Screen
-				name={'signin'}
+				name={'authenticate'}
 				options={{
 					headerShown: true,
 					header: () => <SettingHeader />
