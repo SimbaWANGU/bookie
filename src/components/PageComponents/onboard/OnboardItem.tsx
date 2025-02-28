@@ -2,13 +2,13 @@ import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
 import { QuickSandText } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
-import useAsyncStorage from '@hooks/useAsyncStorage'
-import useFirstTimeOnApp from '@hooks/useFirstTimeOnApp'
+import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
 import { ImageBackground } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { router } from 'expo-router'
+import { useAtom } from 'jotai'
 import React from 'react'
-import { Pressable, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import tw from 'twrnc'
 
 interface OnboardItemProps {
@@ -16,13 +16,10 @@ interface OnboardItemProps {
 }
 
 const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
-	const [, setFirstTimeOnApp] = useFirstTimeOnApp()
-	const [setFirstTimeOnAppAsync] = useAsyncStorage()
+	const [, setFirstTimeOnApp] = useAtom(firstTimeOnAppAtom)
 
 	return (
-		<View
-			style={tw`flex-1 justify-center`}
-		>
+		<View style={tw`flex-1 justify-center`}>
 			<ImageBackground
 				source={text[0] as string}
 				style={tw`flex-1`}
@@ -54,9 +51,8 @@ const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
 							}]}
 							activeOpacity={.8}
 							onPress={() => {
-								void setFirstTimeOnAppAsync(false, 'firstTimeOnApp')
 								setFirstTimeOnApp(false)
-								router.push('/auth/signin')
+								router.push('/auth/authenticate')
 							}}
 						>
 							<QuickSandText
