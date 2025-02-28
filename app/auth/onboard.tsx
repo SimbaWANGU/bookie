@@ -11,7 +11,7 @@ import { getDynamicValue } from '@constants/Functions'
  
 const PAGE_WIDTH = Dimensions.get('window').width
 
-const onboard = () => {
+const Onboard = () => {
 	const ref = useRef<ICarouselInstance>(null)
 	const slideText = {
 		slideOne: [OnboardImageOne, 'Hello, this is', 'Book Worms', 'Read books designed to entertain you...'],
@@ -63,7 +63,7 @@ const onboard = () => {
 	)
 }
 
-export default onboard
+export default Onboard
 
 
 
