@@ -1,11 +1,10 @@
-import { getStoryResponse } from '@models/story.type'
-import axios from 'axios'
+// api/booksApi.ts
+import { supabase } from '@utils/supabase'
 
-export const storiesApi = {
-  getStory: async (id: string) => {
-    const result = await axios.get<getStoryResponse>(
-      `${process.env.EXPO_PUBLIC_API as string}/stories/${id}`
-    )
-    return result
-  },
+export const fetchStory = async () => {
+  const { data, error } = await supabase.from('books').select('*')
+  if (error) {
+    throw new Error(error.message)
+  }
+  return data
 }

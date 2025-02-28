@@ -1,22 +1,40 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { useGlobalSearchParams } from 'expo-router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import ShimmerPlaceHolder from '@components/styled/Shimmer'
-import { View } from '@components/styled/Themed'
-import Toast from 'react-native-toast-message'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
-import { getDynamicValue } from '@constants/Functions'
 import StoryCarousel from '@components/PageComponents/story/StoryCarousel'
 import tw from 'twrnc'
-import * as Sentry from '@sentry/react-native'
+import { Story } from '@models/story.type'
+import { View } from 'react-native'
+import ShimmerPlaceHolder from '@components/styled/Shimmer'
 
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()
 	// const { story: response, isLoading, error } = useStory(synopsis as string)
-	const [timer, setTimer] = useState(0)
-	const intervalRef = useRef<NodeJS.Timeout | null>(null)
-	const [comTime, setComTime] = useState(0)
-	const queryClient = useQueryClient()
+	// const [timer, setTimer] = useState(0)
+	// const intervalRef = useRef<NodeJS.Timeout | null>(null)
+	// const [comTime, setComTime] = useState(0)
+	// const queryClient = useQueryClient()
+
+	const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<Story[]>({
+    queryKey: ['story', story],
+    queryFn: async ({ pageParam = 0 }) => {
+      // Fetch paragraphs for the given story using offset pagination.
+      const { data, error } = await supabase.from('story_paragraphs').select('*').eq('book_id', synopsis).range(pageParam as number, pageParam as number + 10 - 1)
+      if (error) throw new Error(error.message)
+      return data
+    },
+    // The next page offset is calculated as the current number of pages * 10.
+    getNextPageParam: (lastPage, pages) => {
+      // If the last page returned fewer items than "10", there are no more pages.
+      if (lastPage.length < 10) return undefined
+      return pages.length * 10
+    },
+    initialPageParam: 0,
+  })
+
+  
+
   
 	// const updateAchievementMutation = useMutation({
 	// 	mutationFn: async (achievement: string) => {
@@ -71,20 +89,26 @@ const story = () => {
 	// 	}
 	// }, [achievement])
 
-	// if (isLoading) {
-	// 	return (
-	// 		<View style={tw`h-full w-full items-center justify-center`}>
-	// 			<ShimmerPlaceHolder style={{
-	// 				height: '10%',
-	// 				width: '90%',
-	// 			}} />
-	// 		</View>
-	// 	)
-	// }
+	if (isLoading) {
+		return (
+			<View style={tw`h-full w-full items-center justify-center`}>
+				<ShimmerPlaceHolder style={{
+					height: '10%',
+					width: '90%',
+				}} />
+			</View>
+		)
+	}
 
-	// return (
-	// 	<StoryCarousel story={response}/>
-	// )
+  if (!data) {
+    return (
+      <></>
+    )
+  }
+
+	return (
+		<StoryCarousel story={data.pages.flat()}/>
+	)
 
 	return (
 		<></>

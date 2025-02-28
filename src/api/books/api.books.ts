@@ -1,12 +1,10 @@
-import axios from 'axios'
+// api/booksApi.ts
 import { supabase } from '@utils/supabase'
 
-interface T {}
-
-export const booksApi = {
-  getBooks: async () => {
-    const { data, error } = await supabase.from('books').select('*')
-    // console.log(data, error)
-    return data
-  },
+export const fetchBooks = async () => {
+  const { data, error } = await supabase.from('books').select('*')
+  if (error) {
+    throw new Error(error.message)
+  }
+  return data
 }
