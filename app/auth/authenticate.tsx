@@ -57,11 +57,12 @@ const AuthScreen = () => {
 
   const signInWithEmailMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      await supabase.auth.signInWithPassword({
+      const {data, error} = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       })
-      console.log('sign in data:', formData)
+
+      console.log(data, error)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['session'] })
