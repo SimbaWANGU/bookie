@@ -20,6 +20,17 @@ interface CreatorBook {
   creators: Creator;
 }
 
+// Represents a paragraph for a book
+interface StoryParagraph {
+  id: string;
+  paragraph_no: number;
+  content: string;
+}
+
+interface StoryParagraphCount {
+  count: number
+}
+
 // Represents a Book with its nested relationships
 interface Book {
   id: string;
@@ -29,10 +40,11 @@ interface Book {
   // Include any additional book columns as needed
   book_genres?: BookGenre[];
   creator_books?: CreatorBook[];
+  story_paragraphs?: StoryParagraph[]
   user_likes_book?: []
   user_reviews_book?: []
   user_reading_progress: []
-  story_paragraphs: Story[]
+  story_paragraph_count?: StoryParagraphCount[]
   created_at: string
   updated_at: string
 }
