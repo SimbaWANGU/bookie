@@ -10,11 +10,6 @@ import ShimmerPlaceHolder from '@components/styled/Shimmer'
 
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()
-	// const { story: response, isLoading, error } = useStory(synopsis as string)
-	// const [timer, setTimer] = useState(0)
-	// const intervalRef = useRef<NodeJS.Timeout | null>(null)
-	// const [comTime, setComTime] = useState(0)
-	// const queryClient = useQueryClient()
 
 	const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<Story[]>({
     queryKey: ['story', story],
@@ -33,62 +28,6 @@ const story = () => {
     initialPageParam: 0,
   })
 
-  
-
-  
-	// const updateAchievementMutation = useMutation({
-	// 	mutationFn: async (achievement: string) => {
-	// 		const { data, error } = await supabase.from('profiles').update({
-	// 			achievements: (user?.achievements === null || user?.achievements === undefined) ? [achievement] : [...user?.achievements, achievement]
-	// 		}).eq('id', user?.id).single()
-	// 		if (error) {
-	// 			return error
-	// 		}
-	// 		return data
-	// 	},
-	// 	onSuccess: () => {
-	// 		setAchievement(null)
-	// 		queryClient.invalidateQueries({
-	// 			queryKey: [`user-${user?.id}`]
-	// 		})
-	// 	},
-	// 	onError: (error) => {
-	// 		Sentry.captureException(error)
-	// 	}
-	// })
-
-	// useEffect(() => {
-	// 	if (!isLoading && !error) {
-	// 		intervalRef.current = setInterval(() => {
-	// 			setTimer(timer + 1)
-	// 			setComTime(prevComTime => prevComTime + 1)
-	// 		}, 1000)
-	// 	}
-
-	// 	return () => {
-	// 		if (intervalRef.current != null) clearInterval(intervalRef.current)
-	// 	}
-	// }, [isLoading, error])
-
-	// useEffect(() => {
-	// 	if (achievement !== null) {
-	// 		Toast.show({
-	// 			type: 'info',
-	// 			text1: achievement.title,
-	// 			text1Style: {
-	// 				fontWeight: 'bold',
-	// 				fontSize: getDynamicValue(20)
-	// 			},
-	// 			text2: achievement.description,
-	// 			text2Style: {
-	// 				fontSize: getDynamicValue(16)
-	// 			},
-	// 		})
-	// 		void updateAchievementMutation.mutate(achievement.title)
-	// 		setAchievement(null)
-	// 	}
-	// }, [achievement])
-
 	if (isLoading) {
 		return (
 			<View style={tw`h-full w-full items-center justify-center`}>
@@ -105,13 +44,11 @@ const story = () => {
       <></>
     )
   }
+	
+	const newData = data.pages.flat()
 
 	return (
-		<StoryCarousel story={data.pages.flat()}/>
-	)
-
-	return (
-		<></>
+		<StoryCarousel story={newData} />
 	)
 }
 
