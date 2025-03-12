@@ -53,8 +53,19 @@ const convertToTime = (number: number, showKeyword = true): string => {
 	return timeString.trim()
 }
 
+function calculateElapsedPercentage(currentPage: number, totalPages: number) {
+  if (totalPages <= 0) {
+    return 0
+  }
+  
+  const percentage = (currentPage / totalPages) * 100;
+  // Ensure percentage doesn't exceed 100
+  return Math.min(percentage, 100);
+}
+
 export {
 	getDynamicValue,
 	getRandomItems,
-	convertToTime
+	convertToTime,
+	calculateElapsedPercentage
 }
