@@ -2,7 +2,7 @@
 import { supabase } from '@utils/supabase'
 
 export const fetchBooks = async () => {
-  const { data, error } = await supabase.from('books').select(`
+  const { data, error } = await supabase.from('story_paragraphs').select(`
     *,
     book_genres (
       genres (name)
