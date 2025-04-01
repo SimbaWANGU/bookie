@@ -1,75 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View } from '@components/styled/Themed'
-import { dark, light } from '@constants/Color'
 import { useColorScheme } from 'react-native'
-import { getRandomItems } from '@constants/Functions'
-import BookContainer from '@components/styled/BookContainer'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import ReadingTime from '@components/PageComponents/profile/ReadingTime'
-import Achievements from '@components/PageComponents/profile/Achievements'
 import ProfilePicture from '@components/PageComponents/profile/ProfilePicture'
-import { useQueryClient } from '@tanstack/react-query'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
+import { ScrollView } from 'react-native-gesture-handler'
+import Names from '@components/PageComponents/profile/Names'
+import Bio from '@components/PageComponents/profile/Bio'
+import SelectionPanel from '@components/PageComponents/profile/SelectionPanel'
+import ModalTime from '@components/PageComponents/profile/ModalTime'
+import ModalProfile from '@components/PageComponents/profile/ModalProfile'
+import ModalAchievements from '@components/PageComponents/profile/ModalAchievements'
 
 const profile = () => {
 	const theme = useColorScheme()
-	const queryClient = useQueryClient()
-	const [books] = useState()
-	const [user] = useState()
-	// const presentedBooks = getRandomItems(books!)
-	// presentedBooks.pop()
-
-	// useEffect(() => {
-	// 	queryClient.invalidateQueries({
-	// 		queryKey: [`user-${user?.id}`],
-	// 	})
-	// }, [])
-
+	const [isProfileupdateModalOpen, setProfileupdateModalOpen] = useState(false)
+	const [isTimeModalOpen, setTimeModalOpen] = useState(false)
+	const [isAchievementModalOpen, setAchievementModalOpen] = useState(false)
 
 	return (
-		<View
-			style={tw`flex-1 items-center justify-evenly`}
-			lightColor={light.background}
-			darkColor={dark.background}
-		>
-
-			<ProfilePicture />
-
-			<QuickSandText
-				style={tw`text-2xl`}
-				lightColor={light.activeIconColor}
-				darkColor={dark.activeIconColor}
-			>{`@${'username'}`}</QuickSandText>
-
-			<View style={tw`flex flex-row w-auto p-2 items-center justify-evenly`}>
-				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
-					<FontAwesomeSixIcons name={'star'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{0}</MonoText>
+		<View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
+			<ProfilePicture setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
+			<ScrollView style={tw`-mt-10 `} contentContainerStyle={tw``}>
+				<View style={tw`px-4 bg-transparent`}>
+					<Names />
+					<Bio />
 				</View>
-				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
-					<FontAwesomeSixIcons name={'bookmark'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{0}</MonoText>
-				</View>
-				<View style={tw`flex flex-row items-center justify-evenly w-2/12 mx-2`}>
-					<FontAwesomeSixIcons name={'book-bookmark'} color={theme === 'light' ? light.iconsColor : dark.iconsColor} />
-					<MonoText style={tw`text-xl`}>{0}</MonoText>
-				</View>
-			</View>
 
-			{/* <View
-				style={tw`flex flex-row flex-wrap w-full items-center justify-evenly`}
-			>
-				{presentedBooks.map((book, index) => (
-					<BookContainer 
-						key={index}
-						book={book}
-					/>
-				))}
-			</View> */}
-
-			<ReadingTime />
-			<Achievements />
+				<SelectionPanel />
+				<ModalTime timeModalVisisble={isTimeModalOpen} setTimeModalVisible={(bool) => setTimeModalOpen(bool)} />
+				<ModalProfile profileModalVisible={isProfileupdateModalOpen} setProfileModalVisible={(bool) => setProfileupdateModalOpen(bool)} />
+				<ModalAchievements achievementsModalVisisble={isAchievementModalOpen} setAchievementsModalVisible={(bool) => setAchievementModalOpen(bool)} />
+			</ScrollView>
 		</View>
 	)
 }
