@@ -63,9 +63,31 @@ function calculateElapsedPercentage(currentPage: number, totalPages: number) {
   return Math.min(percentage, 100);
 }
 
+function convertTime(timestampStr: string, use24hFormat: boolean = true): string {
+  // Automatically detect the user's local timezone.
+  const targetTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = new Date(timestampStr);
+
+  // Include year, month, and day along with time information.
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: targetTimezone,
+    year: 'numeric',
+    month: 'short',  // e.g., "Mar"
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: !use24hFormat,
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
+
+
 export {
 	getDynamicValue,
 	getRandomItems,
 	convertToTime,
-	calculateElapsedPercentage
+	calculateElapsedPercentage,
+	convertTime
 }
