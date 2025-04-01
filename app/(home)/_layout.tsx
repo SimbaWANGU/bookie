@@ -12,28 +12,26 @@ import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
 import Onboard from 'app/auth/onboard'
 import AuthScreen from 'app/auth/authenticate'
 import ContinueReading from '@components/PageComponents/home/ContinueReading'
+import tw from '@utils/tailwind'
 
 export default function TabLayout() {
 	const theme = useColorScheme()
 	const [firstTimeOnApp] = useAtom(firstTimeOnAppAtom)
 	const [user] = useAtom(userAtom)
 
-	// console.log(firstTimeOnApp, user)
-
-
 	return (
 		<>
 			{(() => {
-        if (firstTimeOnApp && !user) {
-          return (
-						<>
-							<AuthScreen />
-						</>
-					)
-        } else if (!firstTimeOnApp && !user) {
+        if (!firstTimeOnApp && !user) {
           return (
 						<>
 							<Onboard />
+						</>
+					)
+        } else if (firstTimeOnApp && !user) {
+					return (
+						<>
+							<AuthScreen />
 						</>
 					)
         } else {
@@ -57,8 +55,8 @@ export default function TabLayout() {
 											headerShown: true,
 											header: () => (
 												<Header
-													username={user?.user_metadata.full_name}
-													avatarUrl={'https://ui-avatars.com/api/?name=U+N'}
+													username={user?.name as string}
+													avatarUrl={user?.avatar_url as string}
 												/>
 											),
 											tabBarIcon: ({ color }) => <TabsIcons name="house" color={color} />,
@@ -73,8 +71,8 @@ export default function TabLayout() {
 											headerShown: true,
 											header: () => (
 												<Header
-													username={user?.user_metadata.full_name}
-													avatarUrl={'https://ui-avatars.com/api/?name=U+N'}
+													username={user?.name as string}
+													avatarUrl={user?.avatar_url as string}
 												/>
 											),
 											tabBarIcon: ({ color }) => <TabsIcons name="magnifying-glass" color={color} />,
@@ -87,6 +85,7 @@ export default function TabLayout() {
 										name="profile"
 										options={{
 											headerShown: true,
+											headerStyle: {...tw`z-0`},
 											header: () => <ProfileHeader />,
 											tabBarIcon: ({ color }) => <TabsIcons name="user" color={color} />,
 											title: '',
