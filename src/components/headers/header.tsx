@@ -6,7 +6,6 @@ import { light, dark } from '@constants/Color'
 import { MonoText } from '@components/styled/StyledText'
 import { router } from 'expo-router'
 import tw from 'twrnc'
-import icon from '@images/bookworms-logo.png'
 import { Image } from 'expo-image'
 
 interface HeaderProps {
@@ -14,7 +13,7 @@ interface HeaderProps {
   avatarUrl: string
 }
 
-const Header:React.FC<HeaderProps> = ({ username = 'lol' }) => {
+const Header:React.FC<HeaderProps> = ({ username, avatarUrl }) => {
 	return (
 		<View
 			style={[tw`flex w-full flex-row justify-between items-end pb-2 px-4`, {
@@ -33,10 +32,7 @@ const Header:React.FC<HeaderProps> = ({ username = 'lol' }) => {
 				onPress={() => router.push('/profile')}
 			>
 				<Image
-					source={
-						// avatarUrl ? { uri : avatarUrl } : 
-						icon
-					}
+					source={{ uri : avatarUrl }}
 					style={tw`aspect-square rounded-full h-5/12`}
 					contentFit='contain'
 				/>
