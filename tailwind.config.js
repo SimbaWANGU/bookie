@@ -5,7 +5,7 @@ export const theme = {
     colors: {
       accent: '#198D9E',
       accentlight: '#645b67', // example accent color
-      accentdark: '#211425',
+      accentdark: '#0D1821',
       hint: '#D9C2C6',
       sup: '#A8A0B2',
       light: '#F3F4F6', // example background color
