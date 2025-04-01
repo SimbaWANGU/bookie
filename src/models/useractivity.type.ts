@@ -6,7 +6,8 @@ interface User {
   id: string;
   name: string;
   updated_at: string;
-  user_name: string;
+  user_name: string
+  avatar_url: string
 }
 
 interface Creator {

@@ -1,7 +1,7 @@
-import { Session, User } from '@supabase/supabase-js'
+import { CustomUser } from '@models/userProfile.type'
 import { atom } from 'jotai'
 
-const userAtom = atom<User | null>(null)
+const userAtom = atom<CustomUser | null>(null)
 
 export {
   userAtom

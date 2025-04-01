@@ -1,12 +1,14 @@
-export type userProfile = {
-  avatar_url: string | null;
+interface CustomUser {
+  avatar_url: string;
+  created_at: string;
+  email: string;
   id: string;
-  updated_at: string | null;
-  username: string | null;
-  full_name: string | null;
-  favorites: string[] | null;
-  achievements: string[] | null;
-  queue: string[] | null;
-  completed: string[] | null;
-  cumulative_time: number | null;
+  name: string;
+  updated_at: string;
+  user_name: string;
+  bio?: string
+}
+
+export {
+  CustomUser
 }
