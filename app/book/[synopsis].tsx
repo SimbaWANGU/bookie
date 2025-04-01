@@ -1,4 +1,4 @@
-import { Alert, ImageBackground, Modal, ScrollView, TouchableOpacity } from 'react-native'
+import { Alert, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -26,7 +26,6 @@ const synopsis = () => {
 	const [, setSelectedBook] = useAtom(bookAtom)
 	const [progress, setProgress] = useAtom(progressAtom)
 	const [modalVisible, setModalVisible] = useState(false)
-	const [snapPoint, setSnapPoint] = useState(-1)
 
 	const { data: book, isLoading: bookLoading, error: bookError} = useQuery<Book>({
 		queryKey: ['book', synopsis],
@@ -55,14 +54,6 @@ const synopsis = () => {
         status: 'STARTED'
       })
   })
-
-	const openAndCloseComments = () => {
-		if (snapPoint === -1 ) {
-			setSnapPoint(2)
-		} else {
-			setSnapPoint(-1)
-		}
-	}
 	
 	useEffect(() => {
 		if (progressLoading) return;
@@ -94,31 +85,6 @@ const synopsis = () => {
 		}
 	}, [progressLoading, progressData]);
 
-	const dummyComments = [
-		{
-			id: '1',
-			user: 'Alice',
-			userName: 'Alice Johnson',
-			profilePicture: 'https://example.com/path/to/alice.png',
-			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis fugiat officia, iusto aliquid consequuntur, ipsum cumque quas saepe mollitia necessitatibus obcaecati maiores sequi nulla beatae excepturi perspiciatis. Voluptatum, ullam porro.'
-		},
-		{
-			id: '2',
-			user: 'Bob',
-			userName: 'Robert Smith',
-			profilePicture: 'https://example.com/path/to/bob.png',
-			text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem, dolorum magni? Provident temporibus ab sapiente impedit ullam velit, magnam ex tempore omnis. Vitae officiis vel cumque doloremque iste eum accusantium nostrum repellat eveniet aliquid neque illum maxime cum, porro excepturi.'
-		},
-		{
-			id: '3',
-			user: 'Charlie',
-			userName: 'Charlie Brown',
-			profilePicture: 'https://example.com/path/to/charlie.png',
-			text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam, obcaecati.'
-		},
-		// add more comments as needed
-	]
-
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
 			<ImageBackground
@@ -138,7 +104,7 @@ const synopsis = () => {
 								lightColor={light.activeIconColor}
 								darkColor={dark.activeIconColor}
 							>{book?.title}</QuickSandText>
-							<ScrollView style={tw`max-h-1/3 my-2`} >
+							<ScrollView style={tw`max-h-1/2 my-2`} >
 								<MonoText
 									style={tw`text-sm p-2`}
 									lightColor={dark.text}

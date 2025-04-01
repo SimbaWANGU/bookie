@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { View, Modal, KeyboardAvoidingView, Platform } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Ionicons from '@expo/vector-icons/Ionicons'
-import { Controller, useForm } from 'react-hook-form'
 import { Image } from 'expo-image'
 import { MonoText, QuickSandText } from '@components/styled/StyledText'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import tw from '@utils/tailwind'
-import { createReview, fetchReviews } from '@api/books/api.reviews'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
+import { fetchReviews } from '@api/books/api.reviews'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
-import Reviewsheader from '@components/headers/reviewsheader'
+import ModalHeader from '@components/headers/modalsHeader'
 import { BookReview } from '@models/reviews.type'
 import ReviewInput from './ReviewInput'
 import { supabase } from '@utils/supabase'
@@ -63,7 +59,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
         enableOnAndroid={true}
       >
         {/* Header */}
-        <Reviewsheader setModalVisible={setModalVisible} />
+        <ModalHeader setModalVisible={setModalVisible} title={'Reviews'} />
 
         {/* Comments List */}
         {isLoading ? (

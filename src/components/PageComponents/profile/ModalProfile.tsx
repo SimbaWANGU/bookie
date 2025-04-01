@@ -3,7 +3,7 @@ import { View, Text, Modal, TouchableOpacity, Alert } from 'react-native';
 import tw from '@utils/tailwind';
 import Reviewsheader from '@components/headers/modalsHeader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import UploadImage from '../settings/UploadImage';
+import UploadImage from './UploadImage';
 import { useAtom } from 'jotai';
 import { userAtom } from '@stores/user.state';
 import { useForm } from 'react-hook-form';
