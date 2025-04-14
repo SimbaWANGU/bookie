@@ -2,20 +2,29 @@ import React, { useState, useMemo } from 'react';
 import { FlatList, View, Text, ActivityIndicator } from 'react-native';
 import tw from '@utils/tailwind';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@utils/supabase';
 import { BookEntry, BookLiked, BookReview } from '@models/useractivity.type';
 import { getPublishedBooks, getUserLikedBooks, getUserReviewedBooks } from '@api/activity/api.homeactivity';
-import { Image } from 'expo-image';
 import UserBookReview from './UserBookReview';
 import CreatorBookPublished from './CreatorBookPublished';
 import UserBookLiked from './UserBookLiked';
+import { useAtom } from 'jotai';
+import { userAtom } from '@stores/user.state';
+import useCreatorFollows from '@hooks/profile/useCreatorFollows';
+import useUserFollows from '@hooks/profile/useUserFollows';
 
 const UserActivities = () => {
+  const [user] = useAtom(userAtom)
+  const { data: authorFollows } = useCreatorFollows()
+	const { data: userFollows } = useUserFollows()
+  
   // Unconditionally call all your hooks
   const { data: likedBooks = [], isLoading: likedBooksLoading, error: likedBooksError } = useQuery<BookLiked[]>({
     queryKey: ['liked_books'],
-    queryFn: getUserLikedBooks
+    queryFn: async () => await getUserLikedBooks(userFollows!),
+    enabled: userFollows !== null || userFollows || undefined
   });
+
+  console.log(likedBooks)
 
   const { data: reviewedBooks = [], isLoading: reviewedBooksLoading, error: reviewedBooksError } = useQuery<BookReview[]>({
     queryKey: ['reviewed_books'],
@@ -24,7 +33,8 @@ const UserActivities = () => {
 
   const { data: publishedBooks = [], isLoading: publishedBooksLoading, error: publishedBooksError } = useQuery<BookEntry[]>({
     queryKey: ['published_books'],
-    queryFn: getPublishedBooks,
+    queryFn: async () => await getPublishedBooks(authorFollows!),
+    enabled: authorFollows !== undefined || authorFollows !== null
   });
 
   // Combine all activities into one array and shuffle it (using useMemo is safe here)
