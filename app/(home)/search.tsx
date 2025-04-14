@@ -1,6 +1,5 @@
 import { FlatList, View, useColorScheme } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import BookContainer from '@components/styled/BookContainer'
 import { dark, light } from '@constants/Color'
 import SearchBox from '@components/PageComponents/search/SearchBox'
 import { getDynamicValue } from '@constants/Functions'

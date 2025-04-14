@@ -17,8 +17,6 @@ const App = () => {
     queryFn: fetchCustomUser,
   });
 
-  // console.log(data, isLoading, error)
-
   // Use an effect so that side effects run after the render.
   useEffect(() => {
     if (data) {
