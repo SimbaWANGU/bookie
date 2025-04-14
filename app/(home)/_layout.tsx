@@ -89,9 +89,19 @@ export default function TabLayout() {
 											header: () => <ProfileHeader />,
 											tabBarIcon: ({ color }) => <TabsIcons name="user" color={color} />,
 											title: '',
-											lazy: false
+											// lazy: false
 										}}
 									/>
+
+									<Tabs.Screen
+										name="usersprofile"
+										options={{
+											headerShown: false,
+											tabBarButton: () => null, // Hide the button
+											tabBarItemStyle: { display: 'none' } // Remove any layout space reserved for it
+										}}
+									/>
+
 								</Tabs>
 								<ContinueReading />
 							</>

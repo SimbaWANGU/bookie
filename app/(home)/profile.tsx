@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View } from '@components/styled/Themed'
 import { useColorScheme } from 'react-native'
-import ProfilePicture from '@components/PageComponents/profile/ProfilePicture'
+import LeadProfileSection from '@components/PageComponents/profile/LeadProfileSection'
 import tw from '@utils/tailwind'
 import { ScrollView } from 'react-native-gesture-handler'
 import Names from '@components/PageComponents/profile/Names'
@@ -11,7 +11,7 @@ import ModalTime from '@components/PageComponents/profile/ModalTime'
 import ModalProfile from '@components/PageComponents/profile/ModalProfile'
 import ModalAchievements from '@components/PageComponents/profile/ModalAchievements'
 
-const profile = () => {
+const Profile = () => {
 	const theme = useColorScheme()
 	const [isProfileupdateModalOpen, setProfileupdateModalOpen] = useState(false)
 	const [isTimeModalOpen, setTimeModalOpen] = useState(false)
@@ -19,8 +19,8 @@ const profile = () => {
 
 	return (
 		<View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
-			<ProfilePicture setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
-			<ScrollView style={tw`-mt-10 `} contentContainerStyle={tw``}>
+			<ScrollView style={tw``} contentContainerStyle={tw``}>
+			<LeadProfileSection setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
 				<View style={tw`px-4 bg-transparent`}>
 					<Names />
 					<Bio />
@@ -35,4 +35,4 @@ const profile = () => {
 	)
 }
 
-export default profile
+export default Profile
