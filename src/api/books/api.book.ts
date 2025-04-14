@@ -14,7 +14,7 @@ export const fetchBook = async ({ synopsis }: FetchBook) => {
         genres (name)
       ),
       creator_books (
-        creators (name)
+        creators (name, id)
       ),
       story_paragraphs!inner (
         id,

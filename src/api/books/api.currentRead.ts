@@ -1,6 +1,6 @@
 import { supabase } from "@utils/supabase"
 
-const currentRead = async () => {
+const currentRead = async (id: string) => {
   const { data, error } = await supabase
     .from('user_reading_progress')
     .select(`
@@ -12,6 +12,7 @@ const currentRead = async () => {
       )
     `)
     .order('last_updated_at', { ascending: false })
+    .eq('user_id', id)
     .limit(1)
 
   if (error) {

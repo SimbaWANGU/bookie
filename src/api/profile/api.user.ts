@@ -23,6 +23,19 @@ const fetchCustomUser = async (): Promise<CustomUser> => {
   throw new Error("No user session found");
 }
 
+const fetchOtherUser = async (id: string): Promise<CustomUser> => {
+  const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single()
+      
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data as CustomUser;
+}
+
 const fetchBooksInProgress = async (id: string) => {
   const { data, error } = await supabase.from('user_reading_progress').select(`
     *,
@@ -142,6 +155,7 @@ const updateProfile = async ({ id, updateData }: UpdateProfilePayload) => {
 }
 export {
   fetchCustomUser,
+  fetchOtherUser,
   updateProfile,
   fetchBooksInProgress,
   fetchLikedBooks,

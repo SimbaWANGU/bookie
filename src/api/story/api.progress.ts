@@ -24,8 +24,6 @@ const checkReadingProgress = async (book_id: string, user_id: string) => {
 }
 
 const initialReadingProgress = async ({ book_id, paragraph_id, paragraph_no = 1, user_id, started_at}: ReadingProgress) => {
-  console.log(book_id, paragraph_id, user_id)
-
   const { data, error } = await supabase.from('user_reading_progress').insert([
     {
       book_id,
