@@ -26,6 +26,8 @@ import { useAtom } from 'jotai'
 import { User } from '@supabase/supabase-js'
 import { convertTime } from '@constants/Functions'
 import { CustomUser } from '@models/userProfile.type'
+import { DevToolsBubble } from "react-native-react-query-devtools";
+import tw from '@utils/tailwind'
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -119,6 +121,7 @@ const RootLayout = () => {
       <QueryClientProvider client={client}>
         <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
         <App />
+        <DevToolsBubble bubbleStyle={tw`left-0 ml-4`} />
       </QueryClientProvider>
     </GestureHandlerRootView>
   )
