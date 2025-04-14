@@ -12,6 +12,7 @@ interface BookGenre {
 
 // Represents a Creator object
 interface Creator {
+  id: string
   name: string;
 }
 
