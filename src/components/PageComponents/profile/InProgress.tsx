@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, useColorScheme } from 'react-native'
+import { View, ActivityIndicator, useColorScheme, Platform } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { QuickSandText } from '@components/styled/StyledText'
@@ -10,12 +10,17 @@ import { convertTime } from '@constants/Functions'
 import { fetchBooksInProgress } from '@api/profile/api.user'
 import Foundation from '@expo/vector-icons/Foundation';
 
-const InProgressBooks = () => {
+interface InProgressBooksProps {
+  id?: string
+}
+
+const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const theme = useColorScheme()
+  
   const { data: inprogressbooks, isLoading, error } = useQuery<BookActivity[]>({
-    queryKey: ['in_progress_books'],
-    queryFn: async () => await fetchBooksInProgress(user?.id as string)
+    queryKey: ['in_progress_books', id ?? user?.id],
+    queryFn: async () => await fetchBooksInProgress(id ?? user?.id as string)
   })
 
   if (isLoading) {
@@ -34,7 +39,7 @@ const InProgressBooks = () => {
     return (
       <View style={tw``}>
         <QuickSandText style={tw`text-base text-gray-400`}>
-          Books you've opened will appear here
+          Opened books will appear here
         </QuickSandText>
       </View>
     )

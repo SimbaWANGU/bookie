@@ -1,8 +1,10 @@
-import { View, Text, Modal } from 'react-native'
+import { Modal } from 'react-native'
 import React from 'react'
 import Reviewsheader from '@components/headers/modalsHeader'
 import tw from '@utils/tailwind'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import CumulativeReadingTime from './CumulativeReadingTime'
+import CompletedBookReadingTime from './CompletedBookReadingTime'
 
 interface ModalTimeProps {
   timeModalVisisble: boolean
@@ -16,12 +18,11 @@ const ModalTime: React.FC<ModalTimeProps> = ({ timeModalVisisble, setTimeModalVi
       visible={timeModalVisisble}
       onRequestClose={() => setTimeModalVisible(false)}
     >
-      <KeyboardAwareScrollView
-        contentContainerStyle={tw`p-4 pb-32`} // Extra bottom padding for the fixed input box
-        enableOnAndroid={true}
-      >
+      <KeyboardAwareScrollView contentContainerStyle={tw`p-4 pb-32`} enableOnAndroid={true}>
 
         <Reviewsheader setModalVisible={setTimeModalVisible} title={'My Reading Stats'} />
+        <CumulativeReadingTime />
+        <CompletedBookReadingTime />
         
       </KeyboardAwareScrollView>
       

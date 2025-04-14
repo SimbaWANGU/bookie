@@ -4,7 +4,11 @@ import tw from '@utils/tailwind'
 import HorizontalSelectionPanel from './HorizontalSelectionPanel'
 import ContentArea from './ContentArea'
 
-const SelectionPanel = () => {
+interface SelectionPanelProps {
+  id?: string
+}
+
+const SelectionPanel: React.FC<SelectionPanelProps> = ({ id }) => {
   const [selected, setSelected] = useState< 'in progress' | 'completed' | 'liked' | 'reviews'>('in progress')
 
   return (
@@ -13,7 +17,7 @@ const SelectionPanel = () => {
       <HorizontalSelectionPanel selected={selected} setSelected={setSelected} />
 
       {/* Content Area */}
-      <ContentArea selected={selected} />
+      <ContentArea id={id} selected={selected} />
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { View } from '@components/styled/Themed';
 import { QuickSandText } from '@components/styled/StyledText';
 import { convertToTime } from '@constants/Functions';
@@ -7,9 +7,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import tw from '@utils/tailwind';
 import { BarChart } from 'react-native-gifted-charts';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 
 const ReadingTime = () => {
   const [expanded, setExpanded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const slide = useSharedValue(0);
 
   // Total reading time in seconds.
   const totalReadingTimeInSeconds = 2000;
@@ -25,8 +33,30 @@ const ReadingTime = () => {
     { value: 80, label: 'Sat' },
   ];
 
-  // Toggle the expanded state to show/hide the graph.
-  const toggleExpanded = () => setExpanded(!expanded);
+  // Animated style: when slide is 0, translateY = -50 and opacity = 0; when slide is 1, translateY = 0 and opacity = 1.
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: slide.value * 50 - 50 }],
+      opacity: slide.value,
+    };
+  });
+
+  const toggleExpanded = () => {
+    if (expanded) {
+      // Collapse: animate slide value to 0 then remove the content.
+      slide.value = withTiming(0, { duration: 300 }, (finished) => {
+        if (finished) {
+          runOnJS(setShowContent)(false);
+          runOnJS(setExpanded)(false);
+        }
+      });
+    } else {
+      // Expand: make sure the content is mounted, then animate slide value to 1.
+      setShowContent(true);
+      setExpanded(true);
+      slide.value = withTiming(1, { duration: 300 });
+    }
+  };
 
   return (
     <TouchableOpacity onPress={toggleExpanded} activeOpacity={0.8}>
@@ -40,7 +70,7 @@ const ReadingTime = () => {
               Total Reading Time
             </QuickSandText>
             <Ionicons
-              name={expanded ? "chevron-up-outline" : "chevron-down-outline"}
+              name={expanded ? 'chevron-up-outline' : 'chevron-down-outline'}
               size={24}
               color="white"
             />
@@ -56,8 +86,8 @@ const ReadingTime = () => {
             </QuickSandText>
           </View>
         </LinearGradient>
-        {expanded && (
-          <View style={tw`bg-white p-4`}>
+        {showContent && (
+          <Animated.View style={[tw`bg-white p-4`, animatedStyle]}>
             <BarChart
               data={weeklyData}
               height={220}
@@ -65,10 +95,9 @@ const ReadingTime = () => {
               spacing={16}
               yAxisLabelSuffix={`'`}
               noOfSections={5}
-							barBorderTopLeftRadius={10}
-							barBorderTopRightRadius={10}
+              barBorderTopLeftRadius={10}
+              barBorderTopRightRadius={10}
               frontColor="#198D9Ebb"
-              // Adjusting axis label styles to ensure there's no extra left margin.
               yAxisTextStyle={{
                 marginLeft: 0,
                 color: '#000',
@@ -80,7 +109,7 @@ const ReadingTime = () => {
                 fontSize: 12,
               }}
             />
-          </View>
+          </Animated.View>
         )}
       </View>
     </TouchableOpacity>

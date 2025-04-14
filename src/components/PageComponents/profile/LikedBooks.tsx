@@ -9,11 +9,15 @@ import { userAtom } from '@stores/user.state'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
 
-const LikedBooks = () => {
+interface LikedBooksProps {
+  id?: string
+}
+
+const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data: likedBooks, isLoading, error } = useQuery<LikedBook[]>({
-    queryKey: ['liked_books'],
-    queryFn: async () => fetchLikedBooks(user?.id as string)
+    queryKey: ['liked_books', id ?? user?.id],
+    queryFn: async () => fetchLikedBooks(id ?? user?.id as string)
   })
 
   if (isLoading) {
@@ -32,7 +36,7 @@ const LikedBooks = () => {
     return (
       <View style={tw``}>
         <QuickSandText style={tw`text-base text-gray-400`}>
-          Books you've liked will appear here
+          Liked books will appear here
         </QuickSandText>
       </View>
     )

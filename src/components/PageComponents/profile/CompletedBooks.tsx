@@ -3,10 +3,17 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { QuickSandText } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
+import { useAtom } from 'jotai'
+import { userAtom } from '@stores/user.state'
 
-const CompletedBooks = () => {
+interface ReviewedBooksProps {
+  id?: string
+}
+
+const CompletedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
+  const [user] = useAtom(userAtom)
   const { data, isLoading, error } = useQuery({
-    queryKey: ['completed_books'],
+    queryKey: ['completed_books', id ?? user?.id],
     queryFn: async () => []
   })
 

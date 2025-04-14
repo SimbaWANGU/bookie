@@ -9,11 +9,15 @@ import { fetchReviewedBooks } from '@api/profile/api.user';
 import { Image } from 'expo-image';
 import { convertTime } from '@constants/Functions';
 
-const ReviewedBooks = () => {
+interface ReviewedBooksProps {
+  id?: string
+}
+
+const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom);
   const { data: reviewedBooks, isLoading, error } = useQuery<BookReview[]>({
-    queryKey: ['reviewed_books'],
-    queryFn: async () => fetchReviewedBooks(user?.id as string)
+    queryKey: ['reviewed_books', id ?? user?.id],
+    queryFn: async () => fetchReviewedBooks(id ?? user?.id as string)
   });
 
   if (isLoading) {
@@ -28,7 +32,7 @@ const ReviewedBooks = () => {
     return (
       <View style={tw``}>
         <QuickSandText style={tw`text-base text-gray-400`}>
-          Books you've reviewed will appear here
+          Reviewed books will appear here
         </QuickSandText>
       </View>
     );

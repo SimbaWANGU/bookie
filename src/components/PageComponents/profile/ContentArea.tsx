@@ -7,24 +7,25 @@ import ReviewedBooks from './ReviewedBooks'
 import InProgressBooks from './InProgress'
 
 interface ContentAreaProps {
+  id?: string
   selected: 'in progress' | 'completed' | 'liked' | 'reviews'
 }
 
-const ContentArea: React.FC<ContentAreaProps> = ({ selected }) => {
+const ContentArea: React.FC<ContentAreaProps> = ({ id, selected }) => {
 
   return (
     <View style={tw`p-4 h-auto w-full flex-1 items-center justify-center`}>
       {selected === 'in progress' && (
-        <InProgressBooks />
+        <InProgressBooks id={id} />
       )}
       {selected === 'liked' && (
-        <LikedBooks />
+        <LikedBooks id={id} />
       )}
       {selected === 'reviews' && (
-        <ReviewedBooks />
+        <ReviewedBooks id={id} />
       )}
       {selected === 'completed' && (
-        <CompletedBooks />
+        <CompletedBooks id={id} />
       )}
     </View>
   )

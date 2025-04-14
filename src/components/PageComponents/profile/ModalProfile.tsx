@@ -52,7 +52,7 @@ const ModalProfile: React.FC<ModalProfileProps> = ({ profileModalVisible, setPro
       // Assuming data returns an array with one updated user record.
       const updatedUser = data[0];
       setUser((prev) => (prev ? { ...prev, ...updatedUser } : updatedUser));
-      await queryClient.invalidateQueries({ queryKey: ['get-user'] });
+      await queryClient.refetchQueries({ queryKey: ['get-user'] });
       Alert.alert('Profile Updated', 'Your profile details have been updated successfully.')
       setProfileModalVisible(false);
     },
