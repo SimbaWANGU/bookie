@@ -1,27 +1,30 @@
 import { currentRead } from '@api/books/api.currentRead'
 import { calculateElapsedPercentage, getDynamicValue } from '@constants/Functions'
 import { Book } from '@models/book.type'
+import { userAtom } from '@stores/user.state'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
 import tw from '@utils/tailwind'
 import { router } from 'expo-router'
+import { useAtom } from 'jotai'
 import React, { useEffect, useRef } from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 const ContinueReading = () => {
   const queryClient = useQueryClient()
+  const [user] = useAtom(userAtom)
   const progressRef = useRef<AnimatedCircularProgress>(null)
   const { data: book, isLoading, error } = useQuery({
     queryKey: ['current-read'],
-    queryFn: currentRead,
+    queryFn: async () => await currentRead(user?.id as string),
     staleTime: 0
   })
 
   useEffect(() => {
     const subscription = supabase.channel('progress-channel')
       .on('postgres_changes',
-        { event: '*', schema: 'public', table: 'user_reading_progress' },
+        { event: '*', schema: 'public', table: 'user_reading_progress', filter: `user_id=eq.${user?.id}` },
         async () => {
           await new Promise(resolve => setTimeout(resolve, 50));
           await queryClient.invalidateQueries({ queryKey: ['current-read'] })
