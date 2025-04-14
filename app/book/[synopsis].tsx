@@ -19,6 +19,8 @@ import { bookAtom } from '@stores/books.state'
 import { checkReadingProgress, initialReadingProgress } from '@api/story/api.progress'
 import { progressAtom } from '@stores/story.state'
 import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
+import { Image } from 'expo-image'
+import Author from '@components/PageComponents/synopsis/Author'
 
 const synopsis = () => {
 	const { synopsis } = useLocalSearchParams()
@@ -59,16 +61,13 @@ const synopsis = () => {
 		if (progressLoading) return;
 		
 		if (progressData && progressData.length > 0) {
-			console.log('Progress exists');
 			setProgress(() => {
 				if (progressData[0].current_paragraph) {
-					console.log('L', progressData);
 					return {
 						paragraph_no: progressData[0].current_paragraph,
 						paragraph_id: progressData[0].paragraph_id
 					};
 				} else {
-					console.log('M', progressData);
 					return {  
 						paragraph_no: 1,
 						paragraph_id: ''
@@ -77,7 +76,6 @@ const synopsis = () => {
 			});
 		} else {
 			// When progressData is empty or undefined, set default progress.
-			console.log('No progress data, setting default');
 			setProgress({
 				paragraph_no: 1,
 				paragraph_id: ''
@@ -99,8 +97,9 @@ const synopsis = () => {
 					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4`, { justifyContent: 'flex-start' }]}>
 						{/* {snapPoint === -1 ? <></> : <TouchableOpacity onPress={() => setSnapPoint(-1)} style={tw`bg-transparent flex-1`} />} */}
 						<View style={tw`bg-transparent`}>
+							<Author name={book?.creator_books![0].creators.name as string} id={book?.creator_books![0].creators.id as string} />
 							<QuickSandText
-								style={tw`text-3xl p-2`}
+								style={tw`text-4xl p-2`}
 								lightColor={light.activeIconColor}
 								darkColor={dark.activeIconColor}
 							>{book?.title}</QuickSandText>
