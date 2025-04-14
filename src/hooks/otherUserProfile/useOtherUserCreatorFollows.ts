@@ -1,8 +1,5 @@
-import { userAtom } from "@stores/user.state";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@utils/supabase";
-import { useLocalSearchParams } from "expo-router";
-import { useAtom } from "jotai";
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
 
 interface useOtherUserCreatorFollowsProps {
   id: string
@@ -16,10 +13,10 @@ const useOtherUserCreatorFollows = ({ id }: useOtherUserCreatorFollowsProps) => 
       const { data: follows, error: followsError } = await supabase
         .from('users_follow_creators')
         .select('creator_id')
-        .eq('user_id', id);
+        .eq('user_id', id)
 
       if (followsError) {
-        throw new Error(followsError.message);
+        throw new Error(followsError.message)
       }
 
       return follows

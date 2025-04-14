@@ -1,5 +1,4 @@
 import { FontAwesome6 } from '@expo/vector-icons'
-import { light, dark } from '@constants/Color'
 import { getDynamicValue } from '@constants/Functions'
 import tw from '@utils/tailwind'
 import { router } from 'expo-router'

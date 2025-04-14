@@ -1,7 +1,8 @@
-import { MonoText } from "@components/styled/StyledText";
-import tw from "@utils/tailwind";
-import { Controller } from "react-hook-form";
-import { TextInput } from "react-native";
+import React from 'react'
+import { MonoText } from '@components/styled/StyledText'
+import tw from '@utils/tailwind'
+import { Controller } from 'react-hook-form'
+import { TextInput } from 'react-native'
 
 
 const FormInput = ({ control, name, rules, ...inputProps }) => (

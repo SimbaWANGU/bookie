@@ -1,4 +1,4 @@
-import { supabase } from "@utils/supabase"
+import { supabase } from '@utils/supabase'
 
 const currentRead = async (id: string) => {
   const { data, error } = await supabase

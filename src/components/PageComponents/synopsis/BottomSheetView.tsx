@@ -33,7 +33,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
       .on('postgres_changes',
         { event: '*', schema: 'public', table: 'user_reviews_book' },
         async () => {
-          await new Promise(resolve => setTimeout(resolve, 50));
+          await new Promise(resolve => setTimeout(resolve, 50))
           await queryClient.invalidateQueries({ queryKey: ['reviews'] })
         }
       ).subscribe()

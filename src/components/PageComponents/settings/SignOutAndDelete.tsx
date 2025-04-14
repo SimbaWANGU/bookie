@@ -1,16 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { MonoText } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { light, dark } from '@constants/Color'
-import { supabase } from '@utils/supabase'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pressable } from 'react-native'
 import tw from 'twrnc'
-import * as Sentry from '@sentry/react-native'
 
 const SignOutAndDelete = () => {
-  const [user] = useState()
-	const queryClient = useQueryClient()
 	// const signOutMutation = useMutation({
 	// 	mutationFn: async () => {
 	// 		await supabase.auth.signOut()

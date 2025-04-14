@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { QuickSandText } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
@@ -13,7 +13,7 @@ interface NamesProps {
 
 const Names: React.FC<NamesProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
-  const { data: otherUser, isLoading, error } = useQuery({
+  const { data: otherUser } = useQuery({
     queryKey: ['other_user', id],
     queryFn: async () => await fetchOtherUser(id as string),
     enabled: !!id 

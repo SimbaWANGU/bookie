@@ -11,7 +11,7 @@ import ShimmerPlaceHolder from '@components/styled/Shimmer'
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()
 
-	const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<Story[]>({
+	const { data, isLoading } = useInfiniteQuery<Story[]>({
     queryKey: ['story', story],
     queryFn: async ({ pageParam = 0 }) => {
       // Fetch paragraphs for the given story using offset pagination.

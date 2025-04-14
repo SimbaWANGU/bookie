@@ -1,4 +1,4 @@
-import { supabase } from "@utils/supabase";
+import { supabase } from '@utils/supabase'
 
 const getUserLikedBooks = async (followedUsers: { followee: string }[]) => {
   const newArray = followedUsers.map(item => item.followee)
@@ -20,9 +20,9 @@ const getUserReviewedBooks = async () => {
       *,
       users ( * ),
       books ( * )
-    `);
-  if (error) throw new Error(error.message);
-  return data;
+    `)
+  if (error) throw new Error(error.message)
+  return data
 }
 
 const getPublishedBooks = async (followedCreatorsIds: { creator_id: string}[]) => {
@@ -35,8 +35,8 @@ const getPublishedBooks = async (followedCreatorsIds: { creator_id: string}[]) =
       books ( * )
     `)
     .in('creator_id', newArray)
-  if (error) throw new Error(error.message);
-  return data;
+  if (error) throw new Error(error.message)
+  return data
 }
 
 export { 

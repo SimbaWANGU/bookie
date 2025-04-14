@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, useColorScheme, Platform } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { QuickSandText } from '@components/styled/StyledText'
@@ -8,7 +8,7 @@ import { userAtom } from '@stores/user.state'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
 import { fetchBooksInProgress } from '@api/profile/api.user'
-import Foundation from '@expo/vector-icons/Foundation';
+import Foundation from '@expo/vector-icons/Foundation'
 
 interface InProgressBooksProps {
   id?: string
@@ -16,7 +16,6 @@ interface InProgressBooksProps {
 
 const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
-  const theme = useColorScheme()
   
   const { data: inprogressbooks, isLoading, error } = useQuery<BookActivity[]>({
     queryKey: ['in_progress_books', id ?? user?.id],

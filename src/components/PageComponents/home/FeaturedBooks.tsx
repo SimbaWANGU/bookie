@@ -12,7 +12,7 @@ import ShimmerPlaceHolder from '@components/styled/Shimmer'
 const PAGE_WIDTH = Dimensions.get('window').width
 
 const FeaturedBooks = () => {
-	const { data: books = [], isLoading, error } = useQuery({
+	const { data: books = [], isLoading } = useQuery({
     queryKey: ['featured-books'],
     queryFn: fetchBooks,
   })

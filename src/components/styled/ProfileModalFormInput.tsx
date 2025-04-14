@@ -1,6 +1,6 @@
-import tw from "@utils/tailwind";
-import { Controller } from "react-hook-form";
-import { View, TextInput, Text } from "react-native";
+import tw from '@utils/tailwind'
+import { Controller } from 'react-hook-form'
+import { View, TextInput, Text } from 'react-native'
 
 interface ProfileForm {
   name: string;
@@ -37,6 +37,6 @@ const FormInput: React.FC<FormInputProps> = ({ label, control, name, placeholder
       )}
     />
   </View>
-);
+)
 
 export default FormInput

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useColorScheme } from 'react-native'
 import { SplashScreen } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -19,21 +20,19 @@ export {
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
-} from 'react-native-reanimated';
+} from 'react-native-reanimated'
 import { userAtom } from '@stores/user.state'
 import { supabase } from '@utils/supabase'
 import { useAtom } from 'jotai'
-import { User } from '@supabase/supabase-js'
-import { convertTime } from '@constants/Functions'
 import { CustomUser } from '@models/userProfile.type'
-import { DevToolsBubble } from "react-native-react-query-devtools";
+import { DevToolsBubble } from 'react-native-react-query-devtools'
 import tw from '@utils/tailwind'
 
 // This is the default configuration
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: true, // Reanimated runs in strict mode by default
-});
+})
 
 // import QuickSand from '@fonts/Quicksand_Bold.otf'
 
@@ -104,11 +103,11 @@ const RootLayout = () => {
           .single()
           .then(({ data, error }) => {
             if (error) {
-              console.error('Error fetching custom user data:', error);
+              console.error('Error fetching custom user data:', error)
             } else {
               setSession(data as CustomUser)
             }
-          });
+          })
       }
     })
 

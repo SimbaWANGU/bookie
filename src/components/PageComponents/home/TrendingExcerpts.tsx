@@ -3,7 +3,7 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 const TrendingExcerpts = () => {
-  const { data: excerpts = [], isLoading, error } = useQuery({
+  const {  } = useQuery({
     queryKey: ['trending-excerpts'],
     queryFn: async () => {}
   })

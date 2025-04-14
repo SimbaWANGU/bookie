@@ -1,10 +1,10 @@
-import { CustomUser } from "@models/userProfile.type";
-import { supabase } from "@utils/supabase"
-import { decode } from 'base64-arraybuffer';
+import { CustomUser } from '@models/userProfile.type'
+import { supabase } from '@utils/supabase'
+import { decode } from 'base64-arraybuffer'
 
 const fetchCustomUser = async (): Promise<CustomUser> => {
   // Get the current session from Supabase
-  const { data: sessionData } = await supabase.auth.getSession();
+  const { data: sessionData } = await supabase.auth.getSession()
 
   if (sessionData?.session?.user) {
     // Fetch custom user data from your users table
@@ -15,12 +15,12 @@ const fetchCustomUser = async (): Promise<CustomUser> => {
       .single()
       
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
-    return data as CustomUser;
+    return data as CustomUser
   }
 
-  throw new Error("No user session found");
+  throw new Error('No user session found')
 }
 
 const fetchOtherUser = async (id: string): Promise<CustomUser> => {
@@ -31,9 +31,9 @@ const fetchOtherUser = async (id: string): Promise<CustomUser> => {
       .single()
       
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
-    return data as CustomUser;
+    return data as CustomUser
 }
 
 const fetchBooksInProgress = async (id: string) => {
@@ -110,26 +110,26 @@ interface UploadAvatarParams {
 
  const uploadAvatar = async ({ filePath, base64, contentType, userId }: UploadAvatarParams) => {
   // Upload the avatar image, using upsert: true to overwrite any existing file.
-  const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, decode(base64), { contentType, upsert: true });
+  const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, decode(base64), { contentType, upsert: true })
 
   if (uploadError) {
-    throw new Error(`Failed to upload avatar: ${uploadError.message}`);
+    throw new Error(`Failed to upload avatar: ${uploadError.message}`)
   }
 
   // Get the public URL of the uploaded image.
-  const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(filePath);
+  const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(filePath)
 
   // Update the user's record in your custom "users" table with the new avatar URL.
   const { error: updateError } = await supabase
     .from('users')
     .update({ avatar_url: publicUrl })
-    .match({ id: userId });
+    .match({ id: userId })
 
   if (updateError) {
-    throw new Error(`Failed to update user record: ${updateError.message}`);
+    throw new Error(`Failed to update user record: ${updateError.message}`)
   }
 
-  return publicUrl;
+  return publicUrl
 }
 
 interface UpdateProfilePayload {
@@ -146,12 +146,12 @@ const updateProfile = async ({ id, updateData }: UpdateProfilePayload) => {
     .from('users')
     .update(updateData)
     .eq('id', id)
-    .select();
+    .select()
 
   if (error) {
-    throw error;
+    throw error
   }
-  return data;
+  return data
 }
 export {
   fetchCustomUser,

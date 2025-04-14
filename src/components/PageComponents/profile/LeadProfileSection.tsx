@@ -1,11 +1,11 @@
-import React from 'react';
-import { TouchableOpacity, View, useColorScheme } from 'react-native';
-import { QuickSandText } from '@components/styled/StyledText';
-import tw from '@utils/tailwind';
-import useCreatorFollows from '@hooks/profile/useCreatorFollows';
-import useUserFollows from '@hooks/profile/useUserFollows';
-import ProfilePicture from './ProfilePicture';
-import useUserIsFollowed from '@hooks/profile/useUserIsFollowed';
+import React from 'react'
+import { TouchableOpacity, View, useColorScheme } from 'react-native'
+import { QuickSandText } from '@components/styled/StyledText'
+import tw from '@utils/tailwind'
+import useCreatorFollows from '@hooks/profile/useCreatorFollows'
+import useUserFollows from '@hooks/profile/useUserFollows'
+import ProfilePicture from './ProfilePicture'
+import useUserIsFollowed from '@hooks/profile/useUserIsFollowed'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -70,7 +70,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default LeadProfileSection;
+export default LeadProfileSection

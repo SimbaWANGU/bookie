@@ -1,5 +1,3 @@
-import { Story } from './story.type'
-
 // Represents a Genre object
 interface Genre {
   name: string;

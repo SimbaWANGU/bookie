@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getDynamicValue } from '@constants/Functions'
 import tw from '@utils/tailwind'
@@ -14,7 +14,7 @@ interface LikeProps {
 const Like: React.FC<LikeProps> = ({ user_id, book_id  }) => {
   const [liked, setLiked] = useState(false)
   
-  const { data: likeData, isLoading, error } = useQuery({
+  const { data: likeData } = useQuery({
     queryKey: ['checklike', user_id, book_id],
     queryFn: () => checkLikeExists({ user_id, book_id })
   })

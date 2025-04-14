@@ -33,7 +33,7 @@ const CompletedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
     return (
       <View style={tw``}>
         <QuickSandText style={tw`text-base text-gray-400`}>
-          Books you've completed will appear here
+          Books you&apos;ve completed will appear here
         </QuickSandText>
       </View>
     )

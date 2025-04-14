@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { TouchableOpacity, View, useColorScheme } from 'react-native';
-import { QuickSandText } from '@components/styled/StyledText';
-import tw from '@utils/tailwind';
-import { useLocalSearchParams } from 'expo-router';
-import useOtherUserCreatorFollows from '@hooks/otherUserProfile/useOtherUserCreatorFollows';
-import useOtherUserFollows from '@hooks/otherUserProfile/useOtherUserFollows';
-import useOtherUserIsFollowed from '@hooks/otherUserProfile/useOtherUserIsFollowed';
-import ProfilePicture from '@components/PageComponents/otherUser/ProfilePicture';
+import React from 'react'
+import { TouchableOpacity, View, useColorScheme } from 'react-native'
+import { QuickSandText } from '@components/styled/StyledText'
+import tw from '@utils/tailwind'
+import { useLocalSearchParams } from 'expo-router'
+import useOtherUserCreatorFollows from '@hooks/otherUserProfile/useOtherUserCreatorFollows'
+import useOtherUserFollows from '@hooks/otherUserProfile/useOtherUserFollows'
+import useOtherUserIsFollowed from '@hooks/otherUserProfile/useOtherUserIsFollowed'
+import ProfilePicture from '@components/PageComponents/otherUser/ProfilePicture'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -73,7 +73,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default LeadProfileSection;
+export default LeadProfileSection

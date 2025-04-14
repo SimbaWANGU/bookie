@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@utils/supabase";
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
 
 interface useOtherUserFollowsProps {
   id: string
@@ -15,18 +15,18 @@ const useOtherUserFollows = ({ id }: useOtherUserFollowsProps) => {
       const { data: follows, error: followsError } = await supabase
         .from('user_follows_user')
         .select('followee')
-        .eq('follower', id);
+        .eq('follower', id)
   
       if (followsError) {
-        throw new Error(followsError.message);
+        throw new Error(followsError.message)
       }
   
-      return follows;
+      return follows
     },
     enabled: !!id
-  });
+  })
 
-  return { data, isLoading, error };
-};
+  return { data, isLoading, error }
+}
 
-export default useOtherUserFollows;
+export default useOtherUserFollows

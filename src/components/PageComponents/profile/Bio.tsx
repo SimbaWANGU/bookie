@@ -13,7 +13,7 @@ interface BioProps {
 
 const Bio: React.FC<BioProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
-  const { data: otherUser, isLoading, error } = useQuery({
+  const { data: otherUser } = useQuery({
     queryKey: ['other_user', id ?? user?.id],
     queryFn: async () => await fetchOtherUser(id ?? user?.id as string),
   })

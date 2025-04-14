@@ -1,20 +1,19 @@
-import React from 'react';
-import { Alert, Pressable, View, Text, TouchableOpacity } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
-import Toast from 'react-native-toast-message';
-import { Image } from 'expo-image';
-import tw from '@utils/tailwind';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-import { userAtom } from '@stores/user.state';
-import { uploadAvatar } from '@api/profile/api.user';
-import { getDynamicValue } from '@constants/Functions';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react'
+import { Alert, Text, TouchableOpacity } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
+import { Image } from 'expo-image'
+import tw from '@utils/tailwind'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAtom } from 'jotai'
+import { userAtom } from '@stores/user.state'
+import { uploadAvatar } from '@api/profile/api.user'
+import { getDynamicValue } from '@constants/Functions'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const UploadAvatar = () => {
-  const [user, setUser] = useAtom(userAtom)
+  const [user] = useAtom(userAtom)
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
@@ -57,24 +56,24 @@ const UploadAvatar = () => {
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
-      });
+      })
 
-      if (result.canceled) return;
+      if (result.canceled) return
 
-      const asset = result.assets[0];
+      const asset = result.assets[0]
       const base64 = await FileSystem.readAsStringAsync(asset.uri, {
         encoding: FileSystem.EncodingType.Base64,
-      });
+      })
 
       // Determine file extension and content type.
-      const extension = asset.uri.split('.').pop();
-      const contentType = `image/${extension}`;
+      const extension = asset.uri.split('.').pop()
+      const contentType = `image/${extension}`
       // Use a consistent file path so that the new image overwrites the old one.
-      const filePath = `avatars/${user?.id}.${extension}`;
+      const filePath = `avatars/${user?.id}.${extension}`
 
-      mutation.mutate({ filePath, base64, contentType, userId: user?.id as string });
+      mutation.mutate({ filePath, base64, contentType, userId: user?.id as string })
     } catch (error: any) {
-      console.error('Error picking image:', error);
+      console.error('Error picking image:', error)
       Alert.alert(
 				'Error Picking Image',
         'Try again later',
@@ -87,7 +86,7 @@ const UploadAvatar = () => {
         ],
 			)
     }
-  };
+  }
 
   return (
     <>
@@ -115,7 +114,7 @@ const UploadAvatar = () => {
       </TouchableOpacity>
       <Text style={tw`text-center text-base text-gray-400 my-1`}>Update your profile picture</Text>
     </>
-  );
-};
+  )
+}
 
-export default UploadAvatar;
+export default UploadAvatar

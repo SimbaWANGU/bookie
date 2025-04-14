@@ -58,15 +58,15 @@ function calculateElapsedPercentage(currentPage: number, totalPages: number) {
     return 0
   }
   
-  const percentage = (currentPage / totalPages) * 100;
+  const percentage = (currentPage / totalPages) * 100
   // Ensure percentage doesn't exceed 100
-  return Math.min(percentage, 100);
+  return Math.min(percentage, 100)
 }
 
 function convertTime(timestampStr: string, use24hFormat: boolean = true): string {
   // Automatically detect the user's local timezone.
-  const targetTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const date = new Date(timestampStr);
+  const targetTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const date = new Date(timestampStr)
 
   // Include year, month, and day along with time information.
   const options: Intl.DateTimeFormatOptions = {
@@ -77,9 +77,9 @@ function convertTime(timestampStr: string, use24hFormat: boolean = true): string
     hour: '2-digit',
     minute: '2-digit',
     hour12: !use24hFormat,
-  };
+  }
 
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  return new Intl.DateTimeFormat('en-US', options).format(date)
 }
 
 

@@ -1,13 +1,9 @@
-import { FlatList, View, useColorScheme } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, useColorScheme } from 'react-native'
+import React from 'react'
 import { dark, light } from '@constants/Color'
-import SearchBox from '@components/PageComponents/search/SearchBox'
-import { getDynamicValue } from '@constants/Functions'
-import Genres from '@components/PageComponents/search/Genres'
 
 const search = () => {
 	const theme = useColorScheme()
-	const [books] = useState()
 	// const [booksOnDisplay, setBooksOnDisplay] = useState()
 	// const [genre] = useState()
 	// const [searchTerm] = useState()

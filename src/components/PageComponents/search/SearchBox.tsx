@@ -13,9 +13,9 @@ interface FormData {
 const SearchBox = (): JSX.Element => {
 	const theme = useColorScheme()
 	const [isFocused, setIsFocused] = useState(false)
-	const [searchTermState, setSearchTermState] = useState('')
-	const [searchTerm, setSearchTerm] = useState('')
-	const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+	const [searchTermState] = useState('')
+	const [, setSearchTerm] = useState('')
+	const { control } = useForm<FormData>({
 		defaultValues: {
 			searchTerm: ''
 		}

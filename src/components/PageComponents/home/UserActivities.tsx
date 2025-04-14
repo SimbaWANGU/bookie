@@ -1,19 +1,16 @@
-import React, { useState, useMemo } from 'react';
-import { FlatList, View, Text, ActivityIndicator } from 'react-native';
-import tw from '@utils/tailwind';
-import { useQuery } from '@tanstack/react-query';
-import { BookEntry, BookLiked, BookReview } from '@models/useractivity.type';
-import { getPublishedBooks, getUserLikedBooks, getUserReviewedBooks } from '@api/activity/api.homeactivity';
-import UserBookReview from './UserBookReview';
-import CreatorBookPublished from './CreatorBookPublished';
-import UserBookLiked from './UserBookLiked';
-import { useAtom } from 'jotai';
-import { userAtom } from '@stores/user.state';
-import useCreatorFollows from '@hooks/profile/useCreatorFollows';
-import useUserFollows from '@hooks/profile/useUserFollows';
+import React, { useState, useMemo } from 'react'
+import { FlatList, View, Text, ActivityIndicator } from 'react-native'
+import tw from '@utils/tailwind'
+import { useQuery } from '@tanstack/react-query'
+import { BookEntry, BookLiked, BookReview } from '@models/useractivity.type'
+import { getPublishedBooks, getUserLikedBooks, getUserReviewedBooks } from '@api/activity/api.homeactivity'
+import UserBookReview from './UserBookReview'
+import CreatorBookPublished from './CreatorBookPublished'
+import UserBookLiked from './UserBookLiked'
+import useCreatorFollows from '@hooks/profile/useCreatorFollows'
+import useUserFollows from '@hooks/profile/useUserFollows'
 
 const UserActivities = () => {
-  const [user] = useAtom(userAtom)
   const { data: authorFollows } = useCreatorFollows()
 	const { data: userFollows } = useUserFollows()
   
@@ -22,20 +19,20 @@ const UserActivities = () => {
     queryKey: ['liked_books'],
     queryFn: async () => await getUserLikedBooks(userFollows!),
     enabled: userFollows !== null || userFollows || undefined
-  });
+  })
 
   console.log(likedBooks)
 
   const { data: reviewedBooks = [], isLoading: reviewedBooksLoading, error: reviewedBooksError } = useQuery<BookReview[]>({
     queryKey: ['reviewed_books'],
     queryFn: getUserReviewedBooks
-  });
+  })
 
   const { data: publishedBooks = [], isLoading: publishedBooksLoading, error: publishedBooksError } = useQuery<BookEntry[]>({
     queryKey: ['published_books'],
     queryFn: async () => await getPublishedBooks(authorFollows!),
     enabled: authorFollows !== undefined || authorFollows !== null
-  });
+  })
 
   // Combine all activities into one array and shuffle it (using useMemo is safe here)
   const allActivities = useMemo(() => {
@@ -43,29 +40,29 @@ const UserActivities = () => {
       ...reviewedBooks,
       // ...likedBooks,
       // ...publishedBooks,
-    ];
+    ]
     // Fisher-Yates shuffle
     // for (let i = combined.length - 1; i > 0; i--) {
     //   const j = Math.floor(Math.random() * (i + 1));
     //   [combined[i], combined[j]] = [combined[j], combined[i]];
     // }
-    return combined;
-  }, [likedBooks, reviewedBooks, publishedBooks]);
+    return combined
+  }, [likedBooks, reviewedBooks, publishedBooks])
 
   // Manage the number of items visible in the list
-  const [visibleCount, setVisibleCount] = useState(10);
+  const [visibleCount, setVisibleCount] = useState(10)
 
   // Compute the displayed activities (again, useMemo here is only for computation)
   const displayedActivities = useMemo(() => {
-    return allActivities.slice(0, visibleCount);
-  }, [allActivities, visibleCount]);
+    return allActivities.slice(0, visibleCount)
+  }, [allActivities, visibleCount])
 
   // Function to load more items
   const loadMore = () => {
     setVisibleCount((prev) =>
       Math.min(prev + 10, allActivities.length)
-    );
-  };
+    )
+  }
 
   // Handle loading and errors unconditionally at the top level
   if (likedBooksLoading || reviewedBooksLoading || publishedBooksLoading) {
@@ -73,14 +70,14 @@ const UserActivities = () => {
       <View style={tw`flex-1 justify-center items-center`}>
         <ActivityIndicator size="large" />
       </View>
-    );
+    )
   }
   if (likedBooksError || reviewedBooksError || publishedBooksError) {
     return (
       <View style={tw`flex-1 justify-center items-center`}>
         <Text>Error loading activities</Text>
       </View>
-    );
+    )
   }
 
   // Render the activity item based on its type
@@ -89,19 +86,19 @@ const UserActivities = () => {
       // Render a book review
       return (
         <UserBookReview item={item} />
-      );
+      )
     } else if ('creators' in item) {
       // Render a published book entry
       return (
         <CreatorBookPublished item={item} />
-      );
+      )
     } else {
       // Render a liked book
       return (
         <UserBookLiked item={item} />
-      );
+      )
     }
-  };
+  }
 
   return (
     <View style={tw`flex-1 mt-4`}>
@@ -119,7 +116,7 @@ const UserActivities = () => {
         }
       />
     </View>
-  );
-};
+  )
+}
 
-export default UserActivities;
+export default UserActivities

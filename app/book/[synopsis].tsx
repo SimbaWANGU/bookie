@@ -1,4 +1,4 @@
-import { Alert, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -8,7 +8,6 @@ import { dark, light } from '@constants/Color'
 import { StatusBar } from 'expo-status-bar'
 import { MonoText, QuickSandText } from '@components/styled/StyledText'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import * as Sentry from '@sentry/react-native'
 import { Book } from '@models/book.type'
 import tw from '@utils/tailwind'
 import InteractionOptions from '@components/styled/InteractionOptions'
@@ -19,7 +18,6 @@ import { bookAtom } from '@stores/books.state'
 import { checkReadingProgress, initialReadingProgress } from '@api/story/api.progress'
 import { progressAtom } from '@stores/story.state'
 import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
-import { Image } from 'expo-image'
 import Author from '@components/PageComponents/synopsis/Author'
 
 const synopsis = () => {
@@ -29,7 +27,7 @@ const synopsis = () => {
 	const [progress, setProgress] = useAtom(progressAtom)
 	const [modalVisible, setModalVisible] = useState(false)
 
-	const { data: book, isLoading: bookLoading, error: bookError} = useQuery<Book>({
+	const { data: book } = useQuery<Book>({
 		queryKey: ['book', synopsis],
 		queryFn: () => fetchBook({ synopsis })
 	})
@@ -58,7 +56,7 @@ const synopsis = () => {
   })
 	
 	useEffect(() => {
-		if (progressLoading) return;
+		if (progressLoading) return
 		
 		if (progressData && progressData.length > 0) {
 			setProgress(() => {
@@ -66,22 +64,22 @@ const synopsis = () => {
 					return {
 						paragraph_no: progressData[0].current_paragraph,
 						paragraph_id: progressData[0].paragraph_id
-					};
+					}
 				} else {
 					return {  
 						paragraph_no: 1,
 						paragraph_id: ''
-					};
+					}
 				}
-			});
+			})
 		} else {
 			// When progressData is empty or undefined, set default progress.
 			setProgress({
 				paragraph_no: 1,
 				paragraph_id: ''
-			});
+			})
 		}
-	}, [progressLoading, progressData]);
+	}, [progressLoading, progressData])
 
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
@@ -122,11 +120,11 @@ const synopsis = () => {
 									if (!(progressData && progressData.length > 0)) {
 										createInitialProgressMutation.mutate(undefined, {
 											onSuccess: () => {
-												router.push(`/book/story`)
+												router.push('/book/story')
 											}
 										})
 									} else {
-										router.push(`/book/story`)
+										router.push('/book/story')
 									}
 								}}
 							>

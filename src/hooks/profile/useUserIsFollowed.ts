@@ -1,7 +1,7 @@
-import { userAtom } from "@stores/user.state";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@utils/supabase";
-import { useAtom } from "jotai";
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
+import { useAtom } from 'jotai'
 
 const useUserIsFollowed = () => {
   const [user] = useAtom(userAtom)
@@ -18,7 +18,7 @@ const useUserIsFollowed = () => {
         throw new Error(followsError.message)
       }
   
-      return follows;
+      return follows
     },
     enabled: !!user?.id
   })

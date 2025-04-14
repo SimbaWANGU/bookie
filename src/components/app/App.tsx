@@ -1,37 +1,36 @@
-import React, { useEffect } from 'react';
-import { Text } from 'react-native';
-import SettingHeader from '@components/headers/settingHeader';
-import { SplashScreen, Stack } from 'expo-router';
-import { CustomUser } from '@models/userProfile.type';
-import { userAtom } from '@stores/user.state';
-import { supabase } from '@utils/supabase';
-import { useAtom } from 'jotai';
-import { useQuery } from '@tanstack/react-query';
-import { fetchCustomUser } from '@api/profile/api.user';
+import React, { useEffect } from 'react'
+import { Text } from 'react-native'
+import SettingHeader from '@components/headers/settingHeader'
+import { SplashScreen, Stack } from 'expo-router'
+import { CustomUser } from '@models/userProfile.type'
+import { userAtom } from '@stores/user.state'
+import { useAtom } from 'jotai'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCustomUser } from '@api/profile/api.user'
 
 const App = () => {
-  const [, setSession] = useAtom(userAtom);
+  const [, setSession] = useAtom(userAtom)
 
   const { data, error, isLoading } = useQuery<CustomUser>({
     queryKey: ['get-user'],
     queryFn: fetchCustomUser,
-  });
+  })
 
   // Use an effect so that side effects run after the render.
   useEffect(() => {
     if (data) {
-      setSession(data);
-      SplashScreen.hideAsync();
+      setSession(data)
+      SplashScreen.hideAsync()
     }
-  }, [data, isLoading]);
+  }, [data, isLoading])
 
   if (isLoading) {
     // Render a loading indicator or nothing while loading
-    return null;
+    return null
   }
 
   if (error) {
-    return <Text>Error: {error.message}</Text>;
+    return <Text>Error: {error.message}</Text>
   }
 
   return (
@@ -64,7 +63,7 @@ const App = () => {
         getId={() => String(Date.now())}
       />
     </Stack>
-  );
-};
+  )
+}
 
-export default App;
+export default App

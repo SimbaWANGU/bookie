@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
-import { light, dark } from '@constants/Color'
-import { Pressable, useColorScheme } from 'react-native'
-import { MonoText } from '@components/styled/StyledText'
-import tw from 'twrnc'
+import React from 'react'
 
 interface GenreProps {
   genre: string
 }
 
 const Genre: React.FC<GenreProps> = () => {
-	const theme = useColorScheme()
-	const [selectedGenre, setSelectedGenre] = useState()
-
 	return (
 		<></>
 	)

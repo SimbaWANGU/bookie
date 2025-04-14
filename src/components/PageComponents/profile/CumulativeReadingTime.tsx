@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { View } from '@components/styled/Themed';
-import { QuickSandText } from '@components/styled/StyledText';
-import { convertToTime } from '@constants/Functions';
-import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import tw from '@utils/tailwind';
-import { BarChart } from 'react-native-gifted-charts';
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native'
+import { View } from '@components/styled/Themed'
+import { QuickSandText } from '@components/styled/StyledText'
+import { convertToTime } from '@constants/Functions'
+import { Ionicons } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
+import tw from '@utils/tailwind'
+import { BarChart } from 'react-native-gifted-charts'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   runOnJS,
-} from 'react-native-reanimated';
+} from 'react-native-reanimated'
 
 const ReadingTime = () => {
-  const [expanded, setExpanded] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const slide = useSharedValue(0);
+  const [expanded, setExpanded] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const slide = useSharedValue(0)
 
   // Total reading time in seconds.
-  const totalReadingTimeInSeconds = 2000;
+  const totalReadingTimeInSeconds = 2000
 
   // Sample weekly data (reading time in minutes for each day of the week).
   const weeklyData = [
@@ -31,32 +31,32 @@ const ReadingTime = () => {
     { value: 90, label: 'Thu' },
     { value: 50, label: 'Fri' },
     { value: 80, label: 'Sat' },
-  ];
+  ]
 
   // Animated style: when slide is 0, translateY = -50 and opacity = 0; when slide is 1, translateY = 0 and opacity = 1.
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: slide.value * 50 - 50 }],
       opacity: slide.value,
-    };
-  });
+    }
+  })
 
   const toggleExpanded = () => {
     if (expanded) {
       // Collapse: animate slide value to 0 then remove the content.
       slide.value = withTiming(0, { duration: 300 }, (finished) => {
         if (finished) {
-          runOnJS(setShowContent)(false);
-          runOnJS(setExpanded)(false);
+          runOnJS(setShowContent)(false)
+          runOnJS(setExpanded)(false)
         }
-      });
+      })
     } else {
       // Expand: make sure the content is mounted, then animate slide value to 1.
-      setShowContent(true);
-      setExpanded(true);
-      slide.value = withTiming(1, { duration: 300 });
+      setShowContent(true)
+      setExpanded(true)
+      slide.value = withTiming(1, { duration: 300 })
     }
-  };
+  }
 
   return (
     <TouchableOpacity onPress={toggleExpanded} activeOpacity={0.8}>
@@ -93,7 +93,7 @@ const ReadingTime = () => {
               height={220}
               barWidth={20}
               spacing={16}
-              yAxisLabelSuffix={`'`}
+              yAxisLabelSuffix={'\''}
               noOfSections={5}
               barBorderTopLeftRadius={10}
               barBorderTopRightRadius={10}
@@ -113,7 +113,7 @@ const ReadingTime = () => {
         )}
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default ReadingTime;
+export default ReadingTime

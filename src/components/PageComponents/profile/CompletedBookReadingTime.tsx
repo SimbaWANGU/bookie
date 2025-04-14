@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image'
 import tw from '@utils/tailwind'
@@ -6,11 +6,11 @@ import { useQuery } from '@tanstack/react-query'
 import { getCompletedBooksReadingStats } from '@api/profile/api.readingStats'
 import { BookProgress } from '@models/completed.type'
 import { convertToTime } from '@constants/Functions'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { QuickSandText } from '@components/styled/StyledText'
 
 const CompletedBookReadingTime = () => {
-  const { data: progress, isLoading, error} = useQuery<BookProgress[]>({
+  const { data: progress } = useQuery<BookProgress[]>({
     queryKey: ['completed_book_reading_time'],
     queryFn: getCompletedBooksReadingStats
   })
@@ -76,39 +76,5 @@ const CompletedBookReadingTime = () => {
   </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
-    backgroundColor: '#fff'
-  },
-  coverImage: {
-    width: 150,
-    height: 220,
-    marginBottom: 16,
-    resizeMode: 'cover',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  description: {
-    marginBottom: 8,
-    fontSize: 16,
-  },
-  status: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  readingTime: {
-    fontSize: 16,
-  },
-});
 
 export default CompletedBookReadingTime

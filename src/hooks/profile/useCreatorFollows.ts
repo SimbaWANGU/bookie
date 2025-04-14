@@ -1,7 +1,7 @@
-import { userAtom } from "@stores/user.state";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@utils/supabase";
-import { useAtom } from "jotai";
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
+import { useAtom } from 'jotai'
 
 const useCreatorFollows = () => {
   const [user] = useAtom(userAtom)
@@ -13,10 +13,10 @@ const useCreatorFollows = () => {
       const { data: follows, error: followsError } = await supabase
         .from('users_follow_creators')
         .select('creator_id')
-        .eq('user_id', user?.id);
+        .eq('user_id', user?.id)
 
       if (followsError) {
-        throw new Error(followsError.message);
+        throw new Error(followsError.message)
       }
 
       return follows

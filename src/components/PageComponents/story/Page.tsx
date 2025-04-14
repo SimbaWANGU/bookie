@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ImageBackground } from 'react-native'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { supabase } from '@utils/supabase'
-import Toast from 'react-native-toast-message'
-import { getDynamicValue } from '@constants/Functions'
 import tw from 'twrnc'
 
 interface storySwiperProps {
@@ -15,11 +11,8 @@ interface storySwiperProps {
 }
 
 const Page: React.FC<storySwiperProps> = ({ text }): JSX.Element => {
-	const [user] = useState()
-	const queryClient = useQueryClient()
 	const regexImageLink = /^https:\/\/drive\.google\.com\/uc\?export=view&id=\S+$/
-	const regexTheEnd = /^The End$/i
-	const [achievement, setAchievement] = useState()
+	// const regexTheEnd = /^The End$/i
 
 	// const updateAchievementMutation = useMutation({
 	// 	mutationFn: async ({ bookId, achievement }: { bookId: string, achievement?: string | null }) => {

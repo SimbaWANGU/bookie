@@ -19,7 +19,7 @@ const SelectionPanel: React.FC<SelectionPanelProps> = ({ id }) => {
       {/* Content Area */}
       <ContentArea id={id} selected={selected} />
     </View>
-  );
-};
+  )
+}
 
 export default SelectionPanel

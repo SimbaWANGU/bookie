@@ -1,4 +1,4 @@
-import { supabase } from "@utils/supabase"
+import { supabase } from '@utils/supabase'
 
 const getCompletedBooksReadingStats = async () => {
   const { data, error } = await supabase.from('user_reading_progress')

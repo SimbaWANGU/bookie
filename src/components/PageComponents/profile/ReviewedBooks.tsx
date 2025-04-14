@@ -1,31 +1,31 @@
-import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
-import { QuickSandText } from '@components/styled/StyledText';
-import tw from '@utils/tailwind';
-import { useAtom } from 'jotai';
-import { userAtom } from '@stores/user.state';
-import { fetchReviewedBooks } from '@api/profile/api.user';
-import { Image } from 'expo-image';
-import { convertTime } from '@constants/Functions';
+import React from 'react'
+import { View, ActivityIndicator } from 'react-native'
+import { useQuery } from '@tanstack/react-query'
+import { QuickSandText } from '@components/styled/StyledText'
+import tw from '@utils/tailwind'
+import { useAtom } from 'jotai'
+import { userAtom } from '@stores/user.state'
+import { fetchReviewedBooks } from '@api/profile/api.user'
+import { Image } from 'expo-image'
+import { convertTime } from '@constants/Functions'
 
 interface ReviewedBooksProps {
   id?: string
 }
 
 const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
-  const [user] = useAtom(userAtom);
+  const [user] = useAtom(userAtom)
   const { data: reviewedBooks, isLoading, error } = useQuery<BookReview[]>({
     queryKey: ['reviewed_books', id ?? user?.id],
     queryFn: async () => fetchReviewedBooks(id ?? user?.id as string)
-  });
+  })
 
   if (isLoading) {
-    return <ActivityIndicator size="large" />;
+    return <ActivityIndicator size="large" />
   }
 
   if (error || !reviewedBooks) {
-    return <></>;
+    return <></>
   }
 
   if (reviewedBooks.length === 0) {
@@ -35,13 +35,13 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
           Reviewed books will appear here
         </QuickSandText>
       </View>
-    );
+    )
   }
 
   return (
     <View>
       {reviewedBooks.map((data, index) => {
-        const { books, review, created_at, users } = data;
+        const { books, review, created_at, users } = data
 
         return (
           <View key={index} style={tw`bg-white/90 p-4 rounded-lg shadow mb-4`}>
@@ -86,13 +86,13 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
               </QuickSandText>
             </View>
           </View>
-        );
+        )
       })}
     </View>
-  );
-};
+  )
+}
 
-export default ReviewedBooks;
+export default ReviewedBooks
 
 interface Genre {
   name: string;

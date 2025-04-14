@@ -24,7 +24,7 @@ export const fetchBook = async ({ synopsis }: FetchBook) => {
     `)
     .eq('id', synopsis as string)
     .eq('story_paragraphs.paragraph_no', 1) // Fetch only paragraph_no = 1
-    .single();
+    .single()
 
   if (error) {
     throw new Error(error.message)

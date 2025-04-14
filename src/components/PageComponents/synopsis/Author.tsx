@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { Image } from 'expo-image';
-import { useMutation } from '@tanstack/react-query';
-import tw from '@utils/tailwind';
-import { QuickSandText } from '@components/styled/StyledText';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { supabase } from '@utils/supabase';
+import React, { useState } from 'react'
+import { TouchableOpacity, View } from 'react-native'
+import { Image } from 'expo-image'
+import { useMutation } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
+import { QuickSandText } from '@components/styled/StyledText'
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
+import { supabase } from '@utils/supabase'
 
 interface AuthorProps {
   uri?: string;
@@ -18,33 +18,33 @@ const Author: React.FC<AuthorProps> = ({
   name,
   id,
 }) => {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false)
 
   const followMutation = useMutation({
     mutationFn: async ({ creator_id, follow }: { creator_id: string; follow: boolean }) => {
       if (follow) {
-        const { error } = await supabase.from('users_follow_creators').insert([{ creator_id }]);
-        if (error) throw error;
+        const { error } = await supabase.from('users_follow_creators').insert([{ creator_id }])
+        if (error) throw error
       } else {
         const { error } = await supabase
           .from('users_follow_creators')
           .delete()
-          .eq('creator_id', creator_id);
-        if (error) throw error;
+          .eq('creator_id', creator_id)
+        if (error) throw error
       }
     },
     onMutate: async ({ follow }) => {
-      setIsFollowing(follow); // Optimistically update
+      setIsFollowing(follow) // Optimistically update
     },
     onError: (err) => {
-      setIsFollowing((prev) => !prev); // Revert if failed
-      console.error('Failed to update follow status:', err);
+      setIsFollowing((prev) => !prev) // Revert if failed
+      console.error('Failed to update follow status:', err)
     },
-  });
+  })
 
   const handleFollowing = () => {
-    followMutation.mutate({ creator_id: id, follow: !isFollowing });
-  };
+    followMutation.mutate({ creator_id: id, follow: !isFollowing })
+  }
 
   return (
     <View style={tw`flex flex-row gap-2 bg-transparent mb-4`}>
@@ -69,7 +69,7 @@ const Author: React.FC<AuthorProps> = ({
         )}
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default Author;
+export default Author

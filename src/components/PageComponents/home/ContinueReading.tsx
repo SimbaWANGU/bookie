@@ -26,7 +26,7 @@ const ContinueReading = () => {
       .on('postgres_changes',
         { event: '*', schema: 'public', table: 'user_reading_progress', filter: `user_id=eq.${user?.id}` },
         async () => {
-          await new Promise(resolve => setTimeout(resolve, 50));
+          await new Promise(resolve => setTimeout(resolve, 50))
           await queryClient.invalidateQueries({ queryKey: ['current-read'] })
         }
       )
@@ -41,7 +41,7 @@ const ContinueReading = () => {
     return null
   }
 
-  let lastRead: Book = book[0].books
+  const lastRead: Book = book[0].books
   
   return (
     <TouchableOpacity

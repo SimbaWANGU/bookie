@@ -1,3 +1,4 @@
+import React from 'react'
 import Animated, { SharedValue, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
 import { View } from '@components/styled/Themed'
 import { Book } from '@models/book.type'
@@ -19,7 +20,7 @@ interface ItemProps {
 }
 
 const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
-	const [firstTimeOnApp, setFirstTimeonApp] = useAtom(firstTimeOnAppAtom)
+	const [, setFirstTimeonApp] = useAtom(firstTimeOnAppAtom)
 	const maskStyle = useAnimatedStyle(() => {
 		const backgroundColor = interpolateColor(
 			animationValue.value,

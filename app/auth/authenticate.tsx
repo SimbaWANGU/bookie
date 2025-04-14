@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Alert, Modal, ActivityIndicator, StyleSheet } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
 import Logo from '@assets/images/bookworms-logo.png'
 import tw from '@utils/tailwind'
@@ -149,7 +148,7 @@ const AuthScreen = () => {
         <Text style={tw`text-center text-accent`}>
           {isSignUp
             ? 'Already have an account? Sign In'
-            : "Don't have an account? Sign Up"}
+            : 'Don\'t have an account? Sign Up'}
         </Text>
       </TouchableOpacity>
 

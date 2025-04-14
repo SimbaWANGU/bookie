@@ -28,7 +28,7 @@ const UserBookReview: React.FC<UserBookReviewProps> = ({ item }) => {
         <TouchableOpacity
           style={tw`z-10`}
           activeOpacity={.8}
-          onPress={() => { item.users.id === user?.id ? router.push(`/profile`) : router.push(`/usersprofile/${item.users.id}`) }}
+          onPress={() => { item.users.id === user?.id ? router.push('/profile') : router.push(`/usersprofile/${item.users.id}`) }}
         >
           <Image
             source={{ uri: item.users.avatar_url }}

@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
 const progressAtom = atom({
   paragraph_id: '',

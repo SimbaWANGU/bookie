@@ -22,7 +22,7 @@ const PAGE_WIDTH = Dimensions.get('window').width
 const StoryPagerView: React.FC<StoryCarouselProps> = ({ story }) => {
   const [book] = useAtom(bookAtom)
   const [user] = useAtom(userAtom)
-  const [progress, setProgress] = useAtom(progressAtom)
+  const [progress] = useAtom(progressAtom)
   console.log(progress)
   const [page, setPage] = useState(progress)
 

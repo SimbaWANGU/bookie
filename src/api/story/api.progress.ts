@@ -1,4 +1,4 @@
-import { supabase } from "@utils/supabase"
+import { supabase } from '@utils/supabase'
 
 interface ReadingProgress {
   book_id: string
@@ -43,7 +43,7 @@ const initialReadingProgress = async ({ book_id, paragraph_id, paragraph_no = 1,
 }
 
 const updateReadingProgress = async (progress: ReadingProgress) => {
-  const { book_id, paragraph_id, user_id, paragraph_no, last_updated_at, total_time_spent, status } = progress
+  const { book_id, paragraph_id, user_id, paragraph_no, last_updated_at, status } = progress
 
   const { error } = await supabase
     .from('user_reading_progress')

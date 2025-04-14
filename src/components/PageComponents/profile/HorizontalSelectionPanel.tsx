@@ -1,8 +1,8 @@
 import { View, TouchableOpacity, useColorScheme } from 'react-native'
 import React, { Dispatch, SetStateAction } from 'react'
 import tw from '@utils/tailwind'
-import { MaterialCommunityIcons, Ionicons, FontAwesome} from '@expo/vector-icons';
-import { getDynamicValue } from '@constants/Functions';
+import { MaterialCommunityIcons, Ionicons, FontAwesome} from '@expo/vector-icons'
+import { getDynamicValue } from '@constants/Functions'
 
 interface HorizontalSelectionPanelProps {
   selected: 'in progress' | 'completed' | 'liked' | 'reviews'
@@ -30,7 +30,7 @@ const HorizontalSelectionPanel: React.FC<HorizontalSelectionPanelProps> = ({ sel
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setSelected('reviews')} style={tw`p-2`}>
         <FontAwesome
-          name={selected === 'reviews' ? "comment" : "comment-o"}
+          name={selected === 'reviews' ? 'comment' : 'comment-o'}
           size={getDynamicValue(30)}
           style={tw`${selected === 'reviews' ? 'text-accent' : (theme === 'light' ? 'text-dark/80' : 'text-light/80')}`}
         />
