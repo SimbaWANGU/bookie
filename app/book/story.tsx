@@ -7,12 +7,13 @@ import tw from 'twrnc'
 import { Story } from '@models/story.type'
 import { View } from 'react-native'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()
 
 	const { data, isLoading } = useInfiniteQuery<Story[]>({
-    queryKey: ['story', story],
+    queryKey: [QueryKeys.story, story],
     queryFn: async ({ pageParam = 0 }) => {
       // Fetch paragraphs for the given story using offset pagination.
       const { data, error } = await supabase.from('story_paragraphs').select('*').eq('book_id', synopsis).range(pageParam as number, pageParam as number + 10 - 1)

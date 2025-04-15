@@ -8,6 +8,7 @@ import { userAtom } from '@stores/user.state'
 import { fetchReviewedBooks } from '@api/profile/api.user'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface ReviewedBooksProps {
   id?: string
@@ -16,7 +17,7 @@ interface ReviewedBooksProps {
 const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data: reviewedBooks, isLoading, error } = useQuery<BookReview[]>({
-    queryKey: ['reviewed_books', id ?? user?.id],
+    queryKey: [QueryKeys.reviewedBooks, id ?? user?.id],
     queryFn: async () => fetchReviewedBooks(id ?? user?.id as string)
   })
 

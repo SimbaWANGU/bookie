@@ -9,6 +9,7 @@ import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
 import { fetchBooksInProgress } from '@api/profile/api.user'
 import Foundation from '@expo/vector-icons/Foundation'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface InProgressBooksProps {
   id?: string
@@ -18,7 +19,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   
   const { data: inprogressbooks, isLoading, error } = useQuery<BookActivity[]>({
-    queryKey: ['in_progress_books', id ?? user?.id],
+    queryKey: [QueryKeys.inProgressBooks, id ?? user?.id],
     queryFn: async () => await fetchBooksInProgress(id ?? user?.id as string)
   })
 

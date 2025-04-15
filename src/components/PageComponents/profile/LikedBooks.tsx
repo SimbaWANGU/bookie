@@ -8,6 +8,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface LikedBooksProps {
   id?: string
@@ -16,7 +17,7 @@ interface LikedBooksProps {
 const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data: likedBooks, isLoading, error } = useQuery<LikedBook[]>({
-    queryKey: ['liked_books', id ?? user?.id],
+    queryKey: [QueryKeys.likedBooks, id ?? user?.id],
     queryFn: async () => fetchLikedBooks(id ?? user?.id as string)
   })
 

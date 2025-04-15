@@ -6,6 +6,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { fetchOtherUser } from '@api/profile/api.user'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface BioProps {
   id?: string
@@ -14,7 +15,7 @@ interface BioProps {
 const Bio: React.FC<BioProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data: otherUser } = useQuery({
-    queryKey: ['other_user', id ?? user?.id],
+    queryKey: [QueryKeys.otherUser, id ?? user?.id],
     queryFn: async () => await fetchOtherUser(id ?? user?.id as string),
   })
 

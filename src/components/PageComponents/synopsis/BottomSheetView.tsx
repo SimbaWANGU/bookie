@@ -12,6 +12,7 @@ import ModalHeader from '@components/headers/modalsHeader'
 import { BookReview } from '@models/reviews.type'
 import ReviewInput from './ReviewInput'
 import { supabase } from '@utils/supabase'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface BottomSheetViewProps {
   book_id: string
@@ -24,7 +25,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
   const queryClient = useQueryClient()
 
   const { data: reviews, isLoading, error } = useQuery<BookReview[]>({
-    queryKey: ['reviews', book_id],
+    queryKey: [QueryKeys.reviews, book_id],
     queryFn: () => fetchReviews(book_id)
   })
 
@@ -34,7 +35,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
         { event: '*', schema: 'public', table: 'user_reviews_book' },
         async () => {
           await new Promise(resolve => setTimeout(resolve, 50))
-          await queryClient.invalidateQueries({ queryKey: ['reviews'] })
+          await queryClient.invalidateQueries({ queryKey: [QueryKeys.reviews] })
         }
       ).subscribe()
 

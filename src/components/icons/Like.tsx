@@ -5,6 +5,7 @@ import tw from '@utils/tailwind'
 import { Ionicons } from '@expo/vector-icons'
 import { LikeBook, checkLikeExists, likeBook, unlikeBook } from '@api/books/api.like'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface LikeProps {
   user_id: string
@@ -15,7 +16,7 @@ const Like: React.FC<LikeProps> = ({ user_id, book_id  }) => {
   const [liked, setLiked] = useState(false)
   
   const { data: likeData } = useQuery({
-    queryKey: ['checklike', user_id, book_id],
+    queryKey: [QueryKeys.checkLike, user_id, book_id],
     queryFn: () => checkLikeExists({ user_id, book_id })
   })
 

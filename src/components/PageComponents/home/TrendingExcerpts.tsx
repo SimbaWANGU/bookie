@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const TrendingExcerpts = () => {
   const {  } = useQuery({
-    queryKey: ['trending-excerpts'],
+    queryKey: [QueryKeys.trendingExcerpts],
     queryFn: async () => {}
   })
   return (

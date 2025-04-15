@@ -7,12 +7,13 @@ import { userAtom } from '@stores/user.state'
 import { useAtom } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCustomUser } from '@api/profile/api.user'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const App = () => {
   const [, setSession] = useAtom(userAtom)
 
   const { data, error, isLoading } = useQuery<CustomUser>({
-    queryKey: ['get-user'],
+    queryKey: [QueryKeys.getUser],
     queryFn: fetchCustomUser,
   })
 

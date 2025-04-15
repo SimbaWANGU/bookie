@@ -8,12 +8,13 @@ import tw from 'twrnc'
 import { fetchBooks } from '@api/books/api.books'
 import { useQuery } from '@tanstack/react-query'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
+import { QueryKeys } from '@constants/QueryKeys'
  
 const PAGE_WIDTH = Dimensions.get('window').width
 
 const FeaturedBooks = () => {
 	const { data: books = [], isLoading } = useQuery({
-    queryKey: ['featured-books'],
+    queryKey: [QueryKeys.featuredBooks],
     queryFn: fetchBooks,
   })
 	

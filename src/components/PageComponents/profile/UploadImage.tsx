@@ -11,6 +11,7 @@ import { uploadAvatar } from '@api/profile/api.user'
 import { getDynamicValue } from '@constants/Functions'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { LinearGradient } from 'expo-linear-gradient'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const UploadAvatar = () => {
   const [user] = useAtom(userAtom)
@@ -21,7 +22,7 @@ const UploadAvatar = () => {
 		mutationFn: uploadAvatar,
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-        queryKey: ['get-user']
+        queryKey: [QueryKeys.getUser]
       })
 			Alert.alert(
 				'Profile Picture',

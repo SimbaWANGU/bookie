@@ -5,6 +5,8 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import tw from '@utils/tailwind'
 import { getDynamicValue } from '@constants/Functions'
 import { BookmarkBook, bookmarkBook, checkBookmarkExists, unbookmarkBook } from '@api/books/api.bookmark'
+import { QueryKeys } from '@constants/QueryKeys'
+import { MutationKeys } from '@constants/MutationKeys'
 
 interface BookmarkProps {
   user_id: string
@@ -14,7 +16,7 @@ interface BookmarkProps {
 const Bookmark: React.FC<BookmarkProps> = ({ user_id, book_id }) => {
   // Check for an existing bookmark.
   const { data: bookmarkData } = useQuery({
-    queryKey: ['checkBookmark', user_id, book_id],
+    queryKey: [QueryKeys.checkBookmark, user_id, book_id],
     queryFn: () => checkBookmarkExists({ user_id, book_id }),
   })
 
@@ -28,7 +30,7 @@ const Bookmark: React.FC<BookmarkProps> = ({ user_id, book_id }) => {
   // Mutation for adding a bookmark.
   const bookmarkMutation = useMutation({
     mutationFn: (payload: BookmarkBook) => bookmarkBook(payload),
-    mutationKey: ['bookmark-book'],
+    mutationKey: [MutationKeys.bookmarkBook],
     onSuccess: (data) => {
       console.log('Book bookmarked successfully', data)
     },
@@ -40,7 +42,7 @@ const Bookmark: React.FC<BookmarkProps> = ({ user_id, book_id }) => {
   // Mutation for removing a bookmark.
   const unbookmarkMutation = useMutation({
     mutationFn: (payload: BookmarkBook) => unbookmarkBook(payload),
-    mutationKey: ['unbookmark-book'],
+    mutationKey: [MutationKeys.unbookmarkBook],
     onSuccess: (data) => {
       console.log('Book unbookmarked successfully', data)
     },

@@ -10,6 +10,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import useOtherUserIsFollowed from '@hooks/otherUserProfile/useOtherUserIsFollowed'
 import { supabase } from '@utils/supabase'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface FollowableProfilePictureProps {
   id?: string;
@@ -24,7 +25,7 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
   const { data: userFollowerCount } = useOtherUserIsFollowed({ id: id as string })
 
   const { data: otherUser } = useQuery({
-    queryKey: ['other_user', id],
+    queryKey: [QueryKeys.otherUser, id],
     queryFn: async () => await fetchOtherUser(id as string),
     enabled: !!id,
   })
@@ -44,33 +45,16 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
   const followUserMutation = useMutation({
     mutationKey: ['follow_user', id],
     mutationFn: async () => await supabase.from('user_follows_user').insert([{ followee: id, follower: user?.id }]),
-    // onSuccess: async () => {
-    //   await new Promise(resolve => setTimeout(resolve, 50));
-    //   console.log('query should be invalidated and refetched')
-    //   await queryClient.refetchQueries({ queryKey: ['User is Followed', id as string, 'Users Followed', user?.id as string] })
-    // },
     onError: () => setOptimisticFollowing(false),
-    onSettled: () => queryClient.refetchQueries({ queryKey: ['User is Followed', id as string, 'Users Followed', user?.id as string] })
+    onSettled: () => queryClient.refetchQueries({ queryKey: [QueryKeys.usersFollowingOtherUser, id as string, QueryKeys.usersFollowed, user?.id as string] })
   })
 
   const unfollowUserMutation = useMutation({
     mutationKey: ['unfollow_user', id],
-    mutationFn: async () => {
-      return await supabase
-        .from('user_follows_user')
-        .delete()
-        .match({ followee: id, follower: user?.id })
-    },
-    // onSuccess: async () => {
-    //   await new Promise(resolve => setTimeout(resolve, 50));
-    //   console.log('query should be invalidated and refetched')
-    //   await queryClient.refetchQueries({ queryKey: ['User is Followed', id as string, 'Users Followed', user?.id as string] });
-    // },
-    onError: () => {
-      // On error, revert the optimistic update.
-      setOptimisticFollowing(true)
-    },
-    onSettled: () => queryClient.refetchQueries({ queryKey: ['User is Followed', id as string, 'Users Followed', user?.id as string] })
+    mutationFn: async () => await supabase.from('user_follows_user').delete().match({ followee: id, follower: user?.id })
+    ,
+    onError: () => setOptimisticFollowing(true),
+    onSettled: () => queryClient.refetchQueries({ queryKey: [QueryKeys.usersFollowingOtherUser, id as string, QueryKeys.usersFollowed, user?.id as string] })
   })
 
   return (

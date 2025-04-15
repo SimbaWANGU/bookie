@@ -19,6 +19,8 @@ import { checkReadingProgress, initialReadingProgress } from '@api/story/api.pro
 import { progressAtom } from '@stores/story.state'
 import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
 import Author from '@components/PageComponents/synopsis/Author'
+import { QueryKeys } from '@constants/QueryKeys'
+import { MutationKeys } from '@constants/MutationKeys'
 
 const synopsis = () => {
 	const { synopsis } = useLocalSearchParams()
@@ -28,19 +30,19 @@ const synopsis = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 
 	const { data: book } = useQuery<Book>({
-		queryKey: ['book', synopsis],
+		queryKey: [QueryKeys.book, synopsis],
 		queryFn: () => fetchBook({ synopsis })
 	})
 
 	const { data: progressData, isLoading: progressLoading } = useQuery({
-    queryKey: ['initial-progress', book?.id, user?.id],
+    queryKey: [QueryKeys.initialProgress, book?.id, user?.id],
     queryFn: () => checkReadingProgress(book?.id as string, user?.id as string),
     enabled: !!book && !!user,
   })
 
 	// Mutation: Create initial progress record if none exists
   const createInitialProgressMutation = useMutation({
-    mutationKey: ['register-initial-progress', book?.id, user?.id],
+    mutationKey: [MutationKeys.registerInitialProgress, book?.id, user?.id],
     mutationFn: () => 
       initialReadingProgress({
         book_id: book?.id as string,

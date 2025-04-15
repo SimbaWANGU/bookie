@@ -5,6 +5,7 @@ import { QuickSandText } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface ReviewedBooksProps {
   id?: string
@@ -13,7 +14,7 @@ interface ReviewedBooksProps {
 const CompletedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data, isLoading, error } = useQuery({
-    queryKey: ['completed_books', id ?? user?.id],
+    queryKey: [QueryKeys.completedBooks, id ?? user?.id],
     queryFn: async () => []
   })
 

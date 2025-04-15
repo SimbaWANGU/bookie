@@ -9,6 +9,7 @@ import CreatorBookPublished from './CreatorBookPublished'
 import UserBookLiked from './UserBookLiked'
 import useCreatorFollows from '@hooks/profile/useCreatorFollows'
 import useUserFollows from '@hooks/profile/useUserFollows'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const UserActivities = () => {
   const { data: authorFollows } = useCreatorFollows()
@@ -16,7 +17,7 @@ const UserActivities = () => {
   
   // Unconditionally call all your hooks
   const { data: likedBooks = [], isLoading: likedBooksLoading, error: likedBooksError } = useQuery<BookLiked[]>({
-    queryKey: ['liked_books'],
+    queryKey: [QueryKeys.likedBooks],
     queryFn: async () => await getUserLikedBooks(userFollows!),
     enabled: userFollows !== null || userFollows || undefined
   })
@@ -24,12 +25,12 @@ const UserActivities = () => {
   console.log(likedBooks)
 
   const { data: reviewedBooks = [], isLoading: reviewedBooksLoading, error: reviewedBooksError } = useQuery<BookReview[]>({
-    queryKey: ['reviewed_books'],
+    queryKey: [QueryKeys.reviewedBooks],
     queryFn: getUserReviewedBooks
   })
 
   const { data: publishedBooks = [], isLoading: publishedBooksLoading, error: publishedBooksError } = useQuery<BookEntry[]>({
-    queryKey: ['published_books'],
+    queryKey: [QueryKeys.publishedBooks],
     queryFn: async () => await getPublishedBooks(authorFollows!),
     enabled: authorFollows !== undefined || authorFollows !== null
   })

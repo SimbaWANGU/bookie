@@ -8,10 +8,11 @@ import { BookProgress } from '@models/completed.type'
 import { convertToTime } from '@constants/Functions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { QuickSandText } from '@components/styled/StyledText'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const CompletedBookReadingTime = () => {
   const { data: progress } = useQuery<BookProgress[]>({
-    queryKey: ['completed_book_reading_time'],
+    queryKey: [QueryKeys.completedBookReadingTime],
     queryFn: getCompletedBooksReadingStats
   })
   // console.log(data, isLoading, error)

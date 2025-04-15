@@ -11,6 +11,7 @@ import { router } from 'expo-router'
 import { supabase } from '@utils/supabase'
 import { makeRedirectUri } from 'expo-auth-session'
 import { FormData } from '@models/authform.type'
+import { QueryKeys } from '@constants/QueryKeys'
 
 const redirectTo = makeRedirectUri()
 
@@ -35,7 +36,7 @@ const AuthScreen = () => {
       console.log(formData, 'lol')
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['session'] })
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.session] })
       Alert.alert(
         'Signed In!',
         'Your session.',
@@ -64,7 +65,7 @@ const AuthScreen = () => {
       console.log(data, error)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['session'] })
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.session] })
       Alert.alert(
         'Signed In!',
         'Your session.',

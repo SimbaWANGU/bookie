@@ -1,3 +1,4 @@
+import { QueryKeys } from '@constants/QueryKeys'
 import { userAtom } from '@stores/user.state'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
@@ -8,7 +9,7 @@ const useCreatorFollows = () => {
 
   const { data, isLoading, error } = useQuery<{ creator_id: string }[]>({
     staleTime: Infinity,
-    queryKey: ['Authors Followed', user?.id],
+    queryKey: [QueryKeys.authorsFollowed, user?.id],
     queryFn: async () => { 
       const { data: follows, error: followsError } = await supabase
         .from('users_follow_creators')

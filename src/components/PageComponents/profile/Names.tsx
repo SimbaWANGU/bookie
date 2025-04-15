@@ -6,6 +6,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { fetchOtherUser } from '@api/profile/api.user'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface NamesProps {
   id?: string
@@ -14,7 +15,7 @@ interface NamesProps {
 const Names: React.FC<NamesProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const { data: otherUser } = useQuery({
-    queryKey: ['other_user', id],
+    queryKey: [QueryKeys.otherUser, id],
     queryFn: async () => await fetchOtherUser(id as string),
     enabled: !!id 
   })
