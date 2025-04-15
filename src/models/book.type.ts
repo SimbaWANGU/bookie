@@ -36,6 +36,7 @@ interface Book {
   title: string;
   description: string;
   cover_image_url: string
+  is_audio?: boolean;
   // Include any additional book columns as needed
   book_genres?: BookGenre[];
   creator_books?: CreatorBook[];

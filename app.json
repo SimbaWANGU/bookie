@@ -4,28 +4,32 @@
     "slug": "bookie",
     "scheme": "bookie",
     "version": "1.0.0",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/bookworms-logo.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "runtimeVersion": "1.0.0",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/bookworms-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.simberella.bookie"
+      "bundleIdentifier": "com.simberella.bookie",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/bookworms-logo.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
       "package": "com.simberella.bookie"
     },
@@ -61,11 +65,11 @@
         {
           "url": "https://sentry.io/",
           "project": "book-worms",
-          "organization": "simbawangu",
-          "authToken": "deec6f0a89fa11eeafc6b29b29754011"
+          "organization": "simbawangu"
         }
       ],
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true

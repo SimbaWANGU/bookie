@@ -46,7 +46,11 @@ const ContinueReading = () => {
   
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/book/${lastRead.id}`)}
+      onPress={() => {
+        if (lastRead.is_audio) {
+          router.push(`/audio/${lastRead.id}`)
+        }
+        router.push(`/book/${lastRead.id}`)}}
       style={tw`absolute bottom-28 right-6 card rounded-full`}
       activeOpacity={0.8}
     >

@@ -31,9 +31,6 @@ const Bookmark: React.FC<BookmarkProps> = ({ user_id, book_id }) => {
   const bookmarkMutation = useMutation({
     mutationFn: (payload: BookmarkBook) => bookmarkBook(payload),
     mutationKey: [MutationKeys.bookmarkBook],
-    onSuccess: (data) => {
-      console.log('Book bookmarked successfully', data)
-    },
     onError: (error: any) => {
       console.error('Error bookmarking book:', error.message)
     },
@@ -43,9 +40,6 @@ const Bookmark: React.FC<BookmarkProps> = ({ user_id, book_id }) => {
   const unbookmarkMutation = useMutation({
     mutationFn: (payload: BookmarkBook) => unbookmarkBook(payload),
     mutationKey: [MutationKeys.unbookmarkBook],
-    onSuccess: (data) => {
-      console.log('Book unbookmarked successfully', data)
-    },
     onError: (error: any) => {
       console.error('Error unbookmarking book:', error.message)
     },

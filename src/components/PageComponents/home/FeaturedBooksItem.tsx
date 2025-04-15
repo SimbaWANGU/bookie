@@ -9,9 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { router } from 'expo-router'
 import { QuickSandText, MonoText } from '@components/styled/StyledText'
 import { ImageBackground } from 'expo-image'
-import tw from 'twrnc'
-import { useAtom } from 'jotai'
-import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import tw from '@utils/tailwind'
 
 interface ItemProps {
   index: number
@@ -20,7 +19,6 @@ interface ItemProps {
 }
 
 const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
-	const [, setFirstTimeonApp] = useAtom(firstTimeOnAppAtom)
 	const maskStyle = useAnimatedStyle(() => {
 		const backgroundColor = interpolateColor(
 			animationValue.value,
@@ -72,8 +70,11 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 									backgroundColor: dark.text
 								}]}
 								onPress={() => {
-									setFirstTimeonApp(false)
-									router.push(`/book/${book.id}`)
+									if (book.is_audio) {
+										router.push(`/audio/${book.id}`)
+									} else {
+										router.push(`/book/${book.id}`)
+									}
 								}}
 							>
 								<QuickSandText
@@ -89,6 +90,21 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
                 color={light.activeIconColor}
               /> */}
 						</View>
+						{book.is_audio && (
+							<View
+								style={tw`absolute top-3 right-3 bg-accent/70 dark:bg-black/60 px-3 py-1 rounded-full flex-row items-center z-10`}
+							>
+								<FontAwesome6
+									name="headphones"
+									style={tw`mr-1 text-white`}
+								/>
+								<QuickSandText
+									style={tw`text-xs font-semibold text-white`}
+								>
+									Audio
+								</QuickSandText>
+							</View>
+						)}
 					</LinearGradient>
 				</ImageBackground>
 			</Animated.View>

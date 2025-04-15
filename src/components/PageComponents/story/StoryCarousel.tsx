@@ -53,25 +53,7 @@ const StoryPagerView: React.FC<StoryCarouselProps> = ({ story }) => {
 
   useFocusEffect(
     useCallback(() => {
-      // On page focus: create an initial record if needed
-      // if (!progressData || (Array.isArray(progressData) && progressData.length === 0)) {
-      //   createInitialProgressMutation.mutate()
-      // }
-
       return () => {
-        // On page blur, use the latest page values from the ref
-        //queryClient.invalidateQueries('')
-        // console.log({
-        //   book_id: book?.id as string,
-        //   paragraph_id: pageRef.current.paragraph_id,
-        //   paragraph_no: pageRef.current.paragraph_no,
-        //   user_id: user?.id as string,
-        //   started_at: new Date(),
-        //   last_updated_at: new Date(),
-        //   completed_at: new Date(),
-        //   total_time_spent: 20,
-        //   status: 'UPDATED'
-        // })
         updateProgressMutation.mutate({
           book_id: book?.id as string,
           paragraph_id: pageRef.current.paragraph_id,
