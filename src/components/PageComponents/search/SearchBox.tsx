@@ -4,7 +4,7 @@ import {light, dark } from '@constants/Color'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
 import { useForm, Controller } from 'react-hook-form'
 import useDebounce from '@hooks/useDebounce'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
 
 interface FormData {
   searchTerm: string

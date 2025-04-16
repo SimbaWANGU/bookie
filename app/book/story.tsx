@@ -3,11 +3,11 @@ import { useGlobalSearchParams } from 'expo-router'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
 import StoryCarousel from '@components/PageComponents/story/StoryCarousel'
-import tw from 'twrnc'
 import { Story } from '@models/story.type'
 import { View } from 'react-native'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
 import { QueryKeys } from '@constants/QueryKeys'
+import tw from '@utils/tailwind'
 
 const story = () => {
 	const { synopsis } = useGlobalSearchParams()

@@ -3,7 +3,7 @@ import { ImageBackground } from 'react-native'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
 
 interface storySwiperProps {
   text: string

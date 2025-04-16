@@ -5,8 +5,8 @@ import { Pressable } from 'react-native'
 import { light, dark } from '@constants/Color'
 import { MonoText } from '@components/styled/StyledText'
 import { router } from 'expo-router'
-import tw from 'twrnc'
 import { Image } from 'expo-image'
+import tw from '@utils/tailwind'
 
 interface HeaderProps {
   username: string

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { View } from '@components/styled/Themed'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
 
 interface TabsIconsProps {
 	name: React.ComponentProps<typeof FontAwesome6>['name']

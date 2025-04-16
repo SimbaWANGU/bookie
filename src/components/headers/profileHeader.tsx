@@ -1,11 +1,11 @@
 import React from 'react'
 import { getDynamicValue } from '@constants/Functions'
-import tw from 'twrnc'
 import { ImageBackground } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TouchableOpacity } from 'react-native'
 import { router } from 'expo-router'
 import { FontAwesome6 } from '@expo/vector-icons'
+import tw from '@utils/tailwind'
 
 const ProfileHeader = () => {
   return (

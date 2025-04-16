@@ -2,10 +2,10 @@ import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { getDynamicValue } from '@constants/Functions'
+import tw from '@utils/tailwind'
 import { router } from 'expo-router'
 import React from 'react'
 import { TouchableOpacity, useColorScheme } from 'react-native'
-import tw from 'twrnc'
 
 const StoryHeader = () => {
   const theme = useColorScheme()
