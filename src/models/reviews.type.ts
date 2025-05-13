@@ -5,6 +5,7 @@ interface User {
   name: string;
   updated_at: string;
   user_name: string;
+  avatar_url: string
 }
 
 interface BookReview {
