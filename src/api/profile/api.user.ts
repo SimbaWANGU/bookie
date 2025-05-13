@@ -4,7 +4,7 @@ import { decode } from 'base64-arraybuffer'
 
 const fetchCustomUser = async (): Promise<CustomUser> => {
   // Get the current session from Supabase
-  const { data: sessionData } = await supabase.auth.getSession()
+  const { data: sessionData, error } = await supabase.auth.getSession()
 
   if (sessionData?.session?.user) {
     // Fetch custom user data from your users table
@@ -19,6 +19,8 @@ const fetchCustomUser = async (): Promise<CustomUser> => {
     }
     return data as CustomUser
   }
+
+  console.log(sessionData, error)
 
   throw new Error('No user session found')
 }
