@@ -7,13 +7,13 @@ import { useAtom } from 'jotai'
 const useCreatorFollows = () => {
   const [user] = useAtom(userAtom)
 
-  const { data, isLoading, error } = useQuery<{ creator_id: string }[]>({
+  const { data, isLoading, error } = useQuery<{ creator_id: string, avatar_url: string }[]>({
     staleTime: Infinity,
     queryKey: [QueryKeys.authorsFollowed, user?.id],
     queryFn: async () => { 
       const { data: follows, error: followsError } = await supabase
         .from('users_follow_creators')
-        .select('creator_id')
+        .select('*')
         .eq('user_id', user?.id)
 
       if (followsError) {
