@@ -7,24 +7,20 @@ import {
 } from 'react-native'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
-import { BookEntry } from '@models/useractivity.type'
+import { BookByGenre } from '@models/useractivity.type'
 import { convertTime, getDynamicValue } from '@constants/Functions'
 import { router } from 'expo-router'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
 import { QuickSandText } from '@components/styled/StyledText'
 import Genre from '@components/styled/Genre'
 import Audio from '@components/styled/Audio'
 
-interface CreatorBookPublishedProps {
-  item: BookEntry
+interface BookByGenreCardProps {
+  item: BookByGenre
 }
 
-const CreatorBookPublished: React.FC<CreatorBookPublishedProps> = ({
-  item,
-}) => {
+const BookByGenreCard: React.FC<BookByGenreCardProps> = ({ item }) => {
   const theme = useColorScheme()
-  const [user] = useAtom(userAtom)
+  const creator = item.creator_books[0]?.creators
 
   return (
     <TouchableOpacity
@@ -35,96 +31,96 @@ const CreatorBookPublished: React.FC<CreatorBookPublishedProps> = ({
       }`}
       activeOpacity={0.8}
       onPress={() => {
-        // navigate to creator’s page or book page
-        router.push(
-          item.creator_id === user?.id
-            ? '/profile'
-            : `/usersprofile/${item.creator_id}`
-        )
+        if (creator?.id) {
+          router.push(`/usersprofile/${creator.id}`)
+        }
       }}
     >
       {/* Avatar */}
-      <View
-        style={[
-          tw`flex-row items-center absolute`,
-          {
-            top: getDynamicValue(25),
-            left: getDynamicValue(20),
-          },
-        ]}
-      >
-        <TouchableOpacity
-          style={tw`z-10`}
-          activeOpacity={0.8}
-          onPress={() =>
-            item.creator_id === user?.id
-              ? router.push('/profile')
-              : router.push(`/usersprofile/${item.creator_id}`)
-          }
+      {creator?.avatar_url && (
+        <View
+          style={[
+            tw`flex-row items-center absolute`,
+            {
+              top: getDynamicValue(25),
+              left: getDynamicValue(20),
+            },
+          ]}
         >
-          <Image
-            source={{ uri: item.creators.avatar_url }}
-            style={tw`h-12 w-12 rounded-full`}
-            contentFit="cover"
-          />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            style={tw`z-10`}
+            activeOpacity={0.8}
+            onPress={() => {
+              if (creator?.id) {
+                router.push(`/usersprofile/${creator.id}`)
+              }
+            }}
+          >
+            <Image
+              source={{ uri: creator.avatar_url }}
+              style={tw`h-12 w-12 rounded-full`}
+              contentFit="cover"
+            />
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Content block */}
       <View style={[tw`self-end w-10/12`]}>
-        {/* Title line */}
-        <View style={tw`flex-1`}>
+        {/* Title */}
+        <View>
           <Text
             style={tw`text-base font-bold ${
               theme === 'light' ? 'text-dark' : 'text-light'
             }`}
           >
-            <Text>{item.creators.name}{' '}</Text>
             <Text style={tw`font-medium text-gray-500`}>
-              published{' '}
+              You might like{' '}
             </Text>
-            {item.books.title}
+            {item.title}{' '}
+            <Text>by {creator?.name}{' '}</Text>
           </Text>
         </View>
 
         {/* Book cover */}
         <View>
           <Image
-            source={{ uri: item.books.cover_image_url }}
+            source={{ uri: item.cover_image_url }}
             style={tw`mt-2 h-60 w-full rounded-md`}
             contentFit="cover"
           />
+
           {/* Genres */}
           <View style={tw`absolute bottom-2 mt-2 flex-row flex-wrap p-2`}>
-            {item.books.book_genres.map((genre, index) => (
+            {item.book_genres?.map((genre, index) => (
               <Genre genre={genre.genres.name} key={index} />
             ))}
           </View>
-          {item.books.is_audio && (
-            <Audio />
-          )}
+
+          {/* Audio badge */}
+          {item.is_audio && <Audio />}
         </View>
-        {/* Description preview */}
+
+        {/* Description */}
         <QuickSandText
           style={tw`mt-3 text-sm ${
             theme === 'light' ? 'text-gray-700' : 'text-gray-400'
           }`}
         >
-          {item.books.description}
+          {item.description}
         </QuickSandText>
 
-        {/* Published date */}
+        {/* Date */}
         <QuickSandText
           style={tw`mt-2 text-xs italic ${
             theme === 'light' ? 'text-gray-500' : 'text-gray-600'
           }`}
         >
-          {convertTime(item.books.updated_at, false)}
+          {convertTime(item.updated_at, false)}
         </QuickSandText>
-
       </View>
     </TouchableOpacity>
   )
 }
 
-export default CreatorBookPublished
+export default BookByGenreCard

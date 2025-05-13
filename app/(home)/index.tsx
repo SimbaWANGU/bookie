@@ -1,12 +1,17 @@
 import React from 'react'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, RefreshControl } from 'react-native'
 import { useColorScheme } from 'react-native'
 import tw from '@utils/tailwind'
 import FeaturedBooks from '@components/PageComponents/home/FeaturedBooks'
 import UserActivities from '@components/PageComponents/home/UserActivities'
+import ActivityFilter from '@components/PageComponents/home/ActivityFilter'
+import Header from '@components/headers/header'
 
 const sections = [
+  // { key: 'friends', component: <OthersStartedReadingStories />},
+  { key: 'header', component: <Header /> },
   { key: 'featured', component: <FeaturedBooks /> },
+  { key: 'filter', component: <ActivityFilter /> },
   { key: 'endless_scroll', component: <UserActivities /> },
 ]
 

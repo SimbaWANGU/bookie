@@ -9,10 +9,11 @@ import tw from '@utils/tailwind'
 import { router } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useEffect, useRef } from 'react'
-import { TouchableOpacity, Image } from 'react-native'
+import { TouchableOpacity, Image, useColorScheme } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 const ContinueReading = () => {
+  const theme = useColorScheme()
   const queryClient = useQueryClient()
   const [user] = useAtom(userAtom)
   const progressRef = useRef<AnimatedCircularProgress>(null)
@@ -28,7 +29,7 @@ const ContinueReading = () => {
         { event: '*', schema: 'public', table: 'user_reading_progress', filter: `user_id=eq.${user?.id}` },
         async () => {
           await new Promise(resolve => setTimeout(resolve, 50))
-          await queryClient.invalidateQueries({ queryKey: [QueryKeys.currentRead] })
+          await queryClient.invalidateQueries({ queryKey: [QueryKeys.currentRead, QueryKeys.inProgressBooks, QueryKeys.completedBooks] })
         }
       )
       .subscribe()
@@ -51,7 +52,7 @@ const ContinueReading = () => {
           router.push(`/audio/${lastRead.id}`)
         }
         router.push(`/book/${lastRead.id}`)}}
-      style={tw`absolute bottom-28 right-6 card rounded-full`}
+      style={tw`absolute bottom-28 right-6 card rounded-full ${theme === 'light' ? 'opacity-80' : 'opacity-70'}`}
       activeOpacity={0.8}
     >
       <AnimatedCircularProgress
