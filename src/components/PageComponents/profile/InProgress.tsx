@@ -1,4 +1,4 @@
-import { View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator, useColorScheme } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { QuickSandText } from '@components/styled/StyledText'
@@ -10,12 +10,15 @@ import { convertTime } from '@constants/Functions'
 import { fetchBooksInProgress } from '@api/profile/api.user'
 import Foundation from '@expo/vector-icons/Foundation'
 import { QueryKeys } from '@constants/QueryKeys'
+import Genre from '@components/styled/Genre'
+import { light } from '@constants/Color'
 
 interface InProgressBooksProps {
   id?: string
 }
 
 const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
+  const theme = useColorScheme()
   const [user] = useAtom(userAtom)
   
   const { data: inprogressbooks, isLoading, error } = useQuery<BookActivity[]>({
@@ -51,7 +54,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
         const { books, current_paragraph, last_updated_at } = data
       
         return (
-          <View key={index} style={tw`bg-white/90 p-4 rounded-lg shadow mb-4`}>
+          <View key={index} style={tw`p-4 rounded-lg rounded-2xl mb-4 ${theme === 'light' ? 'border-dark' : 'border-light'}}`}>
             {/* Container with relative positioning to overlay content */}
             <View style={tw`overflow-hidden rounded-lg mb-4 relative`}>
               <Image
@@ -68,14 +71,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
               {/* Overlay for genres */}
               <View style={tw`absolute bottom-0 left-0 right-0 flex-row flex-wrap p-2`}>
                 {books.book_genres?.map((genre, idx) => (
-                  <View
-                    key={idx}
-                    style={tw`px-2 py-1 rounded-full mr-1 mb-1 bg-accent/75`}
-                  >
-                    <QuickSandText style={tw`text-xs font-bold text-light`}>
-                      {genre.genres.name}
-                    </QuickSandText>
-                  </View>
+                  <Genre genre={genre.genres.name} key={idx} />
                 ))}
               </View>
             </View>

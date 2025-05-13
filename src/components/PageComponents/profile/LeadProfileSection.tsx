@@ -21,7 +21,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
   const { data: userFollowsCount } = useUserIsFollowed()
 
   return (
-    <View style={tw`self-start flex flex-row shadow p-2 w-full bg-transparent`}>
+    <View style={tw`self-start flex flex-row shadow mt-10 p-2 w-full bg-transparent`}>
       <ProfilePicture setModalProfileUpdateModal={() => setModalProfileUpdateModal(true)}  />
 
       <View style={tw`flex-1 ml-4 justify-end`}>
