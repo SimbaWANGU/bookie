@@ -12,6 +12,8 @@ enum QueryKeys {
   likedBooks = 'liked-books',
   reviewedBooks = 'reviewed-books',
   publishedBooks = 'published-books',
+  preferredBooks = 'my-preferred-genres',
+  otherstartedReading = 'others-reading',
   completedBooks = 'completed-books',
   completedBookReadingTime = 'completed_book_reading_time',
   reviews = 'reviews',
