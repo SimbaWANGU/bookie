@@ -84,7 +84,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
               >
                 <Image
                   source={{
-                    uri: 'https://ui-avatars.com/api/?name=U+N'
+                    uri: item.users.avatar_url
                   }}
                   style={tw`w-12 h-12 rounded-full mr-3`}
                 />
