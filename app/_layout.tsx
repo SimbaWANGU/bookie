@@ -1,101 +1,73 @@
-import React from 'react'
-import { useColorScheme } from 'react-native'
+// RootLayout.tsx
+import React, { useEffect } from 'react'
+import { Platform, useColorScheme } from 'react-native'
 import { SplashScreen } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useReactQueryDevTools } from '@dev-plugins/react-query'
 import { StatusBar } from 'expo-status-bar'
-import App from '@components/App/App'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
 import 'react-native-reanimated'
 import SpaceMono from '@fonts/SpaceMono-Regular.ttf'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { useEffect } from 'react'
 import * as Sentry from '@sentry/react-native'
-
-export {
-	// Catch any errors thrown by the Layout component.
-	ErrorBoundary,
-} from 'expo-router'
-
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated'
-import { userAtom } from '@stores/user.state'
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
+import { CustomUser } from '@models/userProfile.type'
 import { supabase } from '@utils/supabase'
 import { useAtom } from 'jotai'
-import { CustomUser } from '@models/userProfile.type'
-import { DevToolsBubble } from 'react-native-react-query-devtools'
-import tw from '@utils/tailwind'
+import { userAtom } from '@stores/user.state'
+import Main from '@components/Main/Main'
+import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { bookPreferencesAtom } from '@stores/preference.state'
 
-// This is the default configuration
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
-  strict: true, // Reanimated runs in strict mode by default
+  strict: true,
 })
-
-// import QuickSand from '@fonts/Quicksand_Bold.otf'
 
 SplashScreen.preventAutoHideAsync()
 
-// Sentry.init({
-// 	dsn: "https://71fef3f89c26060458a4f90e4f54c3a2:da9eadab22517db8ca8037d87f0e057c@o4506275145908224.ingest.us.sentry.io/4506275154558976",
-// 	tracesSampleRate: 1.0,
-// 	debug: true,
-// })
-
-
-
 const RootLayout = () => {
   const theme = useColorScheme()
+  const [, setSession] = useAtom(userAtom)
+  useAtom(firstTimeOnAppAtom)
+  useAtom(bookPreferencesAtom)
+
   const [loaded, error] = useFonts({
-    SpaceMono: SpaceMono,
-		// QuickSand: QuickSand,
-	})
+    SpaceMono,
+  })
+
+  useEffect(() => {
+    const x = async () => {
+      const l = await  AsyncStorage.getAllKeys()
+      console.log(l)
+
+      const value = await AsyncStorage.getItem(l[0])
+      console.log(Platform.OS, value)
+    }
+
+    x()
+    
+  }, [])
 
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 1000 * 60 * 5, // 5 minutes
+        staleTime: 1000 * 60 * 5,
       },
-      mutations: {
-        onError: (error) => {
-          if ('message' in error) {
-            console.error(error.message)
-          }
-        }
-      }
     },
   })
-  
-  useReactQueryDevTools(client)
-  
-  // useEffect(() => {
-	// 	if (ref) {
-	// 		routingInstrumentation.registerNavigationContainer(ref)
-	// 	}
-	// }, [ref])
 
   useEffect(() => {
-		if (loaded) {
-			SplashScreen.hideAsync()
-		}
-	}, [loaded])
-
-	// useEffect for error handling
-	useEffect(() => {
-		if (error) {
-			Sentry.captureException(error)
-			SplashScreen.hideAsync()
-		}
-	}, [error])
-
-  const [, setSession] = useAtom(userAtom)
+    if (error) {
+      Sentry.captureException(error)
+    }
+  }, [error])
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         // Fetch your custom user data using the auth user's id
+        console.log('root: ', session.user)
         supabase
           .from('users')
           .select('*')
@@ -116,16 +88,14 @@ const RootLayout = () => {
   }, [])
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={client}>
         <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-        <App />
-        <DevToolsBubble bubbleStyle={tw`left-0 ml-4`} />
+        <Main />
       </QueryClientProvider>
     </GestureHandlerRootView>
   )
 }
 
 Sentry.wrap(RootLayout)
-
 export default RootLayout

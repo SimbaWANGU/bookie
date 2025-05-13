@@ -23,7 +23,7 @@ import { QueryKeys } from '@constants/QueryKeys'
 import { MutationKeys } from '@constants/MutationKeys'
 
 const synopsis = () => {
-	const { synopsis } = useLocalSearchParams()
+	const { synopsis, openModal } = useLocalSearchParams()
 	const [user] = useAtom(userAtom)
 	const [, setSelectedBook] = useAtom(bookAtom)
 	const [progress, setProgress] = useAtom(progressAtom)

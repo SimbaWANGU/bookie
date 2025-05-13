@@ -12,13 +12,18 @@ import { supabase } from '@utils/supabase'
 import { makeRedirectUri } from 'expo-auth-session'
 import { FormData } from '@models/authform.type'
 import { QueryKeys } from '@constants/QueryKeys'
+import { useAtom } from 'jotai'
+import { bookPreferencesAtom } from '@stores/preference.state'
 
 const redirectTo = makeRedirectUri()
 
 const AuthScreen = () => {
   const queryClient = useQueryClient()
+  const [bookPreferences] = useAtom(bookPreferencesAtom)
   const [isSignUp, setIsSignUp] = useState(false)
   const { control, handleSubmit } = useForm()
+
+  console.log(redirectTo)
 
   const signUpWithEmailMutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -43,7 +48,7 @@ const AuthScreen = () => {
         [
           {
             text: 'Ok',
-            onPress: () => router.push('/'),
+            onPress: () => router.push('/auth/choose'),
             style: 'cancel',
           },
         ],
@@ -72,7 +77,7 @@ const AuthScreen = () => {
         [
           {
             text: 'Ok',
-            onPress: () => router.push('/'),
+            onPress: () => router.push(bookPreferences.length === 0 ? '/auth/choose' : '/'),
             style: 'cancel',
           },
         ],
@@ -145,11 +150,18 @@ const AuthScreen = () => {
       <Text style={tw`text-center text-gray-500 mb-4`}>or continue with</Text>
       <SocialLogins />
 
-      <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
+      <TouchableOpacity style={tw`mb-2`} onPress={() => setIsSignUp(!isSignUp)}>
         <Text style={tw`text-center text-accent`}>
           {isSignUp
             ? 'Already have an account? Sign In'
             : 'Don\'t have an account? Sign Up'}
+        </Text>
+      </TouchableOpacity>
+
+      {/* //?  add forgot password functionality */}
+      <TouchableOpacity style={tw``} onPress={() => setIsSignUp(!isSignUp)}>
+        <Text style={tw`text-center text-accent`}>
+          Forgot Password?
         </Text>
       </TouchableOpacity>
 

@@ -24,6 +24,14 @@ const _layout = () => {
 				}}
 				getId={() => String(Date.now())}	
 			/>
+			<Stack.Screen
+				name={'choose'}
+				options={{
+					headerShown: false,
+					// header: () => <SettingHeader />
+				}}
+				getId={() => String(Date.now())}	
+			/>
 		</Stack>
 	)
 }

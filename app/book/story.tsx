@@ -8,11 +8,14 @@ import { View } from 'react-native'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
 import { QueryKeys } from '@constants/QueryKeys'
 import tw from '@utils/tailwind'
+import { useKeepAwakeOnScreen } from '@hooks/useKeepAwakeOnScreen'
 
 const story = () => {
+  useKeepAwakeOnScreen()
+  
 	const { synopsis } = useGlobalSearchParams()
 
-	const { data, isLoading } = useInfiniteQuery<Story[]>({
+	const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<Story[]>({
     queryKey: [QueryKeys.story, story],
     queryFn: async ({ pageParam = 0 }) => {
       // Fetch paragraphs for the given story using offset pagination.
@@ -28,6 +31,8 @@ const story = () => {
     },
     initialPageParam: 0,
   })
+
+  console.log(isFetchingNextPage)
 
 	if (isLoading) {
 		return (
@@ -49,7 +54,7 @@ const story = () => {
 	const newData = data.pages.flat()
 
 	return (
-		<StoryCarousel story={newData} />
+		<StoryCarousel story={newData} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
 	)
 }
 
