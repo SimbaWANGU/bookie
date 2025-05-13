@@ -9,13 +9,13 @@ interface TabsIconsProps {
 	focused?: boolean
 }
 
-const TabsIcons: React.FC<TabsIconsProps> = ({ name, color }) => {
+const TabsIcons: React.FC<TabsIconsProps> = ({ name, color, focused }) => {
 
 	return (
 		<View
 			style={tw`h-full w-full bg-transparent items-center justify-center mt-6`}
 		>
-			<FontAwesome6 size={20} name={name} color={color} />
+			<FontAwesome6 size={focused ? 22 : 20} name={name} color={color} />
 		</View>
 	)
 }
