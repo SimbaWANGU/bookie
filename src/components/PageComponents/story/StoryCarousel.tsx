@@ -6,7 +6,7 @@ import PagerView from 'react-native-pager-view'
 import tw from '@utils/tailwind'
 import { QuickSandText, MonoText } from '@components/styled/StyledText'
 import { updateReadingProgress } from '@api/story/api.progress'
-import { useMutation } from '@tanstack/react-query'
+import { FetchNextPageOptions, InfiniteData, InfiniteQueryObserverResult, useMutation } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { bookAtom } from '@stores/books.state'
 import { userAtom } from '@stores/user.state'
@@ -15,6 +15,8 @@ import { progressAtom } from '@stores/story.state'
 
 type StoryCarouselProps = {
   story: Story[]  // A flat list of paragraphs
+  fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<InfiniteData<Story[], unknown>, Error>>
+  hasNextPage: boolean
 }
 
 const PAGE_WIDTH = Dimensions.get('window').width
@@ -74,6 +76,12 @@ const StoryPagerView: React.FC<StoryCarouselProps> = ({ story }) => {
       style={tw`flex-1`}
       initialPage={progress.paragraph_no - 1}
       collapsable={Platform.OS === 'android'}
+      // onPageScroll={(e) => {
+      //   // ? what if user stops reading at page above 7?
+      //   if (e.nativeEvent.position + 1 % 10 === 7 && hasNextPage) {
+      //     fetchNextPage()
+      //   }
+      // }}
       onPageSelected={e => {
         setPage({
           paragraph_no: e.nativeEvent.position + 1,
