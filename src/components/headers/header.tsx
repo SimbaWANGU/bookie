@@ -1,38 +1,31 @@
 import React from 'react'
 import { View } from '@components/styled/Themed'
 import { getDynamicValue } from '@constants/Functions'
-import { Pressable } from 'react-native'
+import { Pressable, useColorScheme } from 'react-native'
 import { light, dark } from '@constants/Color'
-import { MonoText } from '@components/styled/StyledText'
 import { router } from 'expo-router'
 import { Image } from 'expo-image'
 import tw from '@utils/tailwind'
+import logo from '@images/bookworms-logo.png' 
+import { useAtom } from 'jotai'
+import { userAtom } from '@stores/user.state'
 
-interface HeaderProps {
-  username: string
-  avatarUrl: string
-}
-
-const Header:React.FC<HeaderProps> = ({ username, avatarUrl }) => {
+const Header = () => {
+	const [user] = useAtom(userAtom)
+	const theme = useColorScheme()
 	return (
 		<View
-			style={[tw`flex w-full flex-row justify-between items-end pb-2 px-4`, {
+			style={[tw`
+				flex w-full flex-row justify-between items-end pb-2 px-4
+				${theme === 'light' ? 'bg-light' : 'bg-dark'}`, {
 				height: getDynamicValue(140)
 			}]}
-			
-			lightColor={light.background}
-			darkColor={dark.background}
 		>
-			<MonoText
-				style={tw`text-xl`}
-				lightColor={light.text}
-				darkColor={dark.text}
-			>{`@${username}`}</MonoText>
 			<Pressable
-				onPress={() => router.push('/profile')}
+				onPress={() => router.push('/')}
 			>
 				<Image
-					source={{ uri : avatarUrl }}
+					source={logo}
 					style={tw`aspect-square rounded-full h-5/12`}
 					contentFit='contain'
 				/>
