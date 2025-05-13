@@ -23,6 +23,7 @@
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
+      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/bookworms-logo.png",
         "backgroundColor": "#ffffff"
@@ -68,7 +69,6 @@
           "organization": "simbawangu"
         }
       ],
-      "react-native-edge-to-edge",
       "expo-audio"
     ],
     "experiments": {
