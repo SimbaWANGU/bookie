@@ -22,34 +22,37 @@ import PagesSearchResults from '@components/PageComponents/search/PagesSearchRes
 import UsersSearchResults from '@components/PageComponents/search/UsersSearchResults'
 import tw from '@utils/tailwind'
 import ExploreResults from '@components/PageComponents/search/ExploreResults'
-
-type SearchOption = 'users' | 'authors' | 'books' | 'pages'
+import { userAtom } from '@stores/user.state'
 
 type SearchResultTypeMap = {
   users: CustomUser
   authors: Author
   books: Book
   pages: Paragraph
+  '': null | undefined
 }
 
 const Search = () => {
   const theme = useColorScheme()
-
   const [searchTerm] = useAtom(searchTermAtom)
   const [searchOption] = useAtom(searchOptionsAtom)
-
+  const [user] = useAtom(userAtom)
 
   const { data: searchResults, isFetching, hasNextPage, fetchNextPage, isLoading, error } = useInfiniteQuery<SearchResultTypeMap[typeof searchOption][]>({
     queryKey: ['search', searchOption, searchTerm],
-    enabled: searchTerm.length > 2 && !!searchOption,
+    enabled: searchTerm.length > 2 && searchOption !== '',
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => lastPage.length === PAGE_SIZE ? allPages.length : undefined,
-    queryFn: async ({ pageParam }) => await searchApi({ pageParam: pageParam as number, searchOption, searchTerm }),
+    queryFn: async ({ pageParam }) => await searchApi({ pageParam: pageParam as number, searchOption, searchTerm, userId: user?.id }),
   })
 
   const flatResults = searchResults?.pages.flatMap((page) => page) ?? []
 
   const renderResults = () => {
+    if (searchOption === '') {
+      return <ExploreResults />
+    }
+  
     switch (searchOption) {
       case 'users':
         return <UsersSearchResults item={flatResults as CustomUser[]} />
@@ -68,14 +71,16 @@ const Search = () => {
     <View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
       <SearchBox />
       <SearchOptions />
-      {/* {isLoading || isFetching ? (
-        <ActivityIndicator />
-      ) : flatResults.length === 0 ? (
-        <></>
-      ) : (
-        renderResults()
-      )} */}
-			<ExploreResults />
+      {searchOption === '' ? (
+          renderResults()
+        ) : isLoading || isFetching ? (
+          <ActivityIndicator />
+        ) : flatResults.length === 0 ? (
+          <></>
+        ) : (
+          renderResults()
+        )
+      }
     </View>
   )
 }
