@@ -8,7 +8,6 @@ import { fetchOtherUser } from '@api/profile/api.user'
 import { QueryKeys } from '@constants/QueryKeys'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
-import useRealtimeSubscription from '@hooks/useRealtimeSubscription'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -20,7 +19,6 @@ interface ProfilePictureProps {
 const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpdateModal, setModalAchievement }) => {
   const theme = useColorScheme()
   const { user } = useLocalSearchParams()
-  useRealtimeSubscription({ id: user as string })
 
   const { data: otherUser, isLoading } = useQuery({
     queryKey: [QueryKeys.otherUser, user],
