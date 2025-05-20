@@ -27,7 +27,13 @@ const SearchOptions = () => {
           const isActive = searchOption === item.value
           return (
             <Pressable
-              onPress={() => setSearchOptions(item.value)}
+              onPress={() => {
+                if (searchOption === item.value) {
+                  setSearchOptions('')
+                } else {
+                  setSearchOptions(item.value)
+                }
+              }}
               style={tw.style(
                 'px-4 py-2 rounded-full mr-2',
                 isActive ? 'bg-accent' : 'bg-white border border-gray-300'

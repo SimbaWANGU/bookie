@@ -1,7 +1,7 @@
 import { PAGE_SIZE } from "@constants/Variables"
 import { supabase } from "@utils/supabase"
 
-const searchApi = async ({ pageParam = 0, searchOption, searchTerm }) => {
+const searchApi = async ({ pageParam = 0, searchOption, searchTerm, userId }) => {
   const from = pageParam * PAGE_SIZE
   const to = from + PAGE_SIZE - 1
 
@@ -58,8 +58,10 @@ const searchApi = async ({ pageParam = 0, searchOption, searchTerm }) => {
     const { data, error } = await supabase
       .from('users')
       .select('*')
-      .ilike('user_name', `%${searchTerm}%`)
+      .or(`user_name.ilike.%${searchTerm}%,name.ilike.%${searchTerm}%`)
+      .neq('id', userId)
       .range(from, to)
+
     if (error) throw error
     return data
   }
