@@ -9,6 +9,7 @@ interface User {
   avatar_url?: string
   created_at: string
   updated_at: string
+  expo_push_token: string
 }
 
 interface Creator {
@@ -20,6 +21,7 @@ interface Creator {
   name: string;
   updated_at: string;
   avatar_url: string
+  expo_push_token: string
 }
 
 interface Genre {

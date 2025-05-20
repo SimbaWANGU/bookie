@@ -8,4 +8,5 @@ export interface UserWithFollow {
   avatar_url: string
   bio: string
   is_following: boolean
+  expo_push_token: string
 }

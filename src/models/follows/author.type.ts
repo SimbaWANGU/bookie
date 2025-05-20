@@ -8,4 +8,5 @@ export interface CreatorWithFollow {
   email: string
   name: string
   is_following: boolean
+  expo_push_token: string
 }

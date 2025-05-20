@@ -6,6 +6,7 @@ interface User {
   updated_at: string;
   user_name: string;
   avatar_url: string
+  expo_push_token: string
 }
 
 interface BookReview {

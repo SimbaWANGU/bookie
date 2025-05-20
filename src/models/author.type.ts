@@ -7,6 +7,7 @@ interface Author {
   alias: string
   name: string
   avatar_url: string
+  expo_push_token: string
 }
 
 export {
