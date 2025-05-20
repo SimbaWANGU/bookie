@@ -23,12 +23,7 @@ const UsersProfileHeader = () => {
         style={tw`w-full h-full absolute rounded items-start justify-center`}
         locations={[0, 1]}
       >
-				<TouchableOpacity
-					style={tw`p-2 mr-4`}
-        	onPress={() => router.back()}
-				>
-        <FontAwesome6 name={'arrow-left'} style={tw`text-2xl right-4 top-2 p-7 back-icon text-white`} />
-      </TouchableOpacity>
+				
 			</LinearGradient>
     </ImageBackground>
 	)

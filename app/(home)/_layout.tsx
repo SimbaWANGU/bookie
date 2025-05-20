@@ -9,7 +9,6 @@ import TabsIcons from '@components/icons/TabIcons'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
-// import ContinueReading from '@components/PageComponents/home/ContinueReading'
 import tw from '@utils/tailwind'
 import { bookPreferencesAtom } from '@stores/preference.state'
 import { Image } from 'expo-image'
@@ -70,7 +69,7 @@ export default function TabLayout() {
 				<Tabs.Screen
 					name="profile"
 					options={{
-						headerShown: !true,
+						headerShown: true,
 						headerStyle: {...tw`z-0`},
 						header: () => <ProfileHeader />,
 						tabBarIcon: ({ focused }) => <Image source={user.avatar_url} style={tw`mt-6 h-full border ${focused ? 'border-accent' : theme === 'light' ? 'border-dark' : 'border-light'} aspect-square rounded-full`} />,
@@ -80,6 +79,7 @@ export default function TabLayout() {
 				/>
 
 			</Tabs>
+
 				
 			<ContinueReading />
 		</>

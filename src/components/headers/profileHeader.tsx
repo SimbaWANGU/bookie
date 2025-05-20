@@ -1,36 +1,22 @@
 import React from 'react'
-import { getDynamicValue } from '@constants/Functions'
-import { ImageBackground } from 'expo-image'
-import { LinearGradient } from 'expo-linear-gradient'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, useColorScheme } from 'react-native'
 import { router } from 'expo-router'
 import { FontAwesome6 } from '@expo/vector-icons'
 import tw from '@utils/tailwind'
+import { View } from '@components/styled/Themed'
 
 const ProfileHeader = () => {
+  const theme = useColorScheme()
+
   return (
-    <ImageBackground
-      style={[
-        tw`flex w-full flex-row px-4 bg-accent`,
-        { height: getDynamicValue(150) }
-      ]}
-      source={{ uri: 'https://art.rtistiq.com/en-us/_next/image?url=https%3A%2F%2Fd28jbe41jq1wak.cloudfront.net%2FBlogsImages%2Fabstract_art_Compressed_638250928944386407.jpg&w=1920&q=75' }}
-    >	
-      <LinearGradient
-        colors={['#00000088', 'transparent']}
-        start={{ x: 0, y: 0.5 }}
-        end={{ x: 1, y: 0.5 }}
-        style={tw`w-full h-full absolute rounded items-start justify-center`}
-        locations={[0, 1]}
+    <View style={tw`h-20 justify-end ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
+      <TouchableOpacity
+        style={tw`left-4`}
+        onPress={() => router.back()}
       >
-				<TouchableOpacity
-					style={tw`p-2 mr-4`}
-        	onPress={() => router.back()}
-				>
-        <FontAwesome6 name={'arrow-left'} style={tw`text-2xl right-4 top-2 p-7 back-icon text-white`} />
+        <FontAwesome6 name={'arrow-left'} style={tw`android:text-3xl ios:text-2xl ${theme === 'light' ? 'text-dark' : 'text-light'}`} />
       </TouchableOpacity>
-			</LinearGradient>
-    </ImageBackground>
+    </View>
   )
 }
 
