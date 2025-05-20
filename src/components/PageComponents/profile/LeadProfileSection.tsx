@@ -6,6 +6,8 @@ import useCreatorFollows from '@hooks/profile/useCreatorFollows'
 import useUserFollows from '@hooks/profile/useUserFollows'
 import ProfilePicture from './ProfilePicture'
 import useUserIsFollowed from '@hooks/profile/useUserIsFollowed'
+import { useAtom } from 'jotai'
+import { userAtom } from '@stores/user.state'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -16,12 +18,10 @@ interface ProfilePictureProps {
 // setModaTime,
 const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpdateModal, setModalAchievement }) => {
   const theme = useColorScheme()
-	const { data: authorFollows } = useCreatorFollows()
-	const { data: userFollowerCount } = useUserFollows()
-  const { data: userFollowsCount } = useUserIsFollowed()
+  const [user] = useAtom(userAtom)
 
   return (
-    <View style={tw`self-start flex flex-row shadow mt-10 p-2 w-full bg-transparent`}>
+    <View style={tw`self-start flex flex-row shadow mt-2 p-2 w-full bg-transparent`}>
       <ProfilePicture setModalProfileUpdateModal={() => setModalProfileUpdateModal(true)}  />
 
       <View style={tw`flex-1 ml-4 justify-end`}>
@@ -29,7 +29,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         <View style={tw`flex-row justify-around mb-2 my-auto`}>
           <View style={tw`items-center`}>
             <QuickSandText style={tw`text-lg font-bold`}>
-              {authorFollows ? authorFollows.length : 0}
+              {user?.authors_followed_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Authors
@@ -38,7 +38,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
           <View style={tw`items-center`}>
 						
             <QuickSandText style={tw`text-lg font-bold`}>
-              {userFollowsCount ? userFollowsCount.length : 0}
+              {user?.follower_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Followers
@@ -46,7 +46,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
           </View>
           <View style={tw`items-center`}>
             <QuickSandText style={tw`text-lg font-bold`}>
-              {userFollowerCount ? userFollowerCount.length : 0}
+              {user?.following_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Following

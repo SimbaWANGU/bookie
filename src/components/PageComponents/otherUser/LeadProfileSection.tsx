@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity, View, useColorScheme } from 'react-native'
 import { QuickSandText } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
 import { useLocalSearchParams } from 'expo-router'
-import useOtherUserCreatorFollows from '@hooks/otherUserProfile/useOtherUserCreatorFollows'
-import useOtherUserFollows from '@hooks/otherUserProfile/useOtherUserFollows'
-import useOtherUserIsFollowed from '@hooks/otherUserProfile/useOtherUserIsFollowed'
 import ProfilePicture from '@components/PageComponents/otherUser/ProfilePicture'
+import { fetchOtherUser } from '@api/profile/api.user'
+import { QueryKeys } from '@constants/QueryKeys'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
+import useRealtimeSubscription from '@hooks/useRealtimeSubscription'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -18,10 +20,13 @@ interface ProfilePictureProps {
 const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpdateModal, setModalAchievement }) => {
   const theme = useColorScheme()
   const { user } = useLocalSearchParams()
-  
-	const { data: authorFollowed, isLoading: authorFollowedLoading } = useOtherUserCreatorFollows({ id: user as string })
-	const { data: userFollowerCount, isLoading: userFollowerCountLoading } = useOtherUserFollows({ id: user as string })
-  const { data: userFollowsCount, isLoading: userFollowsCountLoading } = useOtherUserIsFollowed({ id: user as string })
+  useRealtimeSubscription({ id: user as string })
+
+  const { data: otherUser, isLoading } = useQuery({
+    queryKey: [QueryKeys.otherUser, user],
+    queryFn: async () => await fetchOtherUser(user as string),
+    enabled: !!user 
+  })
 
   return (
     <View style={tw`self-start flex flex-row shadow p-2 w-full bg-transparent`}>
@@ -32,7 +37,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         <View style={tw`flex-row justify-around mb-2 my-auto`}>
           <View style={tw`items-center`}>
             <QuickSandText style={tw`text-lg font-bold`}>
-              {!authorFollowedLoading ? authorFollowed ? authorFollowed.length : 0 : 0}
+              {isLoading ? 0 : otherUser?.authors_followed_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Authors
@@ -41,7 +46,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
           <View style={tw`items-center`}>
 						
             <QuickSandText style={tw`text-lg font-bold`}>
-              {!userFollowsCountLoading ? userFollowsCount ? userFollowsCount.length : 0 : 0}
+              {isLoading ? 0 : otherUser?.follower_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Followers
@@ -49,7 +54,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
           </View>
           <View style={tw`items-center`}>
             <QuickSandText style={tw`text-lg font-bold`}>
-              {!userFollowerCountLoading ? userFollowerCount ? userFollowerCount.length : 0 : 0}
+              {isLoading ? 0 : otherUser?.following_count}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
               Following

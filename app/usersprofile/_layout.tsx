@@ -1,6 +1,6 @@
 import React from 'react'
 import { Stack } from 'expo-router'
-import UsersProfileHeader from '@components/headers/usersProfileHeader'
+import ProfileHeader from '@components/headers/profileHeader'
 
 export default function TabLayout() {
 	return (
@@ -13,7 +13,7 @@ export default function TabLayout() {
 				name='[user]'
 				options={{
 					headerShown: true,
-					header: () => <UsersProfileHeader />
+					header: () => <ProfileHeader />
 				}}
 				getId={() => String(Date.now())}	
 			/>
