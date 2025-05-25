@@ -2,16 +2,12 @@ import React from 'react'
 import { View } from '@components/styled/Themed'
 import { getDynamicValue } from '@constants/Functions'
 import { Pressable, useColorScheme } from 'react-native'
-import { light, dark } from '@constants/Color'
 import { router } from 'expo-router'
 import { Image } from 'expo-image'
 import tw from '@utils/tailwind'
 import logo from '@images/bookworms-logo.png' 
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
 
 const Header = () => {
-	const [user] = useAtom(userAtom)
 	const theme = useColorScheme()
 	return (
 		<View

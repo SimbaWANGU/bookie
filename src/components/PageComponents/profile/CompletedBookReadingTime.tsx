@@ -15,7 +15,6 @@ const CompletedBookReadingTime = () => {
     queryKey: [QueryKeys.completedBookReadingTime],
     queryFn: getCompletedBooksReadingStats
   })
-  // console.log(data, isLoading, error)
 
   // ? convert these too:
   // ? 1. total read by genre

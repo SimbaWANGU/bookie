@@ -25,7 +25,6 @@ const StoryPagerView: React.FC<StoryCarouselProps> = ({ story }) => {
   const [book] = useAtom(bookAtom)
   const [user] = useAtom(userAtom)
   const [progress] = useAtom(progressAtom)
-  console.log(progress)
   const [page, setPage] = useState(progress)
 
   // Create a ref to always hold the latest page state

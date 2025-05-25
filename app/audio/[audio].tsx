@@ -31,8 +31,6 @@ const audio = () => {
 
   const player = useAudioPlayer({ uri: book?.audio_books[0].source as string })
 
-	console.log('player: ', player)
-
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
 			<ImageBackground

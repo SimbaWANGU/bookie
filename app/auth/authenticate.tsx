@@ -23,7 +23,6 @@ const AuthScreen = () => {
   const [isSignUp, setIsSignUp] = useState(false)
   const { control, handleSubmit } = useForm()
 
-  console.log(redirectTo)
 
   const signUpWithEmailMutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -38,7 +37,6 @@ const AuthScreen = () => {
           },
         },
       })
-      console.log(formData, 'lol')
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.session] })
@@ -66,8 +64,6 @@ const AuthScreen = () => {
         email: formData.email,
         password: formData.password,
       })
-
-      console.log(data, error)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.session] })

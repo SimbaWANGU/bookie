@@ -11,7 +11,7 @@ const sections = [
   // { key: 'friends', component: <OthersStartedReadingStories />},
   { key: 'header', component: <Header /> },
   { key: 'featured', component: <FeaturedBooks /> },
-  { key: 'filter', component: <ActivityFilter /> },
+  // { key: 'filter', component: <ActivityFilter /> },
   { key: 'endless_scroll', component: <UserActivities /> },
 ]
 

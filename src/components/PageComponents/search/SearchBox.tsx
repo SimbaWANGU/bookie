@@ -27,8 +27,6 @@ const SearchBox = (): JSX.Element => {
 		setSearchTerm(search)
 	}, 1000, [search])
 
-	console.log(search)
-
 	return (
 		<View style={tw`w-full h-24 items-center justify-end`}>
 			<Controller

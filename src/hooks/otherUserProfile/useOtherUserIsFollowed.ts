@@ -14,8 +14,6 @@ const useOtherUserIsFollowed = ({ id }: useOtherUserIsFollowedProps) => {
         .from('user_follows_user')
         .select('follower')
         .eq('followee', id)
-
-        console.log('fetched and refetched')
   
       if (followsError) {
         throw new Error(followsError.message)

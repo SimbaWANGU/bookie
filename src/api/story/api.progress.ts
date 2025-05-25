@@ -60,8 +60,6 @@ const updateReadingProgress = async (progress: ReadingProgress) => {
     .eq('book_id', book_id)
     .eq('user_id', user_id)
 
-    console.log('response from server:', error)
-
   if (error) {
     throw new Error(error.message)
   }

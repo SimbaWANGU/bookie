@@ -24,8 +24,6 @@ const useOtherUserCreatorFollows = ({ id }: useOtherUserCreatorFollowsProps) => 
     }
   })
 
-  console.log(data, isLoading)
-
   return { data, isLoading, error }
 }
 

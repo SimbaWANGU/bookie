@@ -6,10 +6,7 @@ interface useOtherUserFollowsProps {
   id: string
 }
 
-const useOtherUserFollows = ({ id }: useOtherUserFollowsProps) => {
-
-  console.log(id)
-  
+const useOtherUserFollows = ({ id }: useOtherUserFollowsProps) => {  
   const { data, isLoading, error } = useQuery<{ followee: string }[]>({
     queryKey: [QueryKeys.usersFollowedByOtherUser, id],
     queryFn: async () => { 

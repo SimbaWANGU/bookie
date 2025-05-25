@@ -60,6 +60,7 @@ const getBooksByGenres = async (genreNames: string[]) => {
         creators ( * )
       )
     `)
+    .eq('is_audio', false)
     .in('book_genres.genres.name', genreNames)
     .order('created_at', { ascending: false });
 

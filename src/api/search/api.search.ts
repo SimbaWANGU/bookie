@@ -27,6 +27,7 @@ const searchApi = async ({ pageParam = 0, searchOption, searchTerm, userId }) =>
           creators (name)
         )
       `)
+      .eq('is_audio', false)
       .ilike('title', `%${searchTerm}%`)
       .range(from, to)
     if (error) throw error

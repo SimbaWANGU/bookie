@@ -39,10 +39,8 @@ const RootLayout = () => {
   useEffect(() => {
     const x = async () => {
       const l = await  AsyncStorage.getAllKeys()
-      console.log(l)
 
       const value = await AsyncStorage.getItem(l[0])
-      console.log(Platform.OS, value)
     }
 
     x()
@@ -67,7 +65,6 @@ const RootLayout = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         // Fetch your custom user data using the auth user's id
-        console.log('root: ', session.user)
         supabase
           .from('users')
           .select('*')

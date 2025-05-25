@@ -10,7 +10,9 @@ export const fetchBooks = async () => {
     creator_books (
       creators (name)
     )
-  `)  
+  `)
+  .eq('is_audio', false)
+  
   if (error) {
     throw new Error(error.message)
   }

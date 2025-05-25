@@ -1,6 +1,5 @@
 // api/booksApi.ts
 import { supabase } from '@utils/supabase'
-import synopsis from 'app/book/[synopsis]'
 
 interface FetchBook {
   synopsis: string | string[]
@@ -28,6 +27,7 @@ const fetchBook = async ({ synopsis }: FetchBook) => {
       )
     `)
     .eq('id', synopsis)
+    .eq('is_audio', false)
     .eq('story_paragraphs.paragraph_no', 1) // Fetch only paragraph_no = 1
     .single()
 

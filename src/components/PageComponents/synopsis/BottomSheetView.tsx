@@ -44,8 +44,6 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
       }
   }, [])
 
-  console.log(reviews, isLoading, error)
-
   // If reviews data is undefined, return nothing
   if (reviews === undefined) return null
 

@@ -20,8 +20,6 @@ const fetchCustomUser = async (): Promise<CustomUser> => {
     return data as CustomUser
   }
 
-  console.log(sessionData, error)
-
   throw new Error('No user session found')
 }
 
