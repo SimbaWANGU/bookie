@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { FlatList, View, Text, ActivityIndicator } from 'react-native'
 import tw from '@utils/tailwind'
 import { useQuery } from '@tanstack/react-query'
-import { BookByGenre, BookEntry, BookLiked, BookReview, ReadingProgress } from '@models/useractivity.type'
+import { BookByGenre, BookEntry, BookLiked, BookReview } from '@models/useractivity.type'
 import { getBooksByGenres, getOthersStartedReading, getPublishedBooks, getUserLikedBooks, getUserReviewedBooks } from '@api/activity/api.homeactivity'
 import UserBookReview from './UserBookReview'
 import CreatorBookPublished from './CreatorBookPublished'
@@ -13,7 +13,6 @@ import { QueryKeys } from '@constants/QueryKeys'
 import { useAtom } from 'jotai'
 import { bookPreferencesAtom } from '@stores/preference.state'
 import BookByGenreCard from './BookByGenre'
-import UserStartedReading from './ReadingProgress'
 import { activityFilterAtom } from '@stores/filter.state'
 
 const UserActivities = () => {
@@ -21,6 +20,8 @@ const UserActivities = () => {
   const [activityFilter] = useAtom(activityFilterAtom)
   const { data: authorFollows } = useCreatorFollows()
 	const { data: userFollows } = useUserFollows()
+
+  // const simplified = userFollows.map(item => ({ id: item.users. }))
   
   // Unconditionally call all your hooks
   const { data: likedBooks = [], isLoading: likedBooksLoading, error: likedBooksError } = useQuery<BookLiked[]>({

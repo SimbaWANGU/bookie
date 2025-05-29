@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Image } from 'expo-image'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import tw from '@utils/tailwind'
 import { QuickSandText } from '@components/styled/StyledText'
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
 import { supabase } from '@utils/supabase'
-import useCreatorFollows from '@hooks/profile/useCreatorFollows'
-import { QueryKeys } from '@constants/QueryKeys'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
-import { isLoading } from 'expo-font'
 import { CreatorWithFollow } from '@models/follows/author.type'
 
 interface AuthorProps {
@@ -20,7 +17,6 @@ interface AuthorProps {
 }
 
 const Author: React.FC<AuthorProps> = ({ uri, name, id }) => {
-  const queryClient = useQueryClient()
   const [user] = useAtom(userAtom)
   const [isFollowing, setFollowing] = useState(false)
   const { data: authorData, isLoading: authorDataLoading, error: authorDataError } = useQuery<CreatorWithFollow>({
@@ -43,8 +39,6 @@ const Author: React.FC<AuthorProps> = ({ uri, name, id }) => {
       setFollowing(authorData.is_following)
     }
   }, [authorDataLoading])
-
-  console.log(authorData, authorDataLoading, authorDataError)
   
   // const followMutation = useMutation({
   //   mutationFn: async ({ creator_id, follow }: { creator_id: string; follow: boolean }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Animated, { SharedValue, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
-import { View } from '@components/styled/Themed'
+import { Text, View } from '@components/styled/Themed'
 import { Book } from '@models/book.type'
 import { Pressable } from 'react-native'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
@@ -49,11 +49,11 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 						locations={[0.2, 0.9]}
 					>
 
-						<MonoText
-							style={tw`absolute px-6 my-2 text-sm italic bottom-22 z-10`}
+						<Text
+							style={tw`absolute px-6 my-2 text-lg italic bottom-22 z-10`}
 							lightColor={dark.activeIconColor}
 							darkColor={dark.activeIconColor}
-						>Featured Books</MonoText>
+						>Featured Books</Text>
 						<QuickSandText
 							style={tw`absolute px-6 my-2 text-xl bottom-16 z-10`}
 							lightColor={dark.text}

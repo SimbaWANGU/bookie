@@ -1,90 +1,25 @@
 import tw from '@utils/tailwind';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 import { TouchableOpacity, View } from 'react-native';
-import { Image, ImageBackground } from 'expo-image'
+import { Image } from 'expo-image'
 import { ResponsiveGrid } from 'react-native-flexible-grid';
 import { LinearGradient } from 'expo-linear-gradient';
-import { dark } from '@constants/Color';
 import { fetchBooks } from '@api/books/api.books';
 import { QueryKeys } from '@constants/QueryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { Book } from '@models/book.type';
 import { QuickSandText } from '@components/styled/StyledText';
 import Genre from '@components/styled/Genre';
-import Author from '../synopsis/Author';
+import { router } from 'expo-router';
  
 const ExploreResults = () => {
-  let idCounter = useRef(0);
-  const [data, setData] = useState<DataProp[]>([]);
-
   interface DataProp {
     id: number;
     widthRatio?: number;
     heightRatio?: number;
     imageUrl: string;
   }
-
-  const generateData = () => {
-    const originalData = [
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=3',
-        widthRatio: 1,
-        heightRatio: 2,
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=1',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=2',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=4',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=5',
-        widthRatio: 1,
-        heightRatio: 2,
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=6',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=3',
-        widthRatio: 1,
-        heightRatio: 2,
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=1',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=2',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=4',
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=5',
-        widthRatio: 1,
-        heightRatio: 2,
-      },
-      {
-        imageUrl: 'https://picsum.photos/200/300?random=6',
-      },
-    ];
-
-    let clonedData: DataProp[] = [];
-
-    for (let i = 0; i < 5; i++) {
-      const newData = originalData.map((item) => ({
-        ...item, 
-        id: ++idCounter.current,
-      }));
-      clonedData = newData
-    }
-
-    return clonedData;
-  };
 
   const { data: books = [], isLoading } = useQuery<Book[]>({
     queryKey: [QueryKeys.featuredBooks],
@@ -93,7 +28,11 @@ const ExploreResults = () => {
 
   const renderItem = ({ item }: { item: Book }) => {
     return (
-      <TouchableOpacity style={tw`flex-1 m-1 rounded overflow-hidden`} activeOpacity={0.9}>
+      <TouchableOpacity
+        style={tw`flex-1 m-1 rounded overflow-hidden`}
+        activeOpacity={0.9}
+        onPress={() => router.push(`/book/${item.id}`)}
+      >
         <Image
           source={{ uri: item.cover_image_url }}
           contentFit="cover"
@@ -124,10 +63,6 @@ const ExploreResults = () => {
       </TouchableOpacity>
     );
   };
-
-  useEffect(() => {
-    setData(generateData());
-  }, []);
 
   return (
     <View

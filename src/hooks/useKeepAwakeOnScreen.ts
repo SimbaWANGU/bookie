@@ -1,11 +1,11 @@
-import { useKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import { useKeepAwake, deactivateKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import { useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 
-export function useKeepAwakeOnScreen(identifier = 'reading-screen') {
+const useKeepAwakeOnScreen = (identifier = 'reading-screen') => {
   useFocusEffect(
     useCallback(() => {
-      useKeepAwake(identifier);
+      activateKeepAwakeAsync(identifier)
 
       return () => {
         deactivateKeepAwake(identifier)
@@ -13,3 +13,5 @@ export function useKeepAwakeOnScreen(identifier = 'reading-screen') {
     }, [])
   );
 }
+
+export default useKeepAwakeOnScreen
