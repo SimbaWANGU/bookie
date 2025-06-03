@@ -11,6 +11,31 @@ Notifications.setNotificationHandler({
   })
 })
 
+const sendPushNotification = async (expoPushToken: string, user_id: string) => {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'Original Title',
+    body: 'And here is the body',
+    data: {
+      type: 'usersprofile',
+      someData: 'would be here',
+      user_id
+    }
+  }
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Authorization': `Bearer LAccxKwAejim-MBVuBQEuizIChPeOgRTjk0Jk0Ql`,
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  })
+}
+
 const handleRegistrationError = (errorMessage: string) => {
   alert(errorMessage);
   throw new Error(errorMessage);
@@ -49,7 +74,6 @@ const registerForPushNotificationsAsync = async (): Promise<string | undefined> 
 
     try {
       const pushTokenString = (await Notifications.getExpoPushTokenAsync({ projectId })).data
-      console.log('Your token is: ', pushTokenString)
       return pushTokenString
     } catch (e: unknown) {
       handleRegistrationError(`${e}`)
@@ -61,4 +85,4 @@ const registerForPushNotificationsAsync = async (): Promise<string | undefined> 
   }
 }
 
-export { registerForPushNotificationsAsync }
+export { registerForPushNotificationsAsync, sendPushNotification }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Slot, SplashScreen } from 'expo-router'
+import { Slot, SplashScreen, router } from 'expo-router'
 import { CustomUser } from '@models/userProfile.type'
 import { userAtom } from '@stores/user.state'
 import { useAtom } from 'jotai'
@@ -12,7 +12,7 @@ import { registerForPushNotificationsAsync } from '@hooks/usePushNotifications'
 
 const Main = () => {
   const queryClient = useQueryClient()
-  const [, setSession] = useAtom(userAtom)
+  const [user, setSession] = useAtom(userAtom)
   const [firstTimeOnApp] = useAtom(firstTimeOnAppAtom)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState<Notifications.Notification | undefined>(undefined)
@@ -22,12 +22,9 @@ const Main = () => {
     queryFn: fetchCustomUser,
   })
 
-  console.log(data, isLoading)
-
   // Set the session when data is available
   useEffect(() => {
     if (data) {
-      console.log('main: ', data)
       setSession(data)
     }
   }, [data, isLoading, firstTimeOnApp])
@@ -38,7 +35,6 @@ const Main = () => {
     }
   }, [isLoading])
 
-	
   // notification setup
 	useEffect(() => {
 		registerForPushNotificationsAsync().then(token => setExpoPushToken(token ?? '')).catch((error) => setExpoPushToken(`${error}`));
@@ -46,8 +42,18 @@ const Main = () => {
       setNotification(notification);
     });
 
-    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+    const responseListener = Notifications.addNotificationResponseReceivedListener(notification => {
+      switch (notification.notification.request.content.data.type) {
+        case 'usersprofile':
+          router.push(`/usersprofile/${notification.notification.request.content.data.user_id}`)
+
+        case 'club_invite':
+          queryClient.invalidateQueries({ queryKey: [QueryKeys.myClubs] })
+          router.push(`/clubs`)
+
+        default:
+          return
+      }
     });
 
 		return () => {
