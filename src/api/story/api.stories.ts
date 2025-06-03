@@ -1,14 +1,20 @@
 // api/booksApi.ts
 import { supabase } from '@utils/supabase'
 
-export const fetchStory = async () => {
-  const { data, error } = await supabase.from('books').select('*').eq('is_audio', false)
+const fetchStory = async (pageParam: number, synopsis: string) => {
+  const { data, error } = await supabase
+    .from('story_paragraphs')
+    .select('*')
+    .eq('book_id', synopsis)
+    .range(pageParam, pageParam + 9)
+
   if (error) {
     throw new Error(error.message)
   }
+
   return data
 }
 
 export {
-  
+  fetchStory
 }
