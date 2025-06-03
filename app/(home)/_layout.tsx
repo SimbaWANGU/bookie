@@ -2,8 +2,6 @@ import React from 'react'
 import { Redirect, Tabs } from 'expo-router'
 import { Platform, useColorScheme } from 'react-native'
 import { light, dark } from '@constants/Color'
-import Header from '@components/headers/header'
-import ProfileHeader from '@components/headers/profileHeader'
 import { getDynamicValue } from '@constants/Functions'
 import TabsIcons from '@components/icons/TabIcons'
 import { useAtom } from 'jotai'
@@ -13,6 +11,7 @@ import tw from '@utils/tailwind'
 import { bookPreferencesAtom } from '@stores/preference.state'
 import { Image } from 'expo-image'
 import ContinueReading from '@components/PageComponents/home/ContinueReading'
+import Header from '@components/headers/header'
 
 export default function TabLayout() {
 	const theme = useColorScheme()
@@ -35,6 +34,8 @@ export default function TabLayout() {
 	return (
 		<>
 			<Tabs
+				backBehavior="history"
+				// initialRouteName='index'
 				screenOptions={{
 					tabBarStyle: {
 						height: Platform.OS === 'ios' ? getDynamicValue(120) : getDynamicValue(100),
@@ -44,8 +45,20 @@ export default function TabLayout() {
 					},
 					tabBarInactiveTintColor: theme === 'dark' ? dark.iconsColor : light.iconsColor,
 					tabBarActiveTintColor: theme === 'dark' ? dark.activeIconColor : light.activeIconColor,
-				}}>
+				}}
+			>
 
+				<Tabs.Screen
+					name="index"
+					options={{
+						headerShown: true,
+						header: () => <Header title='Home' />,
+						tabBarIcon: ({ color, focused }) => <TabsIcons name="house" color={color} focused={focused} />,
+						title: '',
+						lazy: false,
+						
+					}}
+				/>
 				<Tabs.Screen
 					name="search"
 					options={{
@@ -57,30 +70,28 @@ export default function TabLayout() {
 				/>
 
 				<Tabs.Screen
-					name="index"
+					name="clubs"
 					options={{
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => <TabsIcons name="house" color={color} focused={focused} />,
+						headerShown: true,
+						header: () => <Header title='Clubs' />,
+						tabBarIcon: ({ color, focused }) => <TabsIcons name="people-group" color={color} focused={focused}  />,
 						title: '',
-						lazy: false
+						lazy: false,
 					}}
 				/>
-				
+
 				<Tabs.Screen
 					name="profile"
 					options={{
 						headerShown: true,
-						headerStyle: {...tw`z-0`},
-						header: () => <ProfileHeader />,
+						header: () => <Header title='Profile' />,
 						tabBarIcon: ({ focused }) => <Image source={user.avatar_url} style={tw`mt-6 h-full border ${focused ? 'border-accent' : theme === 'light' ? 'border-dark' : 'border-light'} aspect-square rounded-full`} />,
 						title: '',
 						// lazy: false
 					}}
 				/>
 
-			</Tabs>
-
-				
+			</Tabs>	
 			<ContinueReading />
 		</>
 	)
