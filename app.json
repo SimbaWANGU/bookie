@@ -15,7 +15,9 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
+      "usesAppleSignIn": true,
       "bundleIdentifier": "com.simberella.bookie",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -24,7 +26,6 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "softwareKeyboardLayoutMode": "pan",
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/bookworms-logo.png",
         "backgroundColor": "#ffffff"
@@ -44,6 +45,7 @@
       "expo-router",
       "expo-font",
       "expo-secure-store",
+      "expo-apple-authentication",
       "expo-asset",
       [
         "expo-build-properties",
