@@ -1,6 +1,6 @@
 import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { router, useLocalSearchParams } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { View } from '@components/styled/Themed'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -13,75 +13,63 @@ import tw from '@utils/tailwind'
 import InteractionOptions from '@components/styled/InteractionOptions'
 import { fetchBook } from '@api/books/api.book'
 import { userAtom } from '@stores/user.state'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import { bookAtom } from '@stores/books.state'
 import { checkReadingProgress, initialReadingProgress } from '@api/story/api.progress'
-import { progressAtom } from '@stores/story.state'
+import { lastPageProgressAtom, progressAtom, timeTakenInBookAtom } from '@stores/story.state'
 import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
 import Author from '@components/PageComponents/synopsis/Author'
 import { QueryKeys } from '@constants/QueryKeys'
 import { MutationKeys } from '@constants/MutationKeys'
 
 const synopsis = () => {
-	const { synopsis, openModal } = useLocalSearchParams()
-	const [user] = useAtom(userAtom)
-	const [, setSelectedBook] = useAtom(bookAtom)
-	const [progress, setProgress] = useAtom(progressAtom)
-	const [modalVisible, setModalVisible] = useState(false)
+  const { synopsis } = useLocalSearchParams()
+  const [user] = useAtom(userAtom)
+  const [, setLastPageProgress] = useAtom(lastPageProgressAtom)
+  const [, setLastReadingTime] = useAtom(timeTakenInBookAtom)
+  const [, setSelectedBook] = useAtom(bookAtom)
+  const [progress, setProgress] = useAtom(progressAtom)
+  const [modalVisible, setModalVisible] = useState(false)
 
-	const { data: book } = useQuery<Book>({
-		queryKey: [QueryKeys.book, synopsis],
-		queryFn: () => fetchBook({ synopsis })
-	})
+  const { data: book } = useQuery<Book>({
+    queryKey: [QueryKeys.book, synopsis],
+    queryFn: () => fetchBook({ synopsis }),
+  })
 
-	const { data: progressData, isLoading: progressLoading } = useQuery({
+	console.log(book?.story_paragraphs_count)
+
+  const { data: progressData, isLoading: progressLoading, refetch: refetchProgress } = useQuery({
     queryKey: [QueryKeys.initialProgress, book?.id, user?.id],
     queryFn: () => checkReadingProgress(book?.id as string, user?.id as string),
     enabled: !!book && !!user,
   })
-
+	
 	// Mutation: Create initial progress record if none exists
   const createInitialProgressMutation = useMutation({
     mutationKey: [MutationKeys.registerInitialProgress, book?.id, user?.id],
-    mutationFn: () => 
-      initialReadingProgress({
-        book_id: book?.id as string,
-        paragraph_id: book?.story_paragraphs![0].id as string,
-        paragraph_no: book?.story_paragraphs![0].paragraph_no as number,
-        user_id: user?.id as string,
-        started_at: new Date(),
-        last_updated_at: new Date(),
-        completed_at: new Date(),
-        total_time_spent: 0,
-        status: 'STARTED'
-      })
+    mutationFn: () => initialReadingProgress({ book_id: book?.id as string, paragraph_id: book?.story_paragraphs![0].id as string, paragraph_no: book?.story_paragraphs![0].paragraph_no as number, user_id: user?.id as string, started_at: new Date(), last_updated_at: new Date(), completed_at: new Date(), total_time_spent: 0, status: 'STARTED' })
   })
 	
-	useEffect(() => {
-		if (progressLoading) return
-		
-		if (progressData && progressData.length > 0) {
-			setProgress(() => {
-				if (progressData[0].current_paragraph) {
-					return {
-						paragraph_no: progressData[0].current_paragraph,
-						paragraph_id: progressData[0].paragraph_id
-					}
-				} else {
-					return {  
-						paragraph_no: 1,
-						paragraph_id: ''
-					}
-				}
-			})
-		} else {
-			// When progressData is empty or undefined, set default progress.
-			setProgress({
-				paragraph_no: 1,
-				paragraph_id: ''
-			})
-		}
-	}, [progressLoading, progressData])
+  useEffect(() => {
+    if (progressLoading) return
+    if (progressData && progressData.length > 0) {
+      setProgress(() => {
+        if (progressData[0].current_paragraph) {
+          setLastPageProgress(progressData[0].current_paragraph ?? 0)
+          setLastReadingTime(progressData[0].total_time_spent ?? 0)
+          return { paragraph_no: progressData[0].current_paragraph, paragraph_id: progressData[0].paragraph_id }
+        } else {
+					setLastPageProgress(0)
+          setLastReadingTime(0)
+          return { paragraph_no: 0, paragraph_id: '' }
+        }
+      })
+    } else {
+			setLastPageProgress(0)
+			setLastReadingTime(0)
+      setProgress({ paragraph_no: 0, paragraph_id: '' })
+    }
+  }, [progressLoading, progressData, synopsis])
 
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
