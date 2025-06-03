@@ -1,5 +1,6 @@
 enum QueryKeys {
   session = 'session',
+  myClubs = 'my_book_club',
   initialProgress = "initial-progress",
   book = "book",
   story = "story",
@@ -24,7 +25,8 @@ enum QueryKeys {
   usersFollowed = 'users-i-follow',
   usersFollowedByOtherUser = 'users-other-user-follows',
   usersFollowingMe = 'users-following-me',
-  usersFollowingOtherUser = 'users-following-other-user'
+  usersFollowingOtherUser = 'users-following-other-user',
+  inviteUsers = 'invite-users-list'
 }
 
 export {

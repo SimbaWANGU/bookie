@@ -44,7 +44,7 @@ interface Book {
   user_likes_book?: []
   user_reviews_book?: []
   user_reading_progress: []
-  story_paragraph_count?: StoryParagraphCount[]
+  story_paragraphs_count?: StoryParagraphCount[]
   created_at: string
   updated_at: string
 }

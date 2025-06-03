@@ -65,18 +65,13 @@ const RootLayout = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         // Fetch your custom user data using the auth user's id
-        supabase
-          .from('users')
-          .select('*')
-          .eq('id', session.user.id)
-          .single()
-          .then(({ data, error }) => {
-            if (error) {
-              console.error('Error fetching custom user data:', error)
-            } else {
-              setSession(data as CustomUser)
-            }
-          })
+        supabase.from('users').select('*').eq('id', session.user.id).single().then(({ data, error }) => {
+          if (error) {
+            throw new Error(error.message)
+          } else {
+            setSession(data as CustomUser)
+          }
+        })
       }
     })
 

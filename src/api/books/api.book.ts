@@ -20,15 +20,10 @@ const fetchBook = async ({ synopsis }: FetchBook) => {
       creator_books (
         creators (name, id)
       ),
-      story_paragraphs!inner (
-        id,
-        paragraph_no,
-        content
-      )
+      story_paragraphs_count: story_paragraphs(count)
     `)
     .eq('id', synopsis)
     .eq('is_audio', false)
-    .eq('story_paragraphs.paragraph_no', 1) // Fetch only paragraph_no = 1
     .single()
 
   if (error) {

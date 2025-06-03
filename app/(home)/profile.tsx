@@ -19,7 +19,7 @@ const Profile = () => {
 
 	return (
 		<View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
-			<ScrollView style={tw``} contentContainerStyle={tw``}>
+			<ScrollView style={tw``} showsVerticalScrollIndicator={false} contentContainerStyle={tw`android:mt-32 ios:mt-24`}>
 			<LeadProfileSection setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
 				<View style={tw`px-4 bg-transparent`}>
 					<Names />
