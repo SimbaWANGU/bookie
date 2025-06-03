@@ -1,6 +1,5 @@
 import tw from '@utils/tailwind';
 import React from 'react';
-
 import { TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image'
 import { ResponsiveGrid } from 'react-native-flexible-grid';
@@ -21,7 +20,7 @@ const ExploreResults = () => {
     imageUrl: string;
   }
 
-  const { data: books = [], isLoading } = useQuery<Book[]>({
+  const { data: books = [] } = useQuery<Book[]>({
     queryKey: [QueryKeys.featuredBooks],
     queryFn: fetchBooks,
   })

@@ -12,6 +12,7 @@ import Foundation from '@expo/vector-icons/Foundation'
 import { QueryKeys } from '@constants/QueryKeys'
 import Genre from '@components/styled/Genre'
 import { light } from '@constants/Color'
+import { timeFormatAtom } from '@stores/settings.state'
 
 interface InProgressBooksProps {
   id?: string
@@ -20,10 +21,11 @@ interface InProgressBooksProps {
 const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
   const theme = useColorScheme()
   const [user] = useAtom(userAtom)
+  const [is24Hr] = useAtom(timeFormatAtom)
   
   const { data: inprogressbooks, isLoading, error } = useQuery<BookActivity[]>({
     queryKey: [QueryKeys.inProgressBooks, id ?? user?.id],
-    queryFn: async () => await fetchBooksInProgress(id ?? user?.id as string)
+    queryFn: async () => await fetchBooksInProgress(id ?? user?.id as string, 'UPDATED')
   })
 
   if (isLoading) {
@@ -84,7 +86,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
               {books.description}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
-              {convertTime(last_updated_at, false)}
+              {convertTime(last_updated_at, is24Hr)}
             </QuickSandText>
           </View>
           // <BookContainer book={books} />

@@ -9,6 +9,7 @@ import { userAtom } from '@stores/user.state'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
+import { timeFormatAtom } from '@stores/settings.state'
 
 interface LikedBooksProps {
   id?: string
@@ -16,6 +17,7 @@ interface LikedBooksProps {
 
 const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
+  const [is24Hr] = useAtom(timeFormatAtom)
   const { data: likedBooks, isLoading, error } = useQuery<LikedBook[]>({
     queryKey: [QueryKeys.likedBooks, id ?? user?.id],
     queryFn: async () => fetchLikedBooks(id ?? user?.id as string)
@@ -86,7 +88,7 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
               {books.description}
             </QuickSandText>
             <QuickSandText style={tw`text-xs text-gray-500`}>
-              {convertTime(created_at, false)}
+              {convertTime(created_at, is24Hr)}
             </QuickSandText>
           </View>
           // <BookContainer book={books} />

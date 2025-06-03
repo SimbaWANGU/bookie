@@ -13,6 +13,8 @@ import { router } from 'expo-router'
 import { QuickSandText } from '@components/styled/StyledText'
 import Genre from '@components/styled/Genre'
 import Audio from '@components/styled/Audio'
+import { useAtom } from 'jotai'
+import { timeFormatAtom } from '@stores/settings.state'
 
 interface BookByGenreCardProps {
   item: BookByGenre
@@ -21,6 +23,7 @@ interface BookByGenreCardProps {
 const BookByGenreCard: React.FC<BookByGenreCardProps> = ({ item }) => {
   const theme = useColorScheme()
   const creator = item.creator_books[0]?.creators
+  const [is24Hr] = useAtom(timeFormatAtom)
 
   return (
     <TouchableOpacity
@@ -116,7 +119,7 @@ const BookByGenreCard: React.FC<BookByGenreCardProps> = ({ item }) => {
             theme === 'light' ? 'text-gray-500' : 'text-gray-600'
           }`}
         >
-          {convertTime(item.updated_at, false)}
+          {convertTime(item.updated_at, is24Hr)}
         </QuickSandText>
       </View>
     </TouchableOpacity>

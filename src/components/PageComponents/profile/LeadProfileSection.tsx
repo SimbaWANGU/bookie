@@ -21,7 +21,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
   const [user] = useAtom(userAtom)
 
   return (
-    <View style={tw`self-start flex flex-row shadow mt-2 p-2 w-full bg-transparent mt-20`}>
+    <View style={tw`self-start flex flex-row shadow mt-2 p-2 w-full bg-transparent`}>
       <ProfilePicture setModalProfileUpdateModal={() => setModalProfileUpdateModal(true)}  />
 
       <View style={tw`flex-1 ml-4 justify-end`}>

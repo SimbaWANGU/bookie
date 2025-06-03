@@ -9,6 +9,7 @@ import { fetchReviewedBooks } from '@api/profile/api.user'
 import { Image } from 'expo-image'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
+import { timeFormatAtom } from '@stores/settings.state'
 
 interface ReviewedBooksProps {
   id?: string
@@ -16,6 +17,7 @@ interface ReviewedBooksProps {
 
 const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
+  const [is24Hr] = useAtom(timeFormatAtom)
   const { data: reviewedBooks, isLoading, error } = useQuery<BookReview[]>({
     queryKey: [QueryKeys.reviewedBooks, id ?? user?.id],
     queryFn: async () => fetchReviewedBooks(id ?? user?.id as string)
@@ -83,7 +85,7 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
                 {users.name}
               </QuickSandText>
               <QuickSandText style={tw`text-xs text-gray-500`}>
-                {convertTime(created_at, false)}
+                {convertTime(created_at, is24Hr)}
               </QuickSandText>
             </View>
           </View>

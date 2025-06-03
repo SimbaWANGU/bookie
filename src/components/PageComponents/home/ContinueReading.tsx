@@ -52,7 +52,7 @@ const ContinueReading = () => {
           router.push(`/audio/${lastRead.id}`)
         }
         router.push(`/book/${lastRead.id}`)}}
-      style={tw`absolute bottom-28 right-6 card rounded-full ${theme === 'light' ? 'opacity-80' : 'opacity-70'}`}
+      style={tw`absolute bottom-28 right-6 card rounded-full ${theme === 'light' ? 'opacity-90' : 'opacity-80'}`}
       activeOpacity={0.8}
     >
       <AnimatedCircularProgress
