@@ -1,6 +1,6 @@
-import React from 'react'
-import { Stack } from 'expo-router'
 import SettingHeader from '@components/headers/settingHeader'
+import { Stack } from 'expo-router'
+import React from 'react'
 
 const _layout = () => {
 	return (
@@ -14,7 +14,6 @@ const _layout = () => {
 				options={{
 					headerShown: !true,
 				}}
-				getId={() => String(Date.now())}	
 			/>
 			<Stack.Screen
 				name={'authenticate'}
@@ -22,7 +21,6 @@ const _layout = () => {
 					headerShown: true,
 					header: () => <SettingHeader />
 				}}
-				getId={() => String(Date.now())}	
 			/>
 			<Stack.Screen
 				name={'choose'}
@@ -30,7 +28,6 @@ const _layout = () => {
 					headerShown: false,
 					// header: () => <SettingHeader />
 				}}
-				getId={() => String(Date.now())}	
 			/>
 		</Stack>
 	)

@@ -11,6 +11,8 @@ interface CustomUser {
   follower_count: number
   following_count: number
   authors_followed_count: number
+  completed_books: number
+  total_time_spent: number
 }
 
 export {

@@ -2,12 +2,11 @@ import React from 'react'
 import { TouchableOpacity, View, useColorScheme } from 'react-native'
 import { QuickSandText } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
-import useCreatorFollows from '@hooks/profile/useCreatorFollows'
-import useUserFollows from '@hooks/profile/useUserFollows'
 import ProfilePicture from './ProfilePicture'
-import useUserIsFollowed from '@hooks/profile/useUserIsFollowed'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
+import { Feather } from '@expo/vector-icons'
+import { hitSlop } from '@constants/HitSlop'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -56,15 +55,20 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
 
         <View style={tw`items-end w-auto ml-auto`}>
           <TouchableOpacity
-            style={tw`p-2 rounded-full ${theme === 'light' ? 'bg-accent/20' : 'bg-accent'}`}
+            style={tw`flex-row items-center p-3 rounded-full ${theme === 'light' ? 'bg-accent/10' : 'bg-accent/30'}`}
             activeOpacity={0.8}
-            // Should open modal for viewing stats
+            hitSlop={hitSlop}
             onPress={() => setModalAchievement(true)}
           >
+            <Feather
+              name="award"
+              size={16}
+              style={tw`${theme === 'light' ? 'text-accentdark' : 'text-light/80'}`}
+            />
             <QuickSandText
-              style={tw`text-sm ${theme === 'light' ? 'text-accentdark' : 'text-light/80'} mx-2`}
+              style={tw`text-sm ml-1 ${theme === 'light' ? 'text-accentdark' : 'text-light/80'}`}
             >
-              Starting Out!
+              Achievements
             </QuickSandText>
           </TouchableOpacity>
         </View>

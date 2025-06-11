@@ -1,4 +1,4 @@
-import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -21,6 +21,8 @@ import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView
 import Author from '@components/PageComponents/synopsis/Author'
 import { QueryKeys } from '@constants/QueryKeys'
 import { MutationKeys } from '@constants/MutationKeys'
+import { supabase } from '@utils/supabase'
+import { getCurrentPosition } from '@api/story/api.stories'
 
 const synopsis = () => {
   const { synopsis } = useLocalSearchParams()
@@ -36,19 +38,30 @@ const synopsis = () => {
     queryFn: () => fetchBook({ synopsis }),
   })
 
-	console.log(book?.story_paragraphs_count)
-
-  const { data: progressData, isLoading: progressLoading, refetch: refetchProgress } = useQuery({
-    queryKey: [QueryKeys.initialProgress, book?.id, user?.id],
+  const { data: progressData, isLoading: progressLoading } = useQuery({
+    queryKey: [QueryKeys.initialProgress, book?.id],
     queryFn: () => checkReadingProgress(book?.id as string, user?.id as string),
     enabled: !!book && !!user,
   })
+
+	console.log(progressData)
+
+	const { data: initalParagraphs, isLoading: initalParagraphsLoading } = useQuery({
+		queryKey: [QueryKeys.initalParagraph, book?.id],
+		queryFn: async () => await getCurrentPosition(book?.id as string),
+		enabled: !!book?.id && !progressLoading && (!progressData || progressData.length === 0)
+	})
 	
 	// Mutation: Create initial progress record if none exists
   const createInitialProgressMutation = useMutation({
     mutationKey: [MutationKeys.registerInitialProgress, book?.id, user?.id],
-    mutationFn: () => initialReadingProgress({ book_id: book?.id as string, paragraph_id: book?.story_paragraphs![0].id as string, paragraph_no: book?.story_paragraphs![0].paragraph_no as number, user_id: user?.id as string, started_at: new Date(), last_updated_at: new Date(), completed_at: new Date(), total_time_spent: 0, status: 'STARTED' })
-  })
+		mutationFn: () => {
+			if (!initalParagraphs || initalParagraphs.length === 0) {
+				throw new Error('No initial paragraph found for this book')
+			}
+		
+			return initialReadingProgress({ book_id: book?.id as string, paragraph_id: initalParagraphs[0].id, paragraph_no: 1, user_id: user?.id as string, started_at: new Date(), last_updated_at: new Date(), completed_at: new Date(), total_time_spent: 0, status: 'STARTED' })
+		}  })
 	
   useEffect(() => {
     if (progressLoading) return
@@ -71,6 +84,14 @@ const synopsis = () => {
     }
   }, [progressLoading, progressData, synopsis])
 
+	if (!book || progressLoading || initalParagraphsLoading) {
+		return (
+			<View style={tw`flex-1 justify-center items-center bg-black`}>
+				<ActivityIndicator size="large" color={light.activeIconColor} />
+			</View>
+		)
+	}
+
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
 			<ImageBackground
@@ -82,10 +103,10 @@ const synopsis = () => {
 					locations={[0.2, 0.9]}
 					style={tw`h-full w-full`}
 				>
-					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4`, { justifyContent: 'flex-start' }]}>
+					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4 justify-start`]}>
 						{/* {snapPoint === -1 ? <></> : <TouchableOpacity onPress={() => setSnapPoint(-1)} style={tw`bg-transparent flex-1`} />} */}
 						<View style={tw`bg-transparent`}>
-							<Author name={book?.creator_books![0].creators.name as string} id={book?.creator_books![0].creators.id as string} />
+							{book?.creator_books?.[0]?.creators && ( <Author name={book.creator_books[0].creators.name} id={book.creator_books[0].creators.id} /> )}
 							<QuickSandText
 								style={tw`text-4xl p-2`}
 								lightColor={light.activeIconColor}
@@ -106,11 +127,18 @@ const synopsis = () => {
 								}]}
 								onPress={() => {
 									setSelectedBook(book as Book)
-									if (progressLoading) return
+									if (progressLoading || initalParagraphsLoading) return
 									if (!(progressData && progressData.length > 0)) {
+										if (!initalParagraphs || initalParagraphs.length === 0) {
+											console.warn('No paragraph found, cannot start reading')
+											return
+										}
 										createInitialProgressMutation.mutate(undefined, {
 											onSuccess: () => {
 												router.push('/book/story')
+											},
+											onError: (err) => {
+												console.log(err)
 											}
 										})
 									} else {

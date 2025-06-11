@@ -87,7 +87,7 @@ interface BookByGenre {
 
 interface ReadingProgress {
   book_id: string
-  books: Book
+  books?: Book
   completed_at: string | null
   current_paragraph: number
   last_updated_at: string
@@ -96,7 +96,7 @@ interface ReadingProgress {
   status: 'UPDATED' | 'COMPLETED' | 'NOT_STARTED' // update as per your enum
   total_time_spent: number | null
   user_id: string
-  users: User
+  users?: User
 }
 
 interface Book {

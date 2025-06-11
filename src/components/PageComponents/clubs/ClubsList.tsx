@@ -2,7 +2,8 @@ import {
   View,
   SectionList,
   ActivityIndicator,
-  Text
+  Text,
+  useColorScheme
 } from 'react-native'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -13,41 +14,15 @@ import tw from '@utils/tailwind'
 import { QueryKeys } from '@constants/QueryKeys'
 import BookClubCard from './BookClubCard'
 import { BookClubMember } from '@models/club.type'
+import { getMyClubList } from '@api/clubs/api.clubs'
 
-interface onClickClubProps {
-  onOpenClub: Dispatch<SetStateAction<boolean>>
-}
-
-const ClubsList: React.FC<onClickClubProps> = ({  }) => {
+const ClubsList = () => {
   const [user] = useAtom(userAtom)
+  const theme = useColorScheme()
 
   const { data: clubsList, isLoading } = useQuery<BookClubMember[]>({
     queryKey: [QueryKeys.myClubs],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('book_club_members')
-        .select(`
-          *,
-          book_clubs (
-            club_name,
-            description,
-            visibility,
-            book_club_reads (
-              completed_by,
-              books (
-                *
-              )
-            )
-          )
-        `)
-        .eq('user_id', user?.id)
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      return data
-    }
+    queryFn: async () => await getMyClubList(user?.id as string)
   })
 
   if (isLoading) {
@@ -74,16 +49,11 @@ const ClubsList: React.FC<onClickClubProps> = ({  }) => {
       contentContainerStyle={tw`px-4 pb-10`}
       stickySectionHeadersEnabled={false}
       renderSectionHeader={({ section: { title } }) => (
-        <Text style={tw`text-lg font-bold text-gray-700 mt-4 mb-2`}>
+        <Text style={tw`text-lg font-bold android:my-4 ios:my-1 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
           {title}
         </Text>
       )}
-      renderItem={({ item }) => (
-        <BookClubCard
-          {...item}
-          // onOpenClub={onOpenClub}
-        />
-      )}
+      renderItem={({ index, item }) => <BookClubCard key={`${index}-${item.book_club_id}`} item={item} />}
       ListEmptyComponent={
         <Text style={tw`text-center text-gray-500 mt-10`}>
           You are not part of any book clubs yet.

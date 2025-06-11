@@ -7,18 +7,13 @@ import useUserFollows from '@hooks/profile/useUserFollows'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { createClubWithInvites, inviteList } from '@api/users/api.inviteList'
-import { Image } from 'expo-image'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import StepThree from './StepThree'
 import { fetchBooks } from '@api/books/api.books'
 import { QueryKeys } from '@constants/QueryKeys'
 import { Book } from '@models/book.type'
-
-interface CreateClubModalProps {
-  visible: boolean
-  onAddNewClub: Dispatch<SetStateAction<boolean>>
-}
+import { showCreateClubModalAtom } from '@stores/clubs.state'
 
 export interface ClubFormData {
   name: string
@@ -26,8 +21,9 @@ export interface ClubFormData {
   visibility: boolean
 }
 
-const CreateClubModal: React.FC<CreateClubModalProps> = ({ visible, onAddNewClub}) => {
+const CreateClubModal = () => {
   const [user] = useAtom(userAtom)
+  const [visible, onAddNewClub] = useAtom(showCreateClubModalAtom)
   const [step, setStep] = useState(1)
   const queryClient = useQueryClient()
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
@@ -92,27 +88,27 @@ const CreateClubModal: React.FC<CreateClubModalProps> = ({ visible, onAddNewClub
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
-      <View style={tw`flex-1 justify-center items-center bg-black/50`}>
-      <View style={tw`bg-white p-6 rounded-xl w-11/12 h-5/6`}>
-        {(() => {
-          switch (step) {
-            case 1:
-              return (
-                <StepOne control={control} errors={errors} setStep={setStep} onAddNewClub={onAddNewClub} />
-              );
-            case 2:
-              return (
-                <StepTwo usersList={usersList!} selectedUsers={selectedUsers} toggleUser={toggleUser} handleSubmit={handleSubmit} onSubmit={onSubmit} setStep={setStep} />
-              );
-            case 3:
-              return (
-                <StepThree books={books} selectedBookId={selectedBook} setSelectedBookId={setSelectedBook} setStep={setStep} onSubmit={onSubmit} handleSubmit={handleSubmit} />
-              );
-            default:
-              return null;
-        }
-      })()}
-</View>
+      <View style={tw`flex-1 justify-end items-center bg-black/50`}>
+        <View style={tw`bg-white p-6 rounded-xl w-12/12 android:h-11/12 ios:h-9/10`}>
+          {(() => {
+            switch (step) {
+              case 1:
+                return (
+                  <StepOne control={control} errors={errors} setStep={setStep} onAddNewClub={onAddNewClub} />
+                );
+              case 2:
+                return (
+                  <StepTwo usersList={usersList!} selectedUsers={selectedUsers} toggleUser={toggleUser} handleSubmit={handleSubmit} onSubmit={onSubmit} setStep={setStep} />
+                );
+              case 3:
+                return (
+                  <StepThree books={books} selectedBookId={selectedBook} setSelectedBookId={setSelectedBook} setStep={setStep} onSubmit={onSubmit} handleSubmit={handleSubmit} />
+                );
+              default:
+                return null;
+            }
+          })()}
+        </View>
       </View>
     </Modal>
   )

@@ -48,6 +48,7 @@ const Index = () => {
               {title}
             </Text>
         )}}
+        ListFooterComponent={<View style={tw`ios:h-4 android:h-32`} />}
       />
     </View>
   )

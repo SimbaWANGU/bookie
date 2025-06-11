@@ -47,19 +47,8 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
     mutationFn: async () => await supabase.from('user_follows_user').insert([{ followee: id, follower: user?.id }]),
     onError: () => setOptimisticFollowing(false),
     onSettled: async () => {
-      //await queryClient.refetchQueries({ queryKey: [QueryKeys.usersFollowingOtherUser, id as string, QueryKeys.usersFollowed, user?.id as string] })
-      await supabase.functions.invoke('push-follow-user', {
-        body: {
-          user: {
-            id: user?.id,
-            user_name: user?.name
-          },
-          followed: {
-            // token of followed user
-            expo_push_token: otherUser?.expo_push_token
-          }
-        }
-      })
+      await queryClient.refetchQueries({ queryKey: [QueryKeys.usersFollowingOtherUser, id as string, QueryKeys.usersFollowed, user?.id as string] })
+      await supabase.functions.invoke('push-follow-user', { body: { user: { id: user?.id, user_name: user?.name }, followed: { expo_push_token: otherUser?.expo_push_token } } })
     }
   })
 

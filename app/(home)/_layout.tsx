@@ -87,7 +87,7 @@ export default function TabLayout() {
 						header: () => <Header title='Profile' />,
 						tabBarIcon: ({ focused }) => <Image source={user.avatar_url} style={tw`mt-6 h-full border ${focused ? 'border-accent' : theme === 'light' ? 'border-dark' : 'border-light'} aspect-square rounded-full`} />,
 						title: '',
-						// lazy: false
+						lazy: false
 					}}
 				/>
 

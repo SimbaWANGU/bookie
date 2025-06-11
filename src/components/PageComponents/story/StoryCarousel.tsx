@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Story } from '@models/story.type'
 import PagerView from 'react-native-pager-view'
 import tw from '@utils/tailwind'
-import { FetchNextPageOptions, InfiniteData, InfiniteQueryObserverResult } from '@tanstack/react-query'
+import { FetchNextPageOptions, FetchPreviousPageOptions, InfiniteData, InfiniteQueryObserverResult } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { bookAtom } from '@stores/books.state'
 import { userAtom } from '@stores/user.state'
@@ -15,6 +15,8 @@ import StoryNavigationButtons from './StoryNavigationButtons'
 
 type StoryCarouselProps = {
   story: Story[]
+  fetchPreviousPage: (options?: FetchPreviousPageOptions | undefined) => Promise<InfiniteQueryObserverResult<InfiniteData<Story[], unknown>, Error>>
+  hasPreviousPage: boolean
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<InfiniteData<Story[], unknown>, Error>>
   hasNextPage: boolean
 }

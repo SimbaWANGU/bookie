@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { View, Text, TouchableOpacity, useColorScheme } from 'react-native'
 import { Image } from 'expo-image'
 import tw from '@utils/tailwind'
@@ -8,19 +8,25 @@ import { BookClubMember } from '@models/club.type'
 import { QueryKeys } from '@constants/QueryKeys'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
+import { showClubDetailsAtom } from '@stores/clubs.state'
 
-const BookClubCard: React.FC<BookClubMember> = ({ book_clubs, status, book_club_id }) => {
+interface BookClubProps {
+  item: BookClubMember
+}
+
+const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
   const [user] = useAtom(userAtom)
   const theme = useColorScheme()
   const queryClient = useQueryClient()
-  const currentRead = book_clubs.book_club_reads?.[0]?.books
+  const currentRead = item.book_clubs.book_club_reads?.[0]?.books
+  const [, setShowClubDetailsModal] = useAtom(showClubDetailsAtom)
 
   const acceptInviteMutation = useMutation({
     mutationFn: async () => {
       const { error } = await supabase
         .from('book_club_members')
         .update({ status: 'ACCEPTED' })
-        .eq('book_club_id', book_club_id)
+        .eq('book_club_id', item.book_club_id)
         .eq('user_id', user?.id)
 
       if (error) throw new Error(error.message)
@@ -38,8 +44,11 @@ const BookClubCard: React.FC<BookClubMember> = ({ book_clubs, status, book_club_
   }
 
   return (
-    <View style={tw`${theme === 'light' ? 'bg-white' : 'bg-black'} rounded-lg p-4 mb-3 shadow-md`}>
-      <Text style={tw`text-xl font-bold ${theme === 'light' ? 'text-dark' : 'text-light'}`}>{book_clubs.club_name}</Text>
+    <TouchableOpacity
+      style={tw`${theme === 'light' ? 'bg-white' : 'bg-black'} rounded-lg p-4 mb-3 shadow-md`}
+      onPress={() => setShowClubDetailsModal(item.book_club_id)}
+    >
+      <Text style={tw`text-xl font-bold ${theme === 'light' ? 'text-dark' : 'text-light'}`}>{item.book_clubs.club_name}</Text>
       <View style={tw`mt-4`}>
         {currentRead ? (
           <View style={tw`flex-row`}>
@@ -61,7 +70,7 @@ const BookClubCard: React.FC<BookClubMember> = ({ book_clubs, status, book_club_
         )}
       </View>
 
-      {status === 'INVITED' && (
+      {item.status === 'INVITED' && (
         <TouchableOpacity
           style={tw`mt-4 bg-accent p-4 rounded-full w-6/12 self-center`}
           onPress={handleAcceptInvite}
@@ -72,7 +81,7 @@ const BookClubCard: React.FC<BookClubMember> = ({ book_clubs, status, book_club_
           </Text>
         </TouchableOpacity>
       )}
-    </View>
+    </TouchableOpacity>
   )
 }
 

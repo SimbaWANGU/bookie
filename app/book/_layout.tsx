@@ -1,7 +1,7 @@
-import React from 'react'
-import { Stack } from 'expo-router'
-import SynopsisHeader from '@components/headers/synopsisHeader'
 import StoryHeader from '@components/headers/storyHeader'
+import SynopsisHeader from '@components/headers/synopsisHeader'
+import { Stack } from 'expo-router'
+import React from 'react'
 
 export default function TabLayout() {
 	return (
@@ -16,7 +16,6 @@ export default function TabLayout() {
 					headerShown: true,
 					header: () => <SynopsisHeader />
 				}}
-				getId={() => String(Date.now())}	
 			/>
 			<Stack.Screen
 				name={'story'}
@@ -24,7 +23,6 @@ export default function TabLayout() {
 					headerShown: true,
 					header: () => <StoryHeader />
 				}}
-				getId={() => String(Date.now())}	
 			/>
 		</Stack>
 	)

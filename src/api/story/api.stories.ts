@@ -15,6 +15,17 @@ const fetchStory = async (pageParam: number, synopsis: string) => {
   return data
 }
 
+const getCurrentPosition = async (bookId: string) => {
+  const { data, error } = await supabase.from('story_paragraphs').select('id').eq('book_id', bookId).eq('paragraph_no', 1)
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
+}
+
 export {
-  fetchStory
+  fetchStory,
+  getCurrentPosition
 }

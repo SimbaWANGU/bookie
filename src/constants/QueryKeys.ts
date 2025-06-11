@@ -1,6 +1,6 @@
 enum QueryKeys {
   session = 'session',
-  myClubs = 'my_book_club',
+  myClubs = 'my-book-club',
   initialProgress = "initial-progress",
   book = "book",
   story = "story",
@@ -16,7 +16,7 @@ enum QueryKeys {
   preferredBooks = 'my-preferred-genres',
   otherstartedReading = 'others-reading',
   completedBooks = 'completed-books',
-  completedBookReadingTime = 'completed_book_reading_time',
+  completedBookReadingTime = 'completed-book-reading-time',
   reviews = 'reviews',
   trendingExcerpts = 'trending-excerpts',
   otherUser = 'other-user',
@@ -26,7 +26,9 @@ enum QueryKeys {
   usersFollowedByOtherUser = 'users-other-user-follows',
   usersFollowingMe = 'users-following-me',
   usersFollowingOtherUser = 'users-following-other-user',
-  inviteUsers = 'invite-users-list'
+  inviteUsers = 'invite-users-list',
+  initalParagraph = 'initial-paragraph',
+  clubDetails = 'club-details'
 }
 
 export {

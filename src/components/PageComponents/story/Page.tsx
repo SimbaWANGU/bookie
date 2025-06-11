@@ -19,10 +19,6 @@ const Page: React.FC<storySwiperProps> = ({ content }) => {
 	const [textSize] = useAtom(textSizeAtom)
 	const fontSize = textSizeMap[getScreenSizeCategory()][textSize]
 
-	console.log(fontSize)
-
-	//console.log('lol', fontSize)
-
 	return (
 		<View
 			style={[

@@ -37,16 +37,15 @@ const useReadingTracker = ({ bookId, userId, getCurrentPage }: UseReadingTracker
   const [status] = useAtom(readingStatusAtom)
   const queryClient = useQueryClient()
 
-  useEffect(() => {
-    console.log(getCurrentPage())
-  }, [getCurrentPage()])
-
   const updateProgressMutation = useMutation({
     mutationKey: ['update-progress', bookId, userId],
     mutationFn: (progress: Progress) => updateReadingProgress(progress, status),
     onSuccess: () => setTimeout(() => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.initialProgress, QueryKeys.inProgressBooks, QueryKeys.completedBooks] })
     }, 1000),
+    onError: (err) => {
+      throw new Error(err.message)
+    }
   })
 
   const resume = () => {

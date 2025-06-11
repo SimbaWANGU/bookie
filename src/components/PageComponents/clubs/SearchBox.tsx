@@ -28,7 +28,7 @@ const SearchBox = (): JSX.Element => {
 	}, 1000, [search])
 
 	return (
-		<View style={tw`w-full h-auto items-center justify-end mt-32`}>
+		<View style={tw`w-full h-auto items-center justify-end ios:mt-26 android:mt-32`}>
 			<Controller
 				control={control}
 				name='searchTerm'
