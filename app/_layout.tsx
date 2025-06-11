@@ -1,6 +1,7 @@
 // RootLayout.tsx
+import 'react-native-url-polyfill/auto'
 import React, { useEffect } from 'react'
-import { Platform, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { SplashScreen } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StatusBar } from 'expo-status-bar'
@@ -16,8 +17,9 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import Main from '@components/Main/Main'
 import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { bookPreferencesAtom } from '@stores/preference.state'
+import UserSubscription from 'src/subscriptions/UserSubscription'
+import ToastManager from 'toastify-react-native'
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -32,20 +34,9 @@ const RootLayout = () => {
   useAtom(firstTimeOnAppAtom)
   useAtom(bookPreferencesAtom)
 
-  const [loaded, error] = useFonts({
+  const [, error] = useFonts({
     SpaceMono,
   })
-
-  useEffect(() => {
-    const x = async () => {
-      const l = await  AsyncStorage.getAllKeys()
-
-      const value = await AsyncStorage.getItem(l[0])
-    }
-
-    x()
-    
-  }, [])
 
   const client = new QueryClient({
     defaultOptions: {
@@ -83,8 +74,10 @@ const RootLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={client}>
         <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+        <UserSubscription />
         <Main />
       </QueryClientProvider>
+      <ToastManager />
     </GestureHandlerRootView>
   )
 }

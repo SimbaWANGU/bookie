@@ -19,7 +19,7 @@ const story = () => {
   const safePage = Number.isFinite(lastPageProgress) && lastPageProgress > 0 ? lastPageProgress : 1
   const initialOffset = useMemo(() => Math.floor((safePage - 1) / 10) * 10, [safePage])
 
-	const { data, isLoading: isDataLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
+	const { data, isLoading: isDataLoading, hasPreviousPage, fetchPreviousPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: [QueryKeys.story, synopsis, initialOffset], // make sure queryKey is unique per offset
     queryFn: async ({ pageParam = initialOffset }: { pageParam?: number }) => await fetchStory(pageParam, synopsis as string),
     getNextPageParam: (lastPage, pages) => lastPage.length < 10 ? undefined : pages.length * 10 + initialOffset,
@@ -47,7 +47,7 @@ const story = () => {
 	const newData = data.pages.flat()
 
 	return (
-		<StoryCarousel story={newData} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
+		<StoryCarousel story={newData} hasPreviousPage={hasPreviousPage} fetchPreviousPage={fetchPreviousPage} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
 	)
 }
 
