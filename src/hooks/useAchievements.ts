@@ -1,35 +1,26 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { achievementTimeThresholds } from '@constants/Achievements'
-import useUser from './useUser'
+import { Achievement } from '@models/achievement.type'
+import { awardedAchievementsAtom } from '@stores/achievement.state'
+import { useAtom } from 'jotai'
 
+/** holds the list of time‐based achievements we’ve already shown */
+export function useAchievements() {
+  const [awarded, setAwarded] = useAtom(awardedAchievementsAtom)
 
-const checkAndAwardAchievement = (readingTime: number): { threshold: number, title: string, description: string } | null => {
-	const award = achievementTimeThresholds.find(achievement => {
-		if (readingTime === achievement.threshold) {
-			return achievement.description
-		}
-		return null
-	})
-	if (award === undefined) {
-		return null
-	}
-	return award
+  /** 
+   * given old vs new total_time_spent,  
+   * returns only those thresholds we’ve just crossed 
+   */
+  function checkTimeAchievements(oldTime: number, newTime: number): Achievement[] {
+    const newly: Achievement[] = achievementTimeThresholds
+      .filter(a => oldTime < a.threshold && a.threshold <= newTime)
+      .filter(a => !awarded.find(x => x.threshold === a.threshold))
+
+    if (newly.length) {
+      setAwarded([...awarded, ...newly])
+    }
+    return newly
+  }
+
+  return { awarded, checkTimeAchievements }
 }
-
-const useReadingTimeAchievement = (comTime: number): [{ threshold: number, title: string, description: string } | null, Dispatch<SetStateAction<{ threshold: number, title: string, description: string } | null>>] => {
-	const [user] = useUser()
-	const readingTime = user?.cumulative_time as number + comTime
-
-	const [achievement, setAchievement] = useState<{ threshold: number, title: string, description: string } | null>(null)
-
-	useEffect(() => {
-		const award = checkAndAwardAchievement(readingTime)
-		if (award !== null) {
-			setAchievement(award)
-		}
-	}, [readingTime])
-
-	return [achievement, setAchievement]
-}
-
-export default useReadingTimeAchievement
