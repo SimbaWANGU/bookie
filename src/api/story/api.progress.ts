@@ -46,6 +46,8 @@ const initialReadingProgress = async ({ book_id, paragraph_id, paragraph_no = 1,
 const updateReadingProgress = async (progress: ReadingProgress, state: 'UPDATED' | 'COMPLETED') => {
   const { book_id, paragraph_id, user_id, paragraph_no, last_updated_at, status, completed_at, total_time_spent } = progress
 
+  console.log(progress)
+
   if (state === 'UPDATED') {
     const { error } = await supabase
       .from('user_reading_progress')
