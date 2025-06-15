@@ -1,6 +1,6 @@
 {
-  "name": "@toyamarodrigo/expo-router-template",
-  "version": "0.1.0",
+  "name": "book-worms",
+  "version": "0.0.1",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
