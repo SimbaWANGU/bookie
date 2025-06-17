@@ -1,39 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Slot, SplashScreen, router } from 'expo-router'
-import { CustomUser } from '@models/userProfile.type'
-import { userAtom } from '@stores/user.state'
 import { useAtom } from 'jotai'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import * as Notifications from 'expo-notifications'
+
 import { fetchCustomUser } from '@api/profile/api.user'
 import { QueryKeys } from '@constants/QueryKeys'
-import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
-import * as Notifications from 'expo-notifications'
+import { userAtom } from '@stores/user.state'
 import { registerForPushNotificationsAsync } from '@hooks/usePushNotifications'
 import { supabase } from '@utils/supabase'
+import { CustomUser } from '@models/userProfile.type'
 
 const Main = () => {
   const queryClient = useQueryClient()
   const [, setUser] = useAtom(userAtom)
-  const [firstTimeOnApp] = useAtom(firstTimeOnAppAtom)
 
+  // 1) Fetch your custom user
   const { data, isLoading } = useQuery<CustomUser>({
     queryKey: [QueryKeys.getUser],
     queryFn: fetchCustomUser,
   })
 
-  // Set the session when data is available
-  useEffect(() => {
-    if (data) {
-      setUser(data)
-    }
-  }, [data, isLoading, firstTimeOnApp])
-
-  useEffect(() => {
-    if (!isLoading) {
-      SplashScreen.hideAsync()
-    }
-  }, [isLoading])
-
+  // 2) Mutation to update expo_push_token
   const addExpoPushTokenMutation = useMutation({
     mutationKey: ['updatePushToken'],
     mutationFn: async ({ user_id, expo_push_token }: { user_id: string, expo_push_token: string }) => {
@@ -42,25 +30,34 @@ const Main = () => {
       if (error) {
         throw new Error(error.message)
       }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] })
     }
   })
 
-  // Register push token only if missing or different
+  // 3) Once user data arrives, stash it in Jotai
+  useEffect(() => {
+    if (data) {
+      setUser(data)
+    }
+  }, [data])
+
+  // 4) If user has no push token yet, register and send it
   useEffect(() => {
     if (data?.id && !data.expo_push_token) {
       registerForPushNotificationsAsync().then(async (token) => {
         if (token && token !== data.expo_push_token) {
           addExpoPushTokenMutation.mutate({ user_id: data.id, expo_push_token: token })
-          queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] })
         }
       })
       .catch((error) => {
-        throw new Error(error.message)
+        console.warn('Push‐token registration failed:', error)
       })
     }
   }, [data?.id, data?.expo_push_token])
 
-  // Notification listeners — only set once
+  // 5) Notification listeners (set up once)
   useEffect(() => {
     const notificationListener = Notifications.addNotificationReceivedListener(() => null)
     const responseListener = Notifications.addNotificationResponseReceivedListener(notification => {
@@ -85,11 +82,21 @@ const Main = () => {
     }
   }, [])
 
+  // 6) Hide splash exactly once when loading is done
+  const hasHiddenRef = useRef(false)
+  useEffect(() => {
+    if (!isLoading && !hasHiddenRef.current) {
+      SplashScreen.hideAsync().catch(console.warn)
+      hasHiddenRef.current = true
+    }
+  }, [isLoading])
+
+  // 7) While fetching, render nothing (splash remains)
   if (isLoading) {
     return null
   }
 
-  // ✅ Authenticated user
+  // 8) Now that user & splash are settled, render your routes
   return <Slot />
 }
 

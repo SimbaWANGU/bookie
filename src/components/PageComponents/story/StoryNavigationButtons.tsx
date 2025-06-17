@@ -31,8 +31,6 @@ const StoryNavigationButtons = ({ onNext, onPrev, currentPage }: Props) => {
 
   const totalPage = cachedBook?.story_paragraphs_count
 
-  console.log(synopsis, totalPage![0].count)
-
   if ((pagerViewOrientation === 'vertical')) {
     return (
       <>

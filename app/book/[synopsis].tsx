@@ -44,8 +44,6 @@ const synopsis = () => {
     enabled: !!book && !!user,
   })
 
-	console.log(progressData)
-
 	const { data: initalParagraphs, isLoading: initalParagraphsLoading } = useQuery({
 		queryKey: [QueryKeys.initalParagraph, book?.id],
 		queryFn: async () => await getCurrentPosition(book?.id as string),
@@ -138,7 +136,7 @@ const synopsis = () => {
 												router.push('/book/story')
 											},
 											onError: (err) => {
-												console.log(err)
+												throw new Error(err.message)
 											}
 										})
 									} else {

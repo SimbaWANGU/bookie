@@ -56,8 +56,10 @@ const CreateClubModal = () => {
 
   const createClubWithInvitesMutation = useMutation({
     mutationFn: createClubWithInvites,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.myClubs] })
+    onSettled: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.myClubs] })
+      }, 1500)
     },
     onError: (err) => {
       console.error('Failed to create club with invites:', err)

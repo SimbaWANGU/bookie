@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { View, Text, TouchableOpacity, useColorScheme } from 'react-native'
+import React from 'react'
+import { View, Text, TouchableOpacity, useColorScheme, ActivityIndicator } from 'react-native'
 import { Image } from 'expo-image'
 import tw from '@utils/tailwind'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -9,6 +9,9 @@ import { QueryKeys } from '@constants/QueryKeys'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
 import { showClubDetailsAtom } from '@stores/clubs.state'
+import { QuickSandText } from '@components/styled/StyledText'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { hitSlop } from '@constants/HitSlop'
 
 interface BookClubProps {
   item: BookClubMember
@@ -32,7 +35,6 @@ const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
       if (error) throw new Error(error.message)
     },
     onSuccess: () => {
-      // ! not causing a refetch of clubs upon accepting invite
       setTimeout(() => {
         queryClient.refetchQueries({ queryKey: [QueryKeys.myClubs] })
       }, 1000)
@@ -43,45 +45,81 @@ const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
     acceptInviteMutation.mutate()
   }
 
+  const handleDeclineInvite = () => {
+    // You can implement this with a similar mutation to set status to 'DECLINED'
+  }
+
   return (
-    <TouchableOpacity
-      style={tw`${theme === 'light' ? 'bg-white' : 'bg-black'} rounded-lg p-4 mb-3 shadow-md`}
-      onPress={() => setShowClubDetailsModal(item.book_club_id)}
+    <View
+      style={tw`${theme === 'light' ? 'bg-white' : 'bg-black'} rounded-xl p-4 mb-4 shadow-md`}
     >
-      <Text style={tw`text-xl font-bold ${theme === 'light' ? 'text-dark' : 'text-light'}`}>{item.book_clubs.club_name}</Text>
-      <View style={tw`mt-4`}>
+      {/* Header */}
+      <View style={tw`flex-row justify-between items-center mb-2`}>
+        <QuickSandText style={tw`text-xl font-semibold text-accent`}>
+          {item.book_clubs.club_name}
+        </QuickSandText>
+      </View>
+
+      {/* Book Content */}
+      <TouchableOpacity
+        onPress={() => setShowClubDetailsModal(item.book_club_id)}
+        activeOpacity={0.9}
+      >
         {currentRead ? (
-          <View style={tw`flex-row`}>
+          <View style={tw`flex-row items-start`}>
             <Image
               source={{ uri: currentRead.cover_image_url }}
-              style={tw`w-16 h-24 rounded mr-4`}
+              style={tw`w-20 h-28 rounded-md mr-4`}
             />
             <View style={tw`flex-1`}>
-              <Text style={tw`text-base font-semibold ${theme === 'light' ? 'text-dark/85' : 'text-light/85'}`}>{currentRead.title}</Text>
-              <Text style={tw`text-xs ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'} mt-1`} numberOfLines={3}>
+              <Text
+                style={tw`text-base font-bold ${theme === 'light' ? 'text-black/90' : 'text-white/90'}`}
+              >
+                {currentRead.title}
+              </Text>
+              <Text
+                style={tw`text-xs mt-2 ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}
+                numberOfLines={4}
+              >
                 {currentRead.description}
               </Text>
             </View>
           </View>
         ) : (
-          <View style={tw`bg-gray-100 p-4 rounded`}>
-            <Text style={tw`text-sm text-gray-600 italic`}>No book has been selected as the current read.</Text>
+          <View style={tw`bg-gray-100 dark:bg-neutral-800 p-4 rounded mt-2`}>
+            <Text style={tw`text-sm text-gray-600 dark:text-gray-300 italic`}>
+              No book has been selected as the current read.
+            </Text>
           </View>
         )}
-      </View>
+      </TouchableOpacity>
 
+      {/* Invite Actions */}
       {item.status === 'INVITED' && (
-        <TouchableOpacity
-          style={tw`mt-4 bg-accent p-4 rounded-full w-6/12 self-center`}
-          onPress={handleAcceptInvite}
-          disabled={acceptInviteMutation.isPending}
-        >
-          <Text style={tw`text-white text-center font-semibold`}>
-            {acceptInviteMutation.isPending ? 'Accepting...' : 'Accept Invite'}
-          </Text>
-        </TouchableOpacity>
+        <View style={tw`mt-4 flex-row justify-evenly`}>
+          <TouchableOpacity
+            hitSlop={hitSlop}
+            onPress={handleDeclineInvite}
+            style={tw`p-2 rounded-full`}
+          >
+            <MaterialIcons name="cancel" style={tw`text-red-500 font-medium text-4xl`} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            hitSlop={hitSlop}
+            onPress={handleAcceptInvite}
+            style={tw`p-2 rounded-full`}
+            disabled={acceptInviteMutation.isPending}
+          >
+            {acceptInviteMutation.isPending ? (
+              <ActivityIndicator />
+            ) : (
+                <MaterialIcons name="add-circle" style={tw`text-accent font-medium text-4xl`} />
+            )}
+          </TouchableOpacity>
+        </View>
       )}
-    </TouchableOpacity>
+    </View>
   )
 }
 

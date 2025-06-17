@@ -9,7 +9,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
 import 'react-native-reanimated'
 import SpaceMono from '@fonts/SpaceMono-Regular.ttf'
-import * as Sentry from '@sentry/react-native'
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
 import { CustomUser } from '@models/userProfile.type'
 import { supabase } from '@utils/supabase'
@@ -20,6 +19,18 @@ import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
 import { bookPreferencesAtom } from '@stores/preference.state'
 import UserSubscription from 'src/subscriptions/UserSubscription'
 import ToastManager from 'toastify-react-native'
+// import * as Sentry from "@sentry/react-native";
+
+// Sentry.init({
+//   dsn: "https://71fef3f89c26060458a4f90e4f54c3a2@o4506275145908224.ingest.us.sentry.io/4506275154558976",
+//   // Adds more context data to events (IP address, cookies, user, etc.)
+//   // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
+//   sendDefaultPii: true,
+//   tracesSampleRate: 0.1,
+// 	sampleRate: 0.1,
+// 	debug: true
+// });
+
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -34,7 +45,7 @@ const RootLayout = () => {
   useAtom(firstTimeOnAppAtom)
   useAtom(bookPreferencesAtom)
 
-  const [, error] = useFonts({
+  const [fontLoading, fontError] = useFonts({
     SpaceMono,
   })
 
@@ -45,12 +56,6 @@ const RootLayout = () => {
       },
     },
   })
-
-  useEffect(() => {
-    if (error) {
-      Sentry.captureException(error)
-    }
-  }, [error])
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
@@ -82,5 +87,5 @@ const RootLayout = () => {
   )
 }
 
-Sentry.wrap(RootLayout)
+// Sentry.wrap(RootLayout)
 export default RootLayout

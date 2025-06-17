@@ -7,10 +7,15 @@ import { CustomUser } from '@models/userProfile.type'
 import { userAtom } from '@stores/user.state'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
+import { useAudioPlayer } from 'expo-audio'
 import { useGlobalSearchParams } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { Toast } from 'toastify-react-native'
+import audioOne from '@audio/one.wav'
+import audioTwo from '@audio/two.wav'
+import audioThree from '@audio/three.wav'
+import audioFour from '@audio/four.wav'
 
 const rarityToToastType: Record<Achievement['rarity'], 'default' | 'error' | 'info' | 'success'> = {
   Common: 'default',
@@ -26,7 +31,11 @@ const UserSubscription = () => {
   const { user: userSearchParam } = useGlobalSearchParams()
   const queryClient = useQueryClient()
 
-  console.log(userSearchParam)
+  // ✅ Use hooks at the top
+  const playerCommon = useAudioPlayer(audioOne)
+  const playerRare = useAudioPlayer(audioTwo)
+  const playerLegendary = useAudioPlayer(audioThree)
+  const playerMythic = useAudioPlayer(audioFour)
 
   const addNewAchievementMutation = useMutation({
     mutationKey: [],
@@ -34,16 +43,39 @@ const UserSubscription = () => {
       await addNewAchievement(userId, key),
   })
 
-  const handleAchievementUpdate = (oldValue: number, newValue: number, thresholds: typeof achievementTimeThresholds | typeof achievementBookThresholds, userId: string) => {
+  const handleAchievementUpdate = (
+    oldValue: number,
+    newValue: number,
+    thresholds: typeof achievementTimeThresholds | typeof achievementBookThresholds,
+    userId: string
+  ) => {
     const newAchievements = getNewAchievements(oldValue, newValue, thresholds)
 
     newAchievements.forEach((achievement, index) => {
-      console.log(`🎉 Unlocked: ${achievement.title} (${achievement.description})`)
-
       const toastType = rarityToToastType[achievement.rarity]
+
       if (toastType) {
         setTimeout(() => {
-          // ? add audio 
+          // ✅ Safe switch to play already initialized players
+          switch (achievement.rarity) {
+            case 'Common':
+            case 'Uncommon':
+              playerCommon.play()
+              break
+            case 'Rare':
+            case 'Epic':
+              playerRare.play()
+              break
+            case 'Legendary':
+              playerLegendary.play()
+              break
+            case 'Mythic':
+              playerMythic.play()
+              break
+            default:
+              break
+          }
+
           Toast.show({
             type: toastType,
             text1: achievement.title,
@@ -64,23 +96,26 @@ const UserSubscription = () => {
       .on('postgres_changes',
         { event: '*', schema: 'public', table: 'users', filter: `id=eq.${user.id}` },
         async (payload) => {
-          // console.log(payload)
           const oldObj = payload.old as CustomUser
           const newObj = payload.new as CustomUser
 
           handleAchievementUpdate(oldObj.total_time_spent, newObj.total_time_spent, achievementTimeThresholds, user.id)
           handleAchievementUpdate(oldObj.completed_books, newObj.completed_books, achievementBookThresholds, user.id)
 
-          queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser]})
+          queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] })
 
-          if (oldObj.follower_count !== newObj.follower_count || oldObj.following_count !== newObj.following_count) {
-            queryClient.invalidateQueries({ queryKey: [QueryKeys.otherUser, userSearchParam]})
+          if (
+            oldObj.follower_count !== newObj.follower_count ||
+            oldObj.following_count !== newObj.following_count
+          ) {
+            queryClient.invalidateQueries({
+              queryKey: [QueryKeys.otherUser, userSearchParam],
+            })
           }
         }
       )
-      .subscribe((status, err) => {
-        if (err) console.error('SUBSCRIPTION ERROR:', err)
-        else console.log('✅ SUBSCRIPTION STATUS:', status)
+      .subscribe((_, err) => {
+        if (err) throw new Error(err.message)
       })
 
     return () => {
