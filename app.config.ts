@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 export default {
   expo: {
-    name: 'book-worms',
+    name: 'Book Worms',
     slug: 'book-worms',
     scheme: 'book-worms',
     version: '0.0.1',
@@ -17,7 +17,7 @@ export default {
       backgroundColor: '#ffffff'
     },
     ios: {
-      googleServicesFile: './GoogleService-Info.plist',
+      googleServicesFile: process.env.GOOGLE_SERVICES_IOS,
       supportsTablet: true,
       usesAppleSignIn: true,
       bundleIdentifier: 'com.simberella.bookie',
@@ -26,13 +26,13 @@ export default {
       }
     },
     android: {
-      googleServicesFile: './google-services.json',
+      googleServicesFile: process.env.GOOGLE_SERVICES_ANDROID,
       softwareKeyboardLayoutMode: 'pan',
       adaptiveIcon: {
-        foregroundImage: './assets/images/bookworms-logo.png',
+        foregroundImage: './assets/images/bookworms2048.png',
         backgroundColor: '#ffffff'
       },
-      versionCode: 1,
+      versionCode: 2,
       permissions: [
         'android.permission.RECORD_AUDIO',
         'android.permission.MODIFY_AUDIO_SETTINGS'
@@ -68,15 +68,6 @@ export default {
             'Bookie accesses your photos to let you set your profile picture.'
         }
       ],
-      [
-        '@sentry/react-native/expo',
-        {
-          url: 'https://sentry.io/',
-          project: 'book-worms',
-          organization: 'simbawangu',
-          authToken: process.env.SENTRY_AUTH_TOKEN
-        }
-      ],
       'expo-audio',
       [
         'expo-notifications',
@@ -96,7 +87,7 @@ export default {
       },
       eas: {
         projectId: '8757d84a-3a37-4f3a-a3b4-87ce159a960a'
-      }
+      },
     },
     owner: 'simbawangu'
   }
