@@ -1,113 +1,73 @@
-import React from 'react'
+// RootLayout.tsx
+import 'react-native-url-polyfill/auto'
+import React, { useEffect } from 'react'
 import { useColorScheme } from 'react-native'
 import { SplashScreen } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useReactQueryDevTools } from '@dev-plugins/react-query'
 import { StatusBar } from 'expo-status-bar'
-import App from '@components/App/App'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
 import 'react-native-reanimated'
 import SpaceMono from '@fonts/SpaceMono-Regular.ttf'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { useEffect } from 'react'
-import * as Sentry from '@sentry/react-native'
-
-export {
-	// Catch any errors thrown by the Layout component.
-	ErrorBoundary,
-} from 'expo-router'
-
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated'
-import { userAtom } from '@stores/user.state'
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
+import { CustomUser } from '@models/userProfile.type'
 import { supabase } from '@utils/supabase'
 import { useAtom } from 'jotai'
-import { CustomUser } from '@models/userProfile.type'
-import { DevToolsBubble } from 'react-native-react-query-devtools'
-import tw from '@utils/tailwind'
+import { userAtom } from '@stores/user.state'
+import Main from '@components/Main/Main'
+import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
+import { bookPreferencesAtom } from '@stores/preference.state'
+import UserSubscription from 'src/subscriptions/UserSubscription'
+import ToastManager from 'toastify-react-native'
+// import * as Sentry from "@sentry/react-native";
 
-// This is the default configuration
+// Sentry.init({
+//   dsn: "https://71fef3f89c26060458a4f90e4f54c3a2@o4506275145908224.ingest.us.sentry.io/4506275154558976",
+//   // Adds more context data to events (IP address, cookies, user, etc.)
+//   // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
+//   sendDefaultPii: true,
+//   tracesSampleRate: 0.1,
+// 	sampleRate: 0.1,
+// 	debug: true
+// });
+
+
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
-  strict: true, // Reanimated runs in strict mode by default
+  strict: true,
 })
-
-// import QuickSand from '@fonts/Quicksand_Bold.otf'
 
 SplashScreen.preventAutoHideAsync()
 
-// Sentry.init({
-// 	dsn: "https://71fef3f89c26060458a4f90e4f54c3a2:da9eadab22517db8ca8037d87f0e057c@o4506275145908224.ingest.us.sentry.io/4506275154558976",
-// 	tracesSampleRate: 1.0,
-// 	debug: true,
-// })
-
-
-
 const RootLayout = () => {
   const theme = useColorScheme()
-  const [loaded, error] = useFonts({
-    SpaceMono: SpaceMono,
-		// QuickSand: QuickSand,
-	})
+  const [, setSession] = useAtom(userAtom)
+  useAtom(firstTimeOnAppAtom)
+  useAtom(bookPreferencesAtom)
+
+  const [fontLoading, fontError] = useFonts({
+    SpaceMono,
+  })
 
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 1000 * 60 * 5, // 5 minutes
+        staleTime: 1000 * 60 * 5,
       },
-      mutations: {
-        onError: (error) => {
-          if ('message' in error) {
-            console.error(error.message)
-          }
-        }
-      }
     },
   })
-  
-  useReactQueryDevTools(client)
-  
-  // useEffect(() => {
-	// 	if (ref) {
-	// 		routingInstrumentation.registerNavigationContainer(ref)
-	// 	}
-	// }, [ref])
-
-  useEffect(() => {
-		if (loaded) {
-			SplashScreen.hideAsync()
-		}
-	}, [loaded])
-
-	// useEffect for error handling
-	useEffect(() => {
-		if (error) {
-			Sentry.captureException(error)
-			SplashScreen.hideAsync()
-		}
-	}, [error])
-
-  const [, setSession] = useAtom(userAtom)
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         // Fetch your custom user data using the auth user's id
-        supabase
-          .from('users')
-          .select('*')
-          .eq('id', session.user.id)
-          .single()
-          .then(({ data, error }) => {
-            if (error) {
-              console.error('Error fetching custom user data:', error)
-            } else {
-              setSession(data as CustomUser)
-            }
-          })
+        supabase.from('users').select('*').eq('id', session.user.id).single().then(({ data, error }) => {
+          if (error) {
+            throw new Error(error.message)
+          } else {
+            setSession(data as CustomUser)
+          }
+        })
       }
     })
 
@@ -116,16 +76,16 @@ const RootLayout = () => {
   }, [])
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={client}>
         <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-        <App />
-        <DevToolsBubble bubbleStyle={tw`left-0 ml-4`} />
+        <UserSubscription />
+        <Main />
       </QueryClientProvider>
+      <ToastManager />
     </GestureHandlerRootView>
   )
 }
 
-Sentry.wrap(RootLayout)
-
+// Sentry.wrap(RootLayout)
 export default RootLayout

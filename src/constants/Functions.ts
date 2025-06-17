@@ -1,4 +1,6 @@
 import { Dimensions } from 'react-native'
+import { achievementTimeThresholds } from './Achievements'
+import { Achievement } from '@models/achievement.type'
 
 const referenceWidth = 600
 const referenceHeight = 958
@@ -82,12 +84,21 @@ function convertTime(timestampStr: string, use24hFormat: boolean = true): string
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
 
-
+function getNewAchievements(
+  oldValue: number,
+  newValue: number,
+  thresholds: Achievement[]
+): Achievement[] {
+  return thresholds.filter(
+    (a) => oldValue < a.threshold && newValue >= a.threshold
+  )
+}
 
 export {
 	getDynamicValue,
 	getRandomItems,
 	convertToTime,
 	calculateElapsedPercentage,
-	convertTime
+	convertTime,
+	getNewAchievements
 }

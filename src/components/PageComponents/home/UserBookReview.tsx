@@ -18,17 +18,31 @@ const UserBookReview: React.FC<UserBookReviewProps> = ({ item }) => {
 
   return (
     <TouchableOpacity
-      style={tw`mb-1  p-4 rounded-lg shadow ${theme === 'light' ? 'bg-white border border-gray-200' : 'bg-black border border-gray-900'}`}
-      activeOpacity={.8}  
+      style={tw`mb-1 p-4 rounded-lg shadow ${theme === 'light' ? 'bg-white border border-gray-200' : 'bg-black border border-gray-900'}`}
+      activeOpacity={0.8}
+      onPress={() => router.push({
+        pathname: `/book/[synopsis]`,
+        params: { synopsis: item.book_id }
+      })}
     >
-      <View style={[tw`flex-row items-center absolute`, {
-        top: getDynamicValue(25),
-        left: getDynamicValue(20)
-      }]}>
+      {/* Floating user avatar */}
+      <View
+        style={[
+          tw`flex-row items-center absolute z-10`,
+          {
+            top: getDynamicValue(25),
+            left: getDynamicValue(20),
+          },
+        ]}
+      >
         <TouchableOpacity
           style={tw`z-10`}
-          activeOpacity={.8}
-          onPress={() => { item.users.id === user?.id ? router.push('/profile') : router.push(`/usersprofile/${item.users.id}`) }}
+          activeOpacity={0.8}
+          onPress={() =>
+            item.users.id === user?.id
+              ? router.push('/profile')
+              : router.push(`/usersprofile/${item.users.id}`)
+          }
         >
           <Image
             source={{ uri: item.users.avatar_url }}
@@ -37,18 +51,43 @@ const UserBookReview: React.FC<UserBookReviewProps> = ({ item }) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={[tw`self-end w-10/12`]}>
-        <View style={tw`flex-1`}>
-          <Text style={tw`text-base font-bold ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
-            <Text>{item.users.name}{' '}</Text>
-            <Text style={tw`font-medium text-gray-500`}>reviewed{' '}</Text>
-            {item.books.title}
-          </Text>
-        </View>
-        <Text style={tw`mt-2 text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
-          {item.review}
+
+      {/* User + Book title */}
+      <View style={tw`self-end w-10/12`}>
+        <Text style={tw`text-base font-bold ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
+          <Text>{item.users.name}{' '}</Text>
+          <Text style={tw`font-medium text-gray-500`}>reviewed{' '}</Text>
+          {item.books.title}
         </Text>
       </View>
+
+      {/* Book cover + floating genres */}
+      <View style={tw`mt-3 relative`}>
+        <Image
+          source={{ uri: item.books.cover_image_url }}
+          style={tw`w-full h-48 rounded-lg`}
+          contentFit="cover"
+        />
+
+        {/* Floating genres on top of image */}
+        <View style={tw`absolute top-2 left-2 flex-row flex-wrap`}>
+          {item.books.book_genres?.map((bg, idx) => (
+            <View
+              key={idx}
+              style={tw`px-2 py-1 mr-1 mb-1 rounded-full bg-accent/90`}
+            >
+              <Text style={tw`text-xs font-bold text-light`}>
+                {bg.genres.name}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* Review text */}
+      <Text style={tw`mt-3 text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
+        &apos;&apos;{item.review}&apos;&apos;
+      </Text>
     </TouchableOpacity>
   )
 }

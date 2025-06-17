@@ -1,34 +1,33 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useGlobalSearchParams } from 'expo-router'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { supabase } from '@utils/supabase'
 import StoryCarousel from '@components/PageComponents/story/StoryCarousel'
-import tw from 'twrnc'
-import { Story } from '@models/story.type'
 import { View } from 'react-native'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
+import { QueryKeys } from '@constants/QueryKeys'
+import tw from '@utils/tailwind'
+import useKeepAwakeOnScreen from '@hooks/useKeepAwakeOnScreen'
+import { useAtom } from 'jotai'
+import { lastPageProgressAtom } from '@stores/story.state'
+import { fetchStory } from '@api/story/api.stories'
 
 const story = () => {
-	const { synopsis } = useGlobalSearchParams()
+  const { synopsis } = useGlobalSearchParams()
+  const [lastPageProgress] = useAtom(lastPageProgressAtom)
+  useKeepAwakeOnScreen()
 
-	const { data, isLoading } = useInfiniteQuery<Story[]>({
-    queryKey: ['story', story],
-    queryFn: async ({ pageParam = 0 }) => {
-      // Fetch paragraphs for the given story using offset pagination.
-      const { data, error } = await supabase.from('story_paragraphs').select('*').eq('book_id', synopsis).range(pageParam as number, pageParam as number + 10 - 1)
-      if (error) throw new Error(error.message)
-      return data
-    },
-    // The next page offset is calculated as the current number of pages * 10.
-    getNextPageParam: (lastPage, pages) => {
-      // If the last page returned fewer items than "10", there are no more pages.
-      if (lastPage.length < 10) return undefined
-      return pages.length * 10
-    },
-    initialPageParam: 0,
+  const safePage = Number.isFinite(lastPageProgress) && lastPageProgress > 0 ? lastPageProgress : 1
+  const initialOffset = useMemo(() => Math.floor((safePage - 1) / 10) * 10, [safePage])
+
+	const { data, isLoading: isDataLoading, hasPreviousPage, fetchPreviousPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: [QueryKeys.story, synopsis, initialOffset], // make sure queryKey is unique per offset
+    queryFn: async ({ pageParam = initialOffset }: { pageParam?: number }) => await fetchStory(pageParam, synopsis as string),
+    getNextPageParam: (lastPage, pages) => lastPage.length < 10 ? undefined : pages.length * 10 + initialOffset,
+    initialPageParam: initialOffset,
+    enabled: !!synopsis,
   })
 
-	if (isLoading) {
+	if (isDataLoading) {
 		return (
 			<View style={tw`h-full w-full items-center justify-center`}>
 				<ShimmerPlaceHolder style={{
@@ -48,7 +47,7 @@ const story = () => {
 	const newData = data.pages.flat()
 
 	return (
-		<StoryCarousel story={newData} />
+		<StoryCarousel story={newData} hasPreviousPage={hasPreviousPage} fetchPreviousPage={fetchPreviousPage} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
 	)
 }
 

@@ -1,0 +1,36 @@
+enum QueryKeys {
+  session = 'session',
+  myClubs = 'my-book-club',
+  initialProgress = "initial-progress",
+  book = "book",
+  story = "story",
+  getUser = 'get-user',
+  checkBookmark = 'check-bookmark',
+  checkLike = 'check-like',
+  currentRead = 'current-read',
+  inProgressBooks = 'in-progress-books',
+  featuredBooks = 'featured-books',
+  likedBooks = 'liked-books',
+  reviewedBooks = 'reviewed-books',
+  publishedBooks = 'published-books',
+  preferredBooks = 'my-preferred-genres',
+  otherstartedReading = 'others-reading',
+  completedBooks = 'completed-books',
+  completedBookReadingTime = 'completed-book-reading-time',
+  reviews = 'reviews',
+  trendingExcerpts = 'trending-excerpts',
+  otherUser = 'other-user',
+  authorsFollowed = 'authors-followed',
+  authorsUserFollows = 'authors-user-follows',
+  usersFollowed = 'users-i-follow',
+  usersFollowedByOtherUser = 'users-other-user-follows',
+  usersFollowingMe = 'users-following-me',
+  usersFollowingOtherUser = 'users-following-other-user',
+  inviteUsers = 'invite-users-list',
+  initalParagraph = 'initial-paragraph',
+  clubDetails = 'club-details'
+}
+
+export {
+  QueryKeys
+}

@@ -1,3 +1,4 @@
+import { QueryKeys } from '@constants/QueryKeys'
 import { userAtom } from '@stores/user.state'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
@@ -7,7 +8,7 @@ const useUserFollows = () => {
   const [user] = useAtom(userAtom)
   
   const { data, isLoading, error } = useQuery<{ followee: string }[]>({
-    queryKey: ['Users Followed', user?.id],
+    queryKey: [QueryKeys.usersFollowed, user?.id],
     queryFn: async () => { 
       const { data: follows, error: followsError } = await supabase
         .from('user_follows_user')

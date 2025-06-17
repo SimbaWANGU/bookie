@@ -2,13 +2,13 @@ import { View, ScrollView, useColorScheme } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router'
 import tw from '@utils/tailwind'
-import Bio from '@components/PageComponents/profile/Bio'
 import ModalAchievements from '@components/PageComponents/profile/ModalAchievements'
 import ModalProfile from '@components/PageComponents/profile/ModalProfile'
 import ModalTime from '@components/PageComponents/profile/ModalTime'
-import Names from '@components/PageComponents/profile/Names'
 import SelectionPanel from '@components/PageComponents/profile/SelectionPanel'
 import LeadProfileSection from '@components/PageComponents/otherUser/LeadProfileSection'
+import Names from '@components/PageComponents/otherUser/Names'
+import Bio from '@components/PageComponents/otherUser/Bio'
 
 const OtherUser = () => {
   const { user } = useLocalSearchParams()
@@ -27,7 +27,7 @@ const OtherUser = () => {
 
   return (
     <View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
-			<ScrollView style={tw``} contentContainerStyle={tw``}>
+			<ScrollView style={tw``} showsVerticalScrollIndicator={false} contentContainerStyle={tw`android:mt-32 ios:mt-24`}>
 			<LeadProfileSection setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
 				<View style={tw`px-4 bg-transparent`}>
 					<Names id={user as string} />

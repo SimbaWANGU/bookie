@@ -3,7 +3,7 @@ import { MonoText } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { light, dark } from '@constants/Color'
 import { Pressable } from 'react-native'
-import tw from 'twrnc'
+import tw from '@utils/tailwind'
 
 const SignOutAndDelete = () => {
 	// const signOutMutation = useMutation({

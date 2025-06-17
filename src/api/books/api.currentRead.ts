@@ -1,6 +1,13 @@
+import { Book } from '@models/book.type'
 import { supabase } from '@utils/supabase'
 
-const currentRead = async (id: string) => {
+interface CurrentReadInterface {
+  last_updated_at: string
+  current_paragraph: number
+  books: Book
+}
+
+const currentRead = async (id: string): Promise<CurrentReadInterface[]> => {
   const { data, error } = await supabase
     .from('user_reading_progress')
     .select(`
@@ -18,7 +25,8 @@ const currentRead = async (id: string) => {
   if (error) {
     throw new Error(error.message)
   }
-  return data
+
+  return data as unknown as CurrentReadInterface[]
 }
 
 export { currentRead }

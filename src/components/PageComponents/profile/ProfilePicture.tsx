@@ -12,9 +12,9 @@ interface FollowableProfilePictureProps {
 }
 
 const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalProfileUpdateModal }) => {
-  const [user] = useAtom(userAtom)  
-  return (
+  const [user] = useAtom(userAtom)
 
+  return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={ id === user?.id ? () => null : () => setModalProfileUpdateModal(true) }

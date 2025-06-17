@@ -1,3 +1,4 @@
+import { QueryKeys } from '@constants/QueryKeys'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
 
@@ -8,7 +9,7 @@ interface useOtherUserCreatorFollowsProps {
 const useOtherUserCreatorFollows = ({ id }: useOtherUserCreatorFollowsProps) => {
   const { data, isLoading, error } = useQuery<{ creator_id: string }[]>({
     staleTime: Infinity,
-    queryKey: ['Other User Authors Followed', id],
+    queryKey: [QueryKeys.authorsUserFollows, id],
     queryFn: async () => { 
       const { data: follows, error: followsError } = await supabase
         .from('users_follow_creators')
@@ -22,8 +23,6 @@ const useOtherUserCreatorFollows = ({ id }: useOtherUserCreatorFollowsProps) => 
       return follows
     }
   })
-
-  console.log(data, isLoading)
 
   return { data, isLoading, error }
 }

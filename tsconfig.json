@@ -25,6 +25,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@images/*": ["assets/images/*"],
       "@fonts/*": ["assets/fonts/*"],
+      "@audio/*": ["assets/audio/*"]
     }
   },
   "exclude": ["node_modules"],

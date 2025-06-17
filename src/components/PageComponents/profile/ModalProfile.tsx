@@ -11,6 +11,7 @@ import FormInput from '@components/styled/ProfileModalFormInput'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CustomUser } from '@models/userProfile.type'
 import { updateProfile } from '@api/profile/api.user'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface ModalProfileProps {
   profileModalVisible: boolean;
@@ -51,7 +52,7 @@ const ModalProfile: React.FC<ModalProfileProps> = ({ profileModalVisible, setPro
       // Assuming data returns an array with one updated user record.
       const updatedUser = data[0]
       setUser((prev) => (prev ? { ...prev, ...updatedUser } : updatedUser))
-      await queryClient.refetchQueries({ queryKey: ['get-user'] })
+      await queryClient.refetchQueries({ queryKey: [QueryKeys.getUser] })
       Alert.alert('Profile Updated', 'Your profile details have been updated successfully.')
       setProfileModalVisible(false)
     },

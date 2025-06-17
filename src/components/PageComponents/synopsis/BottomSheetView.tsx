@@ -12,6 +12,7 @@ import ModalHeader from '@components/headers/modalsHeader'
 import { BookReview } from '@models/reviews.type'
 import ReviewInput from './ReviewInput'
 import { supabase } from '@utils/supabase'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface BottomSheetViewProps {
   book_id: string
@@ -24,7 +25,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
   const queryClient = useQueryClient()
 
   const { data: reviews, isLoading, error } = useQuery<BookReview[]>({
-    queryKey: ['reviews', book_id],
+    queryKey: [QueryKeys.reviews, book_id],
     queryFn: () => fetchReviews(book_id)
   })
 
@@ -34,7 +35,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
         { event: '*', schema: 'public', table: 'user_reviews_book' },
         async () => {
           await new Promise(resolve => setTimeout(resolve, 50))
-          await queryClient.invalidateQueries({ queryKey: ['reviews'] })
+          await queryClient.invalidateQueries({ queryKey: [QueryKeys.reviews] })
         }
       ).subscribe()
 
@@ -42,8 +43,6 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
         supabase.removeChannel(subscription)
       }
   }, [])
-
-  console.log(reviews, isLoading, error)
 
   // If reviews data is undefined, return nothing
   if (reviews === undefined) return null
@@ -83,7 +82,7 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
               >
                 <Image
                   source={{
-                    uri: 'https://ui-avatars.com/api/?name=U+N'
+                    uri: item.users.avatar_url
                   }}
                   style={tw`w-12 h-12 rounded-full mr-3`}
                 />

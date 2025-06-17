@@ -1,6 +1,6 @@
-import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { router, useLocalSearchParams } from 'expo-router'
+import { ActivityIndicator, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { View } from '@components/styled/Themed'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -13,73 +13,82 @@ import tw from '@utils/tailwind'
 import InteractionOptions from '@components/styled/InteractionOptions'
 import { fetchBook } from '@api/books/api.book'
 import { userAtom } from '@stores/user.state'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import { bookAtom } from '@stores/books.state'
 import { checkReadingProgress, initialReadingProgress } from '@api/story/api.progress'
-import { progressAtom } from '@stores/story.state'
+import { lastPageProgressAtom, progressAtom, timeTakenInBookAtom } from '@stores/story.state'
 import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
 import Author from '@components/PageComponents/synopsis/Author'
+import { QueryKeys } from '@constants/QueryKeys'
+import { MutationKeys } from '@constants/MutationKeys'
+import { supabase } from '@utils/supabase'
+import { getCurrentPosition } from '@api/story/api.stories'
 
 const synopsis = () => {
-	const { synopsis } = useLocalSearchParams()
-	const [user] = useAtom(userAtom)
-	const [, setSelectedBook] = useAtom(bookAtom)
-	const [progress, setProgress] = useAtom(progressAtom)
-	const [modalVisible, setModalVisible] = useState(false)
+  const { synopsis } = useLocalSearchParams()
+  const [user] = useAtom(userAtom)
+  const [, setLastPageProgress] = useAtom(lastPageProgressAtom)
+  const [, setLastReadingTime] = useAtom(timeTakenInBookAtom)
+  const [, setSelectedBook] = useAtom(bookAtom)
+  const [progress, setProgress] = useAtom(progressAtom)
+  const [modalVisible, setModalVisible] = useState(false)
 
-	const { data: book } = useQuery<Book>({
-		queryKey: ['book', synopsis],
-		queryFn: () => fetchBook({ synopsis })
-	})
+  const { data: book } = useQuery<Book>({
+    queryKey: [QueryKeys.book, synopsis],
+    queryFn: () => fetchBook({ synopsis }),
+  })
 
-	const { data: progressData, isLoading: progressLoading } = useQuery({
-    queryKey: ['initial-progress', book?.id, user?.id],
+  const { data: progressData, isLoading: progressLoading } = useQuery({
+    queryKey: [QueryKeys.initialProgress, book?.id],
     queryFn: () => checkReadingProgress(book?.id as string, user?.id as string),
     enabled: !!book && !!user,
   })
 
+	const { data: initalParagraphs, isLoading: initalParagraphsLoading } = useQuery({
+		queryKey: [QueryKeys.initalParagraph, book?.id],
+		queryFn: async () => await getCurrentPosition(book?.id as string),
+		enabled: !!book?.id && !progressLoading && (!progressData || progressData.length === 0)
+	})
+	
 	// Mutation: Create initial progress record if none exists
   const createInitialProgressMutation = useMutation({
-    mutationKey: ['register-initial-progress', book?.id, user?.id],
-    mutationFn: () => 
-      initialReadingProgress({
-        book_id: book?.id as string,
-        paragraph_id: book?.story_paragraphs![0].id as string,
-        paragraph_no: book?.story_paragraphs![0].paragraph_no as number,
-        user_id: user?.id as string,
-        started_at: new Date(),
-        last_updated_at: new Date(),
-        completed_at: new Date(),
-        total_time_spent: 0,
-        status: 'STARTED'
-      })
-  })
-	
-	useEffect(() => {
-		if (progressLoading) return
+    mutationKey: [MutationKeys.registerInitialProgress, book?.id, user?.id],
+		mutationFn: () => {
+			if (!initalParagraphs || initalParagraphs.length === 0) {
+				throw new Error('No initial paragraph found for this book')
+			}
 		
-		if (progressData && progressData.length > 0) {
-			setProgress(() => {
-				if (progressData[0].current_paragraph) {
-					return {
-						paragraph_no: progressData[0].current_paragraph,
-						paragraph_id: progressData[0].paragraph_id
-					}
-				} else {
-					return {  
-						paragraph_no: 1,
-						paragraph_id: ''
-					}
-				}
-			})
-		} else {
-			// When progressData is empty or undefined, set default progress.
-			setProgress({
-				paragraph_no: 1,
-				paragraph_id: ''
-			})
-		}
-	}, [progressLoading, progressData])
+			return initialReadingProgress({ book_id: book?.id as string, paragraph_id: initalParagraphs[0].id, paragraph_no: 1, user_id: user?.id as string, started_at: new Date(), last_updated_at: new Date(), completed_at: new Date(), total_time_spent: 0, status: 'STARTED' })
+		}  })
+	
+  useEffect(() => {
+    if (progressLoading) return
+    if (progressData && progressData.length > 0) {
+      setProgress(() => {
+        if (progressData[0].current_paragraph) {
+          setLastPageProgress(progressData[0].current_paragraph ?? 0)
+          setLastReadingTime(progressData[0].total_time_spent ?? 0)
+          return { paragraph_no: progressData[0].current_paragraph, paragraph_id: progressData[0].paragraph_id }
+        } else {
+					setLastPageProgress(0)
+          setLastReadingTime(0)
+          return { paragraph_no: 0, paragraph_id: '' }
+        }
+      })
+    } else {
+			setLastPageProgress(0)
+			setLastReadingTime(0)
+      setProgress({ paragraph_no: 0, paragraph_id: '' })
+    }
+  }, [progressLoading, progressData, synopsis])
+
+	if (!book || progressLoading || initalParagraphsLoading) {
+		return (
+			<View style={tw`flex-1 justify-center items-center bg-black`}>
+				<ActivityIndicator size="large" color={light.activeIconColor} />
+			</View>
+		)
+	}
 
 	return (
 		<View style={tw`flex-1 items-center justify-center`}>
@@ -92,10 +101,10 @@ const synopsis = () => {
 					locations={[0.2, 0.9]}
 					style={tw`h-full w-full`}
 				>
-					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4`, { justifyContent: 'flex-start' }]}>
+					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4 justify-start`]}>
 						{/* {snapPoint === -1 ? <></> : <TouchableOpacity onPress={() => setSnapPoint(-1)} style={tw`bg-transparent flex-1`} />} */}
 						<View style={tw`bg-transparent`}>
-							<Author name={book?.creator_books![0].creators.name as string} id={book?.creator_books![0].creators.id as string} />
+							{book?.creator_books?.[0]?.creators && ( <Author name={book.creator_books[0].creators.name} id={book.creator_books[0].creators.id} /> )}
 							<QuickSandText
 								style={tw`text-4xl p-2`}
 								lightColor={light.activeIconColor}
@@ -116,11 +125,18 @@ const synopsis = () => {
 								}]}
 								onPress={() => {
 									setSelectedBook(book as Book)
-									if (progressLoading) return
+									if (progressLoading || initalParagraphsLoading) return
 									if (!(progressData && progressData.length > 0)) {
+										if (!initalParagraphs || initalParagraphs.length === 0) {
+											console.warn('No paragraph found, cannot start reading')
+											return
+										}
 										createInitialProgressMutation.mutate(undefined, {
 											onSuccess: () => {
 												router.push('/book/story')
+											},
+											onError: (err) => {
+												throw new Error(err.message)
 											}
 										})
 									} else {

@@ -4,16 +4,17 @@ import { interpolate } from 'react-native-reanimated'
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel'
 import FeaturedBooksItem from './FeaturedBooksItem'
 import { getDynamicValue } from '@constants/Functions'
-import tw from 'twrnc'
 import { fetchBooks } from '@api/books/api.books'
 import { useQuery } from '@tanstack/react-query'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
+import { QueryKeys } from '@constants/QueryKeys'
+import tw from '@utils/tailwind'
  
 const PAGE_WIDTH = Dimensions.get('window').width
 
 const FeaturedBooks = () => {
 	const { data: books = [], isLoading } = useQuery({
-    queryKey: ['featured-books'],
+    queryKey: [QueryKeys.featuredBooks],
     queryFn: fetchBooks,
   })
 	

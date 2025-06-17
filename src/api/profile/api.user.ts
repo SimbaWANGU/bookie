@@ -4,7 +4,7 @@ import { decode } from 'base64-arraybuffer'
 
 const fetchCustomUser = async (): Promise<CustomUser> => {
   // Get the current session from Supabase
-  const { data: sessionData } = await supabase.auth.getSession()
+  const { data: sessionData, error } = await supabase.auth.getSession()
 
   if (sessionData?.session?.user) {
     // Fetch custom user data from your users table
@@ -36,7 +36,7 @@ const fetchOtherUser = async (id: string): Promise<CustomUser> => {
     return data as CustomUser
 }
 
-const fetchBooksInProgress = async (id: string) => {
+const fetchBooksInProgress = async (id: string, status: 'STARTED' | 'UPDATED' | 'COMPLETED') => {
   const { data, error } = await supabase.from('user_reading_progress').select(`
     *,
     books (
@@ -46,7 +46,7 @@ const fetchBooksInProgress = async (id: string) => {
       )
     )
   `)
-  .eq('status', 'UPDATED')
+  .eq('status', status)
   .eq('user_id', id)
   .order('last_updated_at', { ascending: false })
 

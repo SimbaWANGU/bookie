@@ -20,7 +20,6 @@ const ReviewInput: React.FC<ReviewInputProps> = ({ book_id }) => {
   })
 
   const onSubmit = (data: { newReview: string }) => {
-    console.log('Review submitted:', data.newReview)
     // Here you can call your API to submit the review.
     createReviewMutation.mutate(data.newReview)
     reset()
