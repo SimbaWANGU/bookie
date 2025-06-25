@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image'
 import { ResponsiveGrid } from 'react-native-flexible-grid';
 import { LinearGradient } from 'expo-linear-gradient';
-import { fetchBooks } from '@api/books/api.books';
+import { fetchBooks, fetchExploreBooks } from '@api/books/api.books';
 import { QueryKeys } from '@constants/QueryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { Book } from '@models/book.type';
@@ -20,9 +20,10 @@ const ExploreResults = () => {
     imageUrl: string;
   }
 
+  // add genres prefences to query
   const { data: books = [] } = useQuery<Book[]>({
-    queryKey: [QueryKeys.featuredBooks],
-    queryFn: fetchBooks,
+    queryKey: [QueryKeys.exploreBooks],
+    queryFn: fetchExploreBooks,
   })
 
   const renderItem = ({ item }: { item: Book }) => {

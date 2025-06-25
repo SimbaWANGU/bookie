@@ -28,7 +28,8 @@ enum QueryKeys {
   usersFollowingOtherUser = 'users-following-other-user',
   inviteUsers = 'invite-users-list',
   initalParagraph = 'initial-paragraph',
-  clubDetails = 'club-details'
+  clubDetails = 'club-details',
+  exploreBooks = 'explore-books'
 }
 
 export {
