@@ -6,16 +6,11 @@ export default {
     slug: 'book-worms',
     scheme: 'book-worms',
     version: '0.1.1',
-    icon: './assets/images/bookworms2048.png',
+    icon: './assets/images/bookworms-logo.png',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
     runtimeVersion: '1.0.0',
-    splash: {
-      image: './assets/images/bookworms2048.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
-    },
     ios: {
       googleServicesFile: process.env.GOOGLE_SERVICES_IOS,
       supportsTablet: true,
@@ -30,7 +25,7 @@ export default {
       softwareKeyboardLayoutMode: 'pan',
       adaptiveIcon: {
         foregroundImage: './assets/images/bookworms2048.png',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#002B36'
       },
       permissions: [
         'android.permission.RECORD_AUDIO',
@@ -74,10 +69,23 @@ export default {
           defaultChannel: 'default',
           enableBackgroundRemoteNotifications: false
         }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          backgroundColor: "#002B36",
+          image: './assets/images/bookworms-logo.png',
+          imageWidth: 200,          
+        }
       ]
     ],
     experiments: {
       typedRoutes: true
+    },
+    splash: {
+      
+      resizeMode: 'contain',
+      backgroundColor: '#ffffff'
     },
     extra: {
       router: {
