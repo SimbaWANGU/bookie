@@ -3,13 +3,14 @@ import { Slot, SplashScreen, router } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import * as Notifications from 'expo-notifications'
-
 import { fetchCustomUser } from '@api/profile/api.user'
 import { QueryKeys } from '@constants/QueryKeys'
 import { userAtom } from '@stores/user.state'
 import { registerForPushNotificationsAsync } from '@hooks/usePushNotifications'
 import { supabase } from '@utils/supabase'
 import { CustomUser } from '@models/userProfile.type'
+import ErrorBoundary from 'react-native-error-boundary'
+import CustomFallBack from '@components/FallBack/CustomFallBack'
 
 const Main = () => {
   const queryClient = useQueryClient()
@@ -36,7 +37,7 @@ const Main = () => {
     }
   })
 
-  // 3) Once user data arrives, stash it in Jotai
+  // 3) Once user data arrives, stash it in Jotaix
   useEffect(() => {
     if (data) {
       setUser(data)
@@ -97,7 +98,11 @@ const Main = () => {
   }
 
   // 8) Now that user & splash are settled, render your routes
-  return <Slot />
+  return (
+    <ErrorBoundary FallbackComponent={CustomFallBack}>
+      <Slot />
+    </ErrorBoundary>
+  )
 }
 
 export default Main
