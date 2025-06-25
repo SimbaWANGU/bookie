@@ -1,9 +1,10 @@
-import { View, Text, FlatList, TouchableOpacity, useColorScheme } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, useColorScheme } from 'react-native'
+import React, { useRef } from 'react'
 import { CustomUser } from '@models/userProfile.type'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
 import { router } from 'expo-router'
+import { LegendList, LegendListRef } from "@legendapp/list"
 
 interface UsersSearchResultsProps {
   item: CustomUser[]
@@ -11,9 +12,11 @@ interface UsersSearchResultsProps {
 
 const UsersSearchResults: React.FC<UsersSearchResultsProps> = ({ item }) => {
   const theme = useColorScheme()
+  const listRef = useRef<LegendListRef | null>(null)
 
   return (
-    <FlatList
+    <LegendList
+      ref={listRef}
       data={item}
       contentContainerStyle={tw`px-4`}
       keyExtractor={(item) => `${item.id}-${item.user_name}`}
@@ -21,6 +24,7 @@ const UsersSearchResults: React.FC<UsersSearchResultsProps> = ({ item }) => {
       renderItem={({ item: user }) => {
         return (
           <TouchableOpacity
+            key={user.id}
             style={tw`flex-row items-center py-2`}
             onPress={() => router.push(`/usersprofile/${user.id}`) }
           >

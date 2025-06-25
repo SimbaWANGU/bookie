@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react'
-import { FlatList, View, Text, ActivityIndicator } from 'react-native'
+import React, { useState, useMemo, useRef } from 'react'
+import { View, Text, ActivityIndicator } from 'react-native'
 import tw from '@utils/tailwind'
 import { useQuery } from '@tanstack/react-query'
 import { BookByGenre, BookEntry, BookLiked, BookReview } from '@models/useractivity.type'
@@ -14,8 +14,10 @@ import { useAtom } from 'jotai'
 import { bookPreferencesAtom } from '@stores/preference.state'
 import BookByGenreCard from './BookByGenre'
 import { activityFilterAtom } from '@stores/filter.state'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 const UserActivities = () => {
+  const listRef = useRef<LegendListRef | null>(null)
   const [myPreferredBooks] = useAtom(bookPreferencesAtom)
   const [activityFilter] = useAtom(activityFilterAtom)
   const { data: authorFollows } = useCreatorFollows()
@@ -63,13 +65,7 @@ const UserActivities = () => {
         return publishedBooks
       case '':
       default: {
-        const combined = [
-          ...reviewedBooks,
-          ...likedBooks,
-          ...publishedBooks,
-          ...preferredBooks,
-          ...othersStartedReading
-        ]
+        const combined = [...reviewedBooks, ...likedBooks, ...publishedBooks, ...preferredBooks, ...othersStartedReading]
         // Fisher-Yates shuffle
         for (let i = combined.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -138,7 +134,8 @@ const UserActivities = () => {
 
   return (
     <View style={tw`flex-1`}>
-      <FlatList
+      <LegendList
+        ref={listRef}
         data={displayedActivities}
         renderItem={renderItem}
         keyExtractor={(item, index) => {
@@ -158,7 +155,6 @@ const UserActivities = () => {
         }}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
-        contentContainerStyle={tw`p-4`}
         ListFooterComponent={() =>
           visibleCount < allActivities.length ? (
             <ActivityIndicator size="small" style={tw`my-4`} />

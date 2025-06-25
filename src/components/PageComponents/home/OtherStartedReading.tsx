@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, FlatList, ActivityIndicator, Text } from 'react-native'
+import React, { useRef } from 'react'
+import { View, ActivityIndicator, Text } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import { ReadingProgress } from '@models/useractivity.type'
 import { getOthersStartedReading } from '@api/activity/api.homeactivity'
@@ -7,9 +7,11 @@ import useUserFollows from '@hooks/profile/useUserFollows'
 import { QueryKeys } from '@constants/QueryKeys'
 import UserStartedReading from './ReadingProgress'
 import tw from '@utils/tailwind'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 const OthersStartedReadingStories = () => {
   const { data: userFollows } = useUserFollows()
+  const listRef = useRef<LegendListRef | null>(null)
 
   const { data: othersStartedReading = [], isLoading, error } = useQuery<ReadingProgress[]>({
     queryKey: [QueryKeys.otherstartedReading],
@@ -47,7 +49,8 @@ const OthersStartedReadingStories = () => {
   )
 
   return (
-    <FlatList
+    <LegendList
+      ref={listRef}
       horizontal
       data={duplicatedData}
       keyExtractor={(item) => `${item.user_id}-${item.book_id}`}
