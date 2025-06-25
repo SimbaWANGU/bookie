@@ -5,14 +5,14 @@ export default {
     name: 'Book Worms',
     slug: 'book-worms',
     scheme: 'book-worms',
-    version: '0.0.1',
-    icon: './assets/images/bookworms-logo.png',
+    version: '0.1.1',
+    icon: './assets/images/bookworms2048.png',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
     runtimeVersion: '1.0.0',
     splash: {
-      image: './assets/images/bookworms-logo.png',
+      image: './assets/images/bookworms2048.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff'
     },
@@ -32,7 +32,6 @@ export default {
         foregroundImage: './assets/images/bookworms2048.png',
         backgroundColor: '#ffffff'
       },
-      versionCode: 2,
       permissions: [
         'android.permission.RECORD_AUDIO',
         'android.permission.MODIFY_AUDIO_SETTINGS'
@@ -64,8 +63,7 @@ export default {
       [
         'expo-image-picker',
         {
-          photosPermission:
-            'Bookie accesses your photos to let you set your profile picture.'
+          photosPermission: 'Bookie accesses your photos to let you set your profile picture.'
         }
       ],
       'expo-audio',
