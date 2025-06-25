@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, ScrollView, useColorScheme } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, useColorScheme } from 'react-native';
 import tw from '@utils/tailwind';
 import { useQuery } from '@tanstack/react-query';
 import { getGenres } from '@api/books/api.genres';

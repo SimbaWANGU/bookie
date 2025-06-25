@@ -58,6 +58,18 @@ const RootLayout = () => {
   })
 
   useEffect(() => {
+		if (fontLoading) {
+			SplashScreen.hideAsync()
+		}
+	}, [fontLoading])
+
+  useEffect(() => {
+		if (fontError) {
+			SplashScreen.hideAsync()
+		}
+	}, [fontError])
+
+  useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         // Fetch your custom user data using the auth user's id
@@ -78,9 +90,9 @@ const RootLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={client}>
-        <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-        <UserSubscription />
         <Main />
+        <UserSubscription />
+        <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
       </QueryClientProvider>
       <ToastManager />
     </GestureHandlerRootView>
