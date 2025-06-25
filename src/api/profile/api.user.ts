@@ -107,10 +107,9 @@ interface UploadAvatarParams {
   userId: string;
 }
 
-
  const uploadAvatar = async ({ filePath, base64, contentType, userId }: UploadAvatarParams) => {
   // Upload the avatar image, using upsert: true to overwrite any existing file.
-  const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, decode(base64), { contentType, upsert: true })
+  const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, decode(base64), { contentType, cacheControl: '31536000', upsert: true })
 
   if (uploadError) {
     throw new Error(`Failed to upload avatar: ${uploadError.message}`)
