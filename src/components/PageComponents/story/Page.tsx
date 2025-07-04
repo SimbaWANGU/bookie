@@ -1,12 +1,12 @@
-import React from 'react'
-import { Dimensions, useColorScheme, Text } from 'react-native'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
+import { textSizeMap } from '@constants/TextSizeMap'
+import { textSizeAtom } from '@stores/settings.state'
+import { getScreenSizeCategory } from '@utils/index'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
-import { textSizeAtom } from '@stores/settings.state'
-import { textSizeMap } from '@constants/TextSizeMap'
-import { getScreenSizeCategory } from '@utils/index'
+import React from 'react'
+import { Dimensions, Text, useColorScheme } from 'react-native'
 
 interface storySwiperProps {
   content: string
@@ -69,11 +69,11 @@ const Page: React.FC<storySwiperProps> = ({ content, metadata }) => {
           ))}
         </View>
       ) : content.length < 50 ? (
-        <QuickSandText
+        <QuickSandTextRegular
           style={tw`${theme === 'light' ? 'text-dark' : 'text-light'} text-center text-4xl w-11/12`}
         >
           {content}
-        </QuickSandText>
+        </QuickSandTextRegular>
       ) : (
         <Text
           style={tw`${fontSize} ${theme === 'light' ? 'text-dark' : 'text-light'} text-center w-full px-2`}

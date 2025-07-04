@@ -1,21 +1,21 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-} from 'react-native'
+import Audio from '@components/styled/Audio'
+import Genre from '@components/styled/Genre'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { convertTime, getDynamicValue } from '@constants/Functions'
+import { BookEntry } from '@models/useractivity.type'
+import { timeFormatAtom } from '@stores/settings.state'
+import { userAtom } from '@stores/user.state'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
-import { BookEntry } from '@models/useractivity.type'
-import { convertTime, getDynamicValue } from '@constants/Functions'
 import { router } from 'expo-router'
 import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { QuickSandText } from '@components/styled/StyledText'
-import Genre from '@components/styled/Genre'
-import Audio from '@components/styled/Audio'
-import { timeFormatAtom } from '@stores/settings.state'
+import React from 'react'
+import {
+    Text,
+    TouchableOpacity,
+    View,
+    useColorScheme,
+} from 'react-native'
 
 interface CreatorBookPublishedProps {
   item: BookEntry
@@ -105,22 +105,22 @@ const CreatorBookPublished: React.FC<CreatorBookPublishedProps> = ({ item }) => 
           )}
         </View>
         {/* Description preview */}
-        <QuickSandText
+        <QuickSandTextRegular
           style={tw`mt-3 text-sm ${
             theme === 'light' ? 'text-gray-700' : 'text-gray-400'
           }`}
         >
           {item.books.description}
-        </QuickSandText>
+        </QuickSandTextRegular>
 
         {/* Published date */}
-        <QuickSandText
+        <QuickSandTextRegular
           style={tw`mt-2 text-xs italic ${
             theme === 'light' ? 'text-gray-500' : 'text-gray-600'
           }`}
         >
           {convertTime(item.books.updated_at, is24Hr)}
-        </QuickSandText>
+        </QuickSandTextRegular>
 
       </View>
     </TouchableOpacity>

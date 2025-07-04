@@ -1,17 +1,17 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, useColorScheme, ActivityIndicator } from 'react-native'
-import { Image } from 'expo-image'
-import tw from '@utils/tailwind'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { hitSlop } from '@constants/HitSlop'
+import { QueryKeys } from '@constants/QueryKeys'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { BookClubMember } from '@models/club.type'
+import { showClubDetailsAtom } from '@stores/clubs.state'
+import { userAtom } from '@stores/user.state'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@utils/supabase'
-import { BookClubMember } from '@models/club.type'
-import { QueryKeys } from '@constants/QueryKeys'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
 import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { showClubDetailsAtom } from '@stores/clubs.state'
-import { QuickSandText } from '@components/styled/StyledText'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { hitSlop } from '@constants/HitSlop'
+import React from 'react'
+import { ActivityIndicator, Text, TouchableOpacity, View, useColorScheme } from 'react-native'
 
 interface BookClubProps {
   item: BookClubMember
@@ -55,9 +55,9 @@ const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
     >
       {/* Header */}
       <View style={tw`flex-row justify-between items-center mb-2`}>
-        <QuickSandText style={tw`text-xl font-semibold text-accent`}>
+        <QuickSandTextRegular style={tw`text-xl font-semibold text-accent`}>
           {item.book_clubs.club_name}
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
 
       {/* Book Content */}

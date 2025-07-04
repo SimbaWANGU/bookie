@@ -1,8 +1,8 @@
-import React from 'react'
-import { View, Image } from 'react-native'
-import tw from '@utils/tailwind'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { ReadingProgress } from '@models/useractivity.type'
-import { QuickSandText } from '@components/styled/StyledText'
+import tw from '@utils/tailwind'
+import React from 'react'
+import { Image, View } from 'react-native'
 
 interface UserStartedReadingProps {
   item: ReadingProgress
@@ -21,14 +21,14 @@ const UserStartedReading: React.FC<UserStartedReadingProps> = ({ item }) => {
           resizeMode="cover"
         />
         <Image
-          source={{ uri: user.avatar_url }}
+          source={{ uri: user?.avatar_url }}
           style={tw`h-10 absolute self-center -bottom-2 aspect-square rounded-full`}
           resizeMode="cover"
         />
       </View>
-      <QuickSandText style={tw``}>
-        {user.name}
-      </QuickSandText>
+      <QuickSandTextRegular style={tw``}>
+        {user?.name}
+      </QuickSandTextRegular>
      </View>
   )
 }

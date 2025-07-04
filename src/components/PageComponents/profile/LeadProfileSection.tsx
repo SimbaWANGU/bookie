@@ -1,12 +1,12 @@
+import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { hitSlop } from '@constants/HitSlop'
+import { Feather } from '@expo/vector-icons'
+import { userAtom } from '@stores/user.state'
+import tw from '@utils/tailwind'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { TouchableOpacity, View, useColorScheme } from 'react-native'
-import { QuickSandText } from '@components/styled/StyledText'
-import tw from '@utils/tailwind'
 import ProfilePicture from './ProfilePicture'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { Feather } from '@expo/vector-icons'
-import { hitSlop } from '@constants/HitSlop'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -27,29 +27,29 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         {/* New component displaying the three counts */}
         <View style={tw`flex-row justify-around mb-2 my-auto`}>
           <View style={tw`items-center`}>
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {user?.authors_followed_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Authors
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           <View style={tw`items-center`}>
 						
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {user?.follower_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Followers
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           <View style={tw`items-center`}>
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {user?.following_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Following
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
         </View>
 
@@ -65,11 +65,11 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
               size={16}
               style={tw`${theme === 'light' ? 'text-accentdark' : 'text-light/80'}`}
             />
-            <QuickSandText
+            <QuickSandTextRegular
               style={tw`text-sm ml-1 ${theme === 'light' ? 'text-accentdark' : 'text-light/80'}`}
             >
               Achievements
-            </QuickSandText>
+            </QuickSandTextRegular>
           </TouchableOpacity>
         </View>
       </View>

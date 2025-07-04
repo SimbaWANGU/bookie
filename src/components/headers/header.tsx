@@ -1,18 +1,18 @@
+import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
+import { QuickSandTextBold, QuickSandTextRegular } from '@components/styled/StyledText'
+import { dark, light } from '@constants/Color'
+import { getDynamicValue } from '@constants/Functions'
+import { hitSlop } from '@constants/HitSlop'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import logo from '@images/bookworms-logo.png'
+import { showCreateClubModalAtom } from '@stores/clubs.state'
+import tw from '@utils/tailwind'
+import { BlurView } from 'expo-blur'
+import { Image } from 'expo-image'
+import { router } from 'expo-router'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { Platform, Pressable, useColorScheme, View } from 'react-native'
-import { getDynamicValue } from '@constants/Functions'
-import { router } from 'expo-router'
-import { Image } from 'expo-image'
-import tw from '@utils/tailwind'
-import logo from '@images/bookworms-logo.png'
-import { QuickSandText } from '@components/styled/StyledText'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { BlurView } from 'expo-blur'
-import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { dark, light } from '@constants/Color'
-import { hitSlop } from '@constants/HitSlop'
-import { useAtom } from 'jotai'
-import { showCreateClubModalAtom } from '@stores/clubs.state'
 
 interface HeaderProps {
   title: string
@@ -68,9 +68,9 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         </Pressable>
       )}
 
-      <QuickSandText style={tw`text-lg font-bold`}>
+      <QuickSandTextBold style={tw`text-lg font-bold`}>
         {title === 'User Profile' ? 'Profile' : title}
-      </QuickSandText>
+      </QuickSandTextBold>
 
       {title === 'Clubs' ? (
         <Pressable onPress={() => setShowCreateClubModal(true)} hitSlop={hitSlop}>

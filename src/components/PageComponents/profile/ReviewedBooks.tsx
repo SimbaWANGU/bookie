@@ -1,15 +1,15 @@
-import React from 'react'
-import { View, ActivityIndicator } from 'react-native'
-import { useQuery } from '@tanstack/react-query'
-import { QuickSandText } from '@components/styled/StyledText'
-import tw from '@utils/tailwind'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
 import { fetchReviewedBooks } from '@api/profile/api.user'
-import { Image } from 'expo-image'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
 import { timeFormatAtom } from '@stores/settings.state'
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
+import { useAtom } from 'jotai'
+import React from 'react'
+import { ActivityIndicator, View } from 'react-native'
 
 interface ReviewedBooksProps {
   id?: string
@@ -34,9 +34,9 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
   if (reviewedBooks.length === 0) {
     return (
       <View style={tw``}>
-        <QuickSandText style={tw`text-base text-gray-400`}>
+        <QuickSandTextRegular style={tw`text-base text-gray-400`}>
           Reviewed books will appear here
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
     )
   }
@@ -61,32 +61,32 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
                     key={idx}
                     style={tw`px-2 py-1 rounded-full mr-1 mb-1 bg-accent/75`}
                   >
-                    <QuickSandText style={tw`text-xs font-bold text-light`}>
+                    <QuickSandTextRegular style={tw`text-xs font-bold text-light`}>
                       {genre.genres.name}
-                    </QuickSandText>
+                    </QuickSandTextRegular>
                   </View>
                 ))}
               </View>
             </View>
 
             {/* Book Title */}
-            <QuickSandText style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextRegular style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandText>
+            </QuickSandTextRegular>
 
             {/* Review Text */}
-            <QuickSandText style={tw`text-base mb-2`} numberOfLines={4}>
+            <QuickSandTextRegular style={tw`text-base mb-2`} numberOfLines={4}>
               {review}
-            </QuickSandText>
+            </QuickSandTextRegular>
 
             {/* Footer with Reviewer and Timestamp */}
             <View style={tw`flex-row items-center justify-between`}>
-              <QuickSandText style={tw`text-xs text-gray-500`}>
+              <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
                 {users.name}
-              </QuickSandText>
-              <QuickSandText style={tw`text-xs text-gray-500`}>
+              </QuickSandTextRegular>
+              <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
                 {convertTime(created_at, is24Hr)}
-              </QuickSandText>
+              </QuickSandTextRegular>
             </View>
           </View>
         )

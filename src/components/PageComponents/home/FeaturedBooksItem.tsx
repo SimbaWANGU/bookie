@@ -1,16 +1,16 @@
-import React from 'react'
-import Animated, { SharedValue, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
-import { Text, View } from '@components/styled/Themed'
-import { Book } from '@models/book.type'
-import { Pressable } from 'react-native'
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { light, dark } from '@constants/Color'
+import { QuickSandTextRegular, SpaceMonoTextBold } from '@components/styled/StyledText'
+import { Text, View } from '@components/styled/Themed'
+import { dark, light } from '@constants/Color'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import { Book } from '@models/book.type'
+import tw from '@utils/tailwind'
+import { ImageBackground } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { router } from 'expo-router'
-import { QuickSandText, MonoText } from '@components/styled/StyledText'
-import { ImageBackground } from 'expo-image'
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import tw from '@utils/tailwind'
+import React from 'react'
+import { Pressable } from 'react-native'
+import Animated, { SharedValue, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
 
 interface ItemProps {
   index: number
@@ -49,16 +49,16 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 						locations={[0.2, 0.9]}
 					>
 
-						<Text
+						<SpaceMonoTextBold
 							style={tw`absolute px-6 my-2 text-lg italic bottom-22 z-10`}
 							lightColor={dark.activeIconColor}
 							darkColor={dark.activeIconColor}
-						>Featured Books</Text>
-						<QuickSandText
+						>Featured Books</SpaceMonoTextBold>
+						<QuickSandTextRegular
 							style={tw`absolute px-6 my-2 text-xl bottom-16 z-10`}
 							lightColor={dark.text}
 							darkColor={dark.text}
-						>{book.title}</QuickSandText>
+						>{book.title}</QuickSandTextRegular>
 						<View
 							style={tw`absolute bottom-0 flex flex-row items-center justify-between w-full p-4 absolute z-10`}
 							lightColor={'tranparent'}
@@ -77,11 +77,11 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 									}
 								}}
 							>
-								<QuickSandText
+								<QuickSandTextRegular
                   style={tw`text-base`}
 									lightColor={light.activeIconColor}
                   darkColor={dark.activeIconColor}
-							  >View Book</QuickSandText>
+							  >View Book</QuickSandTextRegular>
 								<FontAwesomeSixIcons name="arrow-right" color={light.activeIconColor} />
 							</Pressable>
 							{/* <FontAwesomeSixIcons
@@ -98,11 +98,11 @@ const FeaturedBooksItem: React.FC<ItemProps> = ({ animationValue, book }) => {
 									name="headphones"
 									style={tw`mr-1 text-white`}
 								/>
-								<QuickSandText
+								<QuickSandTextRegular
 									style={tw`text-xs font-semibold text-white`}
 								>
 									Audio
-								</QuickSandText>
+								</QuickSandTextRegular>
 							</View>
 						)}
 					</LinearGradient>

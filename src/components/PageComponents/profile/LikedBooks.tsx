@@ -1,15 +1,15 @@
-import { View, ActivityIndicator } from 'react-native'
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { QuickSandText } from '@components/styled/StyledText'
-import tw from '@utils/tailwind'
 import { fetchLikedBooks } from '@api/profile/api.user'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { Image } from 'expo-image'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
 import { timeFormatAtom } from '@stores/settings.state'
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
+import { useAtom } from 'jotai'
+import React from 'react'
+import { ActivityIndicator, View } from 'react-native'
 
 interface LikedBooksProps {
   id?: string
@@ -38,9 +38,9 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
   if (likedBooks.length === 0) {
     return (
       <View style={tw``}>
-        <QuickSandText style={tw`text-base text-gray-400`}>
+        <QuickSandTextRegular style={tw`text-base text-gray-400`}>
           Liked books will appear here
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
     )
   }
@@ -61,9 +61,9 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
               {/* Current paragraph badge at top right */}
               {/* <View style={tw`absolute top-2 right-2 bg-white bg-opacity-75 px-2 py-1 rounded-full flex-row items-center`}>
                 <Foundation name="page-multiple" size={16} style={tw`text-accent mr-1`} />
-                <QuickSandText style={tw`text-xs text-accentlight`}>
+                <QuickSandTextRegular style={tw`text-xs text-accentlight`}>
                   {current_paragraph}
-                </QuickSandText>
+                </QuickSandTextRegular>
               </View> */}
               {/* Overlay for genres */}
               <View style={tw`absolute bottom-0 left-0 right-0 flex-row flex-wrap p-2`}>
@@ -72,24 +72,24 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
                     key={index}
                     style={tw`px-2 py-1 rounded-full mr-1 mb-1 bg-accent/75`}
                   >
-                    <QuickSandText style={tw`text-xs font-bold text-light`}>
+                    <QuickSandTextRegular style={tw`text-xs font-bold text-light`}>
                       {genre.genres.name}
-                    </QuickSandText>
+                    </QuickSandTextRegular>
                   </View>
                 ))}
               </View>
             </View>
 
             {/* Other book details */}
-            <QuickSandText style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextRegular style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandText>
-            <QuickSandText style={tw`text-base my-2`} numberOfLines={4}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-base my-2`} numberOfLines={4}>
               {books.description}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               {convertTime(created_at, is24Hr)}
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           // <BookContainer book={books} />
         )

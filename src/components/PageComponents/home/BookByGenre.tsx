@@ -1,20 +1,20 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-} from 'react-native'
+import Audio from '@components/styled/Audio'
+import Genre from '@components/styled/Genre'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { convertTime, getDynamicValue } from '@constants/Functions'
+import { BookByGenre } from '@models/useractivity.type'
+import { timeFormatAtom } from '@stores/settings.state'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
-import { BookByGenre } from '@models/useractivity.type'
-import { convertTime, getDynamicValue } from '@constants/Functions'
 import { router } from 'expo-router'
-import { QuickSandText } from '@components/styled/StyledText'
-import Genre from '@components/styled/Genre'
-import Audio from '@components/styled/Audio'
 import { useAtom } from 'jotai'
-import { timeFormatAtom } from '@stores/settings.state'
+import React from 'react'
+import {
+    Text,
+    TouchableOpacity,
+    View,
+    useColorScheme,
+} from 'react-native'
 
 interface BookByGenreCardProps {
   item: BookByGenre
@@ -105,22 +105,22 @@ const BookByGenreCard: React.FC<BookByGenreCardProps> = ({ item }) => {
         </View>
 
         {/* Description */}
-        <QuickSandText
+        <QuickSandTextRegular
           style={tw`mt-3 text-sm ${
             theme === 'light' ? 'text-gray-700' : 'text-gray-400'
           }`}
         >
           {item.description}
-        </QuickSandText>
+        </QuickSandTextRegular>
 
         {/* Date */}
-        <QuickSandText
+        <QuickSandTextRegular
           style={tw`mt-2 text-xs italic ${
             theme === 'light' ? 'text-gray-500' : 'text-gray-600'
           }`}
         >
           {convertTime(item.updated_at, is24Hr)}
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
     </TouchableOpacity>
   )

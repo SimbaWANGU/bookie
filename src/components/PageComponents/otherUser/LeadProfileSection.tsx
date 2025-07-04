@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'
-import { TouchableOpacity, View, useColorScheme } from 'react-native'
-import { QuickSandText } from '@components/styled/StyledText'
+import { fetchOtherUser } from '@api/profile/api.user'
+import ProfilePicture from '@components/PageComponents/otherUser/ProfilePicture'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QueryKeys } from '@constants/QueryKeys'
+import { useQuery } from '@tanstack/react-query'
 import tw from '@utils/tailwind'
 import { useLocalSearchParams } from 'expo-router'
-import ProfilePicture from '@components/PageComponents/otherUser/ProfilePicture'
-import { fetchOtherUser } from '@api/profile/api.user'
-import { QueryKeys } from '@constants/QueryKeys'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { supabase } from '@utils/supabase'
+import React from 'react'
+import { TouchableOpacity, View, useColorScheme } from 'react-native'
 
 interface ProfilePictureProps {
   setModalProfileUpdateModal: (visible: boolean) => void;
@@ -34,29 +33,29 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
         {/* New component displaying the three counts */}
         <View style={tw`flex-row justify-around mb-2 my-auto`}>
           <View style={tw`items-center`}>
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {isLoading ? 0 : otherUser?.authors_followed_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Authors
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           <View style={tw`items-center`}>
 						
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {isLoading ? 0 : otherUser?.follower_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Followers
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           <View style={tw`items-center`}>
-            <QuickSandText style={tw`text-lg font-bold`}>
+            <QuickSandTextRegular style={tw`text-lg font-bold`}>
               {isLoading ? 0 : otherUser?.following_count}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextRegular>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               Following
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
         </View>
 
@@ -67,11 +66,11 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
             // Should open modal for viewing stats
             onPress={() => setModalAchievement(true)}
           >
-            <QuickSandText
+            <QuickSandTextRegular
               style={tw`text-sm ${theme === 'light' ? 'text-accentdark' : 'text-light/80'} mx-2`}
             >
               Starting Out!
-            </QuickSandText>
+            </QuickSandTextRegular>
           </TouchableOpacity>
         </View>
       </View>

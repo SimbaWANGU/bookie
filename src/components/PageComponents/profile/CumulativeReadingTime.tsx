@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
-import { QuickSandText } from '@components/styled/StyledText'
 import { convertToTime } from '@constants/Functions'
 import { Ionicons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
 import tw from '@utils/tailwind'
+import { LinearGradient } from 'expo-linear-gradient'
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  runOnJS,
+    runOnJS,
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
 } from 'react-native-reanimated'
 
 const ReadingTime = () => {
@@ -66,9 +66,9 @@ const ReadingTime = () => {
           style={tw`p-4`}
         >
           <View style={tw`flex-row items-center justify-between bg-transparent`}>
-            <QuickSandText style={tw`text-xl font-bold text-white`}>
+            <QuickSandTextRegular style={tw`text-xl font-bold text-white`}>
               Total Reading Time
-            </QuickSandText>
+            </QuickSandTextRegular>
             <Ionicons
               name={expanded ? 'chevron-up-outline' : 'chevron-down-outline'}
               size={24}
@@ -76,14 +76,14 @@ const ReadingTime = () => {
             />
           </View>
           <View style={tw`mt-8 bg-transparent`}>
-            <QuickSandText
+            <QuickSandTextRegular
               style={tw`text-4xl font-extrabold text-white`}
               numberOfLines={1}
               adjustsFontSizeToFit
               minimumFontScale={0.5}
             >
               {convertToTime(totalReadingTimeInSeconds)}
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
         </LinearGradient>
         {showContent && (

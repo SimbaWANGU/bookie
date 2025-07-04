@@ -1,16 +1,16 @@
+import { fetchExploreBooks } from '@api/books/api.books';
+import Genre from '@components/styled/Genre';
+import { QuickSandTextRegular } from '@components/styled/StyledText';
+import { QueryKeys } from '@constants/QueryKeys';
+import { Book } from '@models/book.type';
+import { useQuery } from '@tanstack/react-query';
 import tw from '@utils/tailwind';
+import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Image } from 'expo-image'
 import { ResponsiveGrid } from 'react-native-flexible-grid';
-import { LinearGradient } from 'expo-linear-gradient';
-import { fetchBooks, fetchExploreBooks } from '@api/books/api.books';
-import { QueryKeys } from '@constants/QueryKeys';
-import { useQuery } from '@tanstack/react-query';
-import { Book } from '@models/book.type';
-import { QuickSandText } from '@components/styled/StyledText';
-import Genre from '@components/styled/Genre';
-import { router } from 'expo-router';
  
 const ExploreResults = () => {
   interface DataProp {
@@ -53,12 +53,12 @@ const ExploreResults = () => {
           )}
     
           {/* Title */}
-          <QuickSandText
+          <QuickSandTextRegular
             numberOfLines={2}
             style={tw`text-white font-bold text-base mt-1`}
           >
             {item.title}
-          </QuickSandText>
+          </QuickSandTextRegular>
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -72,8 +72,8 @@ const ExploreResults = () => {
         maxItemsPerColumn={2} // changed from 3 to 2
         data={books.map((book, index) => ({
           ...book,
-          widthRatio: index === 0 || index === 4 ? 1 : undefined,
-          heightRatio: index === 0 || index === 4 ? 2 : undefined,
+          widthRatio: index % 4 === 0 ? 1 : undefined,
+          heightRatio: index % 4 === 0 ? 2 : undefined,
         }))}
         renderItem={renderItem}
         showScrollIndicator={false}
