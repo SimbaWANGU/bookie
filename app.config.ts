@@ -3,7 +3,7 @@ export default {
     name: 'Book Worms',
     slug: 'book-worms',
     scheme: 'book-worms',
-    version: '0.1.1',
+    version: '0.1.2',
     icon: './assets/images/app_icon.png',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
