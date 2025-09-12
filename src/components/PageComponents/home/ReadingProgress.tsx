@@ -16,7 +16,7 @@ const UserStartedReading: React.FC<UserStartedReadingProps> = ({ item }) => {
     <View style={tw`flex flex-col items-center justify-center gap-2 mb-4 rounded-full`}>
       <View>
         <Image
-          source={{ uri: book.cover_image_url }}
+          source={{ uri: book?.cover_image_url }}
           style={tw`h-28 aspect-square rounded-full`}
           resizeMode="cover"
         />

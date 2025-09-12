@@ -1,5 +1,5 @@
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
@@ -35,11 +35,11 @@ const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
 							lightColor={dark.text}
 							darkColor={dark.text}
 						>{text[1]}</QuickSandTextRegular>
-						<QuickSandTextRegular
+						<QuickSandTextBold
 							style={tw`text-5xl font-bold my-2`}
 							lightColor={light.activeIconColor}
 							darkColor={dark.activeIconColor}
-						>{text[2]}</QuickSandTextRegular>
+						>{text[2]}</QuickSandTextBold>
 						<QuickSandTextRegular
 							style={tw`text-xl`}
 							lightColor={dark.text}

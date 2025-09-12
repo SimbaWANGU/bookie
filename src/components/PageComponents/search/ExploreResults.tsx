@@ -1,6 +1,6 @@
 import { fetchExploreBooks } from '@api/books/api.books';
 import Genre from '@components/styled/Genre';
-import { QuickSandTextRegular } from '@components/styled/StyledText';
+import { QuickSandTextRegular, QuickSandTextSemiBold } from '@components/styled/StyledText';
 import { QueryKeys } from '@constants/QueryKeys';
 import { Book } from '@models/book.type';
 import { useQuery } from '@tanstack/react-query';
@@ -53,12 +53,12 @@ const ExploreResults = () => {
           )}
     
           {/* Title */}
-          <QuickSandTextRegular
+          <QuickSandTextSemiBold
             numberOfLines={2}
             style={tw`text-white font-bold text-base mt-1`}
           >
             {item.title}
-          </QuickSandTextRegular>
+          </QuickSandTextSemiBold>
         </LinearGradient>
       </TouchableOpacity>
     );

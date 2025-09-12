@@ -27,7 +27,7 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
           tw`aspect-square rounded-full border-2 border-white bg-gray-200`,
           { width: getDynamicValue(200) },
         ]}
-        transition={500}
+        
       />
     </TouchableOpacity>
   )

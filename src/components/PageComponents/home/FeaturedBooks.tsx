@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
 import { QueryKeys } from '@constants/QueryKeys'
 import tw from '@utils/tailwind'
+import { Book } from '@models/book.type'
  
 const PAGE_WIDTH = Dimensions.get('window').width
 

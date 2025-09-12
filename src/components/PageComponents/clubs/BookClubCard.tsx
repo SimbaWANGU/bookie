@@ -1,4 +1,4 @@
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextLight, QuickSandTextMedium, QuickSandTextRegular, QuickSandTextSemiBold } from '@components/styled/StyledText'
 import { hitSlop } from '@constants/HitSlop'
 import { QueryKeys } from '@constants/QueryKeys'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -55,9 +55,9 @@ const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
     >
       {/* Header */}
       <View style={tw`flex-row justify-between items-center mb-2`}>
-        <QuickSandTextRegular style={tw`text-xl font-semibold text-accent`}>
+        <QuickSandTextSemiBold style={tw`text-xl font-semibold text-accent`}>
           {item.book_clubs.club_name}
-        </QuickSandTextRegular>
+        </QuickSandTextSemiBold>
       </View>
 
       {/* Book Content */}
@@ -72,17 +72,17 @@ const BookClubCard: React.FC<BookClubProps> = ({ item }) => {
               style={tw`w-20 h-28 rounded-md mr-4`}
             />
             <View style={tw`flex-1`}>
-              <Text
+              <QuickSandTextBold
                 style={tw`text-base font-bold ${theme === 'light' ? 'text-black/90' : 'text-white/90'}`}
               >
                 {currentRead.title}
-              </Text>
-              <Text
+              </QuickSandTextBold>
+              <QuickSandTextLight
                 style={tw`text-xs mt-2 ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}
                 numberOfLines={4}
               >
                 {currentRead.description}
-              </Text>
+              </QuickSandTextLight>
             </View>
           </View>
         ) : (

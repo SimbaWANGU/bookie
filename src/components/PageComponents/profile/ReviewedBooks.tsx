@@ -1,5 +1,5 @@
 import { fetchReviewedBooks } from '@api/profile/api.user'
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextLight, QuickSandTextRegular } from '@components/styled/StyledText'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
 import { timeFormatAtom } from '@stores/settings.state'
@@ -47,7 +47,7 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
         const { books, review, created_at, users } = data
 
         return (
-          <View key={index} style={tw`bg-white/90 p-4 rounded-lg shadow mb-4`}>
+          <View key={index} style={tw`bg-transparent p-4 rounded-lg shadow mb-4`}>
             {/* Book cover with genre overlay */}
             <View style={tw`overflow-hidden rounded-lg mb-4 relative`}>
               <Image
@@ -70,14 +70,14 @@ const ReviewedBooks: React.FC<ReviewedBooksProps> = ({ id }) => {
             </View>
 
             {/* Book Title */}
-            <QuickSandTextRegular style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextBold style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandTextRegular>
+            </QuickSandTextBold>
 
             {/* Review Text */}
-            <QuickSandTextRegular style={tw`text-base mb-2`} numberOfLines={4}>
+            <QuickSandTextLight style={tw`text-base mb-2`} numberOfLines={4}>
               {review}
-            </QuickSandTextRegular>
+            </QuickSandTextLight>
 
             {/* Footer with Reviewer and Timestamp */}
             <View style={tw`flex-row items-center justify-between`}>

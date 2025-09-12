@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { useGlobalSearchParams } from 'expo-router'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import StoryCarousel from '@components/PageComponents/story/StoryCarousel'
-import { View } from 'react-native'
+import { View, useColorScheme } from 'react-native'
 import ShimmerPlaceHolder from '@components/styled/Shimmer'
 import { QueryKeys } from '@constants/QueryKeys'
 import tw from '@utils/tailwind'
@@ -10,9 +10,11 @@ import useKeepAwakeOnScreen from '@hooks/useKeepAwakeOnScreen'
 import { useAtom } from 'jotai'
 import { lastPageProgressAtom } from '@stores/story.state'
 import { fetchStory } from '@api/story/api.stories'
+import { StatusBar } from 'expo-status-bar'
 
 const story = () => {
   const { synopsis } = useGlobalSearchParams()
+  const theme = useColorScheme()
   const [lastPageProgress] = useAtom(lastPageProgressAtom)
   useKeepAwakeOnScreen()
 
@@ -47,7 +49,10 @@ const story = () => {
 	const newData = data.pages.flat()
 
 	return (
-		<StoryCarousel story={newData} hasPreviousPage={hasPreviousPage} fetchPreviousPage={fetchPreviousPage} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
+    <>
+		  <StoryCarousel story={newData} hasPreviousPage={hasPreviousPage} fetchPreviousPage={fetchPreviousPage} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
+      <StatusBar style={theme === 'light' ? 'dark' : 'light' } />
+    </>
 	)
 }
 

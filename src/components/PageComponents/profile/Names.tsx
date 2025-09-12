@@ -1,4 +1,4 @@
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextSemiBold } from '@components/styled/StyledText'
 import { userAtom } from '@stores/user.state'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
@@ -14,8 +14,8 @@ const Names: React.FC<NamesProps> = () => {
 
   return (
     <View style={tw`bg-transparent flex flex-col`}>
-      <QuickSandTextRegular style={tw`text-3xl text-accent/90 font-bold`}>{user?.name as string}</QuickSandTextRegular>
-      <QuickSandTextRegular style={tw`text-base text-accent/40`}>{`@${user?.user_name as string}`}</QuickSandTextRegular>
+      <QuickSandTextBold style={tw`text-3xl text-accent/90 font-bold`}>{user?.name as string}</QuickSandTextBold>
+      <QuickSandTextSemiBold style={tw`text-base text-accent/40`}>{`@${user?.user_name as string}`}</QuickSandTextSemiBold>
     </View>
   )
 }

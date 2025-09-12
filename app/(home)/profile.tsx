@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
+import { SectionList, useColorScheme } from 'react-native'
 import { View } from '@components/styled/Themed'
-import { useColorScheme } from 'react-native'
-import LeadProfileSection from '@components/PageComponents/profile/LeadProfileSection'
 import tw from '@utils/tailwind'
-import { ScrollView } from 'react-native-gesture-handler'
+import LeadProfileSection from '@components/PageComponents/profile/LeadProfileSection'
 import Names from '@components/PageComponents/profile/Names'
 import Bio from '@components/PageComponents/profile/Bio'
 import SelectionPanel from '@components/PageComponents/profile/SelectionPanel'
@@ -17,20 +16,58 @@ const Profile = () => {
 	const [isTimeModalOpen, setTimeModalOpen] = useState(false)
 	const [isAchievementModalOpen, setAchievementModalOpen] = useState(false)
 
-	return (
-		<View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
-			<ScrollView style={tw``} showsVerticalScrollIndicator={false} contentContainerStyle={tw`android:mt-32 ios:mt-24`}>
-			<LeadProfileSection setModalProfileUpdateModal={(bool) => setProfileupdateModalOpen(bool)} setModaTime={(bool) => setTimeModalOpen(bool)} setModalAchievement={(bool) => setAchievementModalOpen(bool)} />
+	const sections = [
+		{
+			title: 'header',
+			data: ['header'],
+			renderItem: () => (
+				<LeadProfileSection
+					setModalProfileUpdateModal={setProfileupdateModalOpen}
+					setModaTime={setTimeModalOpen}
+					setModalAchievement={setAchievementModalOpen}
+				/>
+			),
+		},
+		{
+			title: 'details',
+			data: ['details'],
+			renderItem: () => (
 				<View style={tw`px-4 bg-transparent`}>
 					<Names />
 					<Bio />
 				</View>
+			),
+		},
+		{
+			title: 'content',
+			data: ['content'],
+			renderItem: () => <SelectionPanel />,
+		},
+	]
 
-				<SelectionPanel />
-				<ModalTime timeModalVisisble={isTimeModalOpen} setTimeModalVisible={(bool) => setTimeModalOpen(bool)} />
-				<ModalProfile profileModalVisible={isProfileupdateModalOpen} setProfileModalVisible={(bool) => setProfileupdateModalOpen(bool)} />
-				<ModalAchievements achievementsModalVisisble={isAchievementModalOpen} setAchievementsModalVisible={(bool) => setAchievementModalOpen(bool)} />
-			</ScrollView>
+	return (
+		<View style={tw`flex-1 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
+			<SectionList
+				sections={sections}
+				keyExtractor={(item, index) => item + index}
+				renderItem={({ section }) => section.renderItem()}
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={tw`android:mt-32 ios:mt-24`}
+				stickySectionHeadersEnabled={false}
+			/>
+
+			<ModalTime
+				timeModalVisisble={isTimeModalOpen}
+				setTimeModalVisible={setTimeModalOpen}
+			/>
+			<ModalProfile
+				profileModalVisible={isProfileupdateModalOpen}
+				setProfileModalVisible={setProfileupdateModalOpen}
+			/>
+			<ModalAchievements
+				achievementsModalVisisble={isAchievementModalOpen}
+				setAchievementsModalVisible={setAchievementModalOpen}
+			/>
 		</View>
 	)
 }

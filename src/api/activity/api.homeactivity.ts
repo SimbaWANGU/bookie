@@ -1,30 +1,5 @@
+import { LikedBookFeedEntry, UserFeedItem } from '@models/feed.type'
 import { supabase } from '@utils/supabase'
-
-const getUserLikedBooks = async (followedUsers: { followee: string }[]) => {
-  const newArray = followedUsers.map(item => item.followee)
-  const { data, error } = await supabase
-    .from('user_likes_book')
-    .select(`
-      *,
-      users ( * ),
-      books ( * )
-    `).in('user_id', newArray)
-  if (error) throw new Error(error.message)
-  return data
-}
-
-const getUserReviewedBooks = async (followedUsers: { followee: string }[]) => {
-  const newArray = followedUsers.map(item => item.followee)
-  const { data, error } = await supabase
-    .from('user_reviews_book')
-    .select(`
-      *,
-      users ( * ),
-      books ( * )
-    `).in('user_id', newArray)
-  if (error) throw new Error(error.message)
-  return data
-}
 
 const getPublishedBooks = async (followedCreatorsIds: { creator_id: string}[]) => {
   const newArray = followedCreatorsIds.map(item => item.creator_id)
@@ -70,48 +45,57 @@ const getBooksByGenres = async (genreNames: string[]) => {
   }
 
   return data;
-};
-
-const getOthersStartedReading = async (followedUsers: { followee: string }[]) => {
-  const userIds = followedUsers.map(u => u.followee)
-
-  const { data, error } = await supabase
-    .from('user_reading_progress')
-    .select(`
-      *,
-      books (
-        *,
-        creator_books (
-          *,
-          creators ( * )
-        )
-      ),
-      users ( * )
-    `)
-    .in('user_id', userIds)
-    .order('user_id', { ascending: true })
-    .order('started_at', { ascending: false })
-
-  if (error) {
-    console.error('Error fetching reading progress:', error)
-    return []
-  }
-
-  // Deduplicate: only keep latest entry per user
-  const uniqueByUser = new Map()
-  for (const item of data) {
-    if (!uniqueByUser.has(item.user_id)) {
-      uniqueByUser.set(item.user_id, item)
-    }
-  }
-
-  return Array.from(uniqueByUser.values())
 }
 
-export { 
-  getUserLikedBooks,
-  getUserReviewedBooks,
-  getPublishedBooks,
-  getBooksByGenres,
-  getOthersStartedReading
+const getUserFeed = async (id: string, offset = 0, limit = 15): Promise<UserFeedItem[]> => {
+  const { data, error } = await supabase.rpc('get_user_feed', {
+    this_user_id: id,
+    offset_count: offset,
+    limit_count: limit
+  })
+
+  if (error) throw new Error(error.message);
+  if (!data) return [];
+
+  return data.map((item: UserFeedItem) => ({
+    ...item,
+    actors: item.actors ?? [],
+    books: item.books ?? null,
+  }))
+}
+
+const getFeedItemStats = async (id: string) => {
+  const { data, error } = await supabase.from('books')
+    .select(`
+      review_count: user_reviews_book(count),
+      like_count: user_likes_book(count)
+    `)
+    .eq('id', id)
+
+  if (error) throw new Error(error.message)
+  return data
+}
+
+const getFeedItemLikes = async (id: string) => {
+  const { data, error } = await supabase
+    .from('user_likes_book')
+    .select(`user:users ( id, user_name, name, avatar_url )`)
+    .eq('book_id', id)
+
+  if (error) throw new Error(error.message)
+  return data
+}
+
+const getFeedItemReviewed = async (id: string) => {
+  const { data, error } = await supabase
+    .from('user_reviews_book')
+    .select(`review, created_at, user: users ( id, user_name, name, avatar_url )`)
+    .eq('book_id', id)
+
+    if (error) throw new Error(error.message)
+    return data
+}
+
+export {
+  getBooksByGenres, getFeedItemLikes, getFeedItemStats, getPublishedBooks, getUserFeed, getFeedItemReviewed
 }

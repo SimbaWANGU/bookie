@@ -27,7 +27,7 @@ const LeadProfileSection: React.FC<ProfilePictureProps> = ({ setModalProfileUpda
 
   return (
     <View style={tw`self-start flex flex-row shadow p-2 w-full bg-transparent`}>
-      <ProfilePicture id={user as string} setModalProfileUpdateModal={() => setModalProfileUpdateModal(true)}  />
+      <ProfilePicture id={user as string}  />
 
       <View style={tw`flex-1 ml-4 justify-end`}>
         {/* New component displaying the three counts */}

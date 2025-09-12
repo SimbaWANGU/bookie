@@ -1,27 +1,29 @@
-import { ActivityIndicator, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { router, useLocalSearchParams } from 'expo-router'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { View } from '@components/styled/Themed'
-import { LinearGradient } from 'expo-linear-gradient'
-import { dark, light } from '@constants/Color'
-import { StatusBar } from 'expo-status-bar'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { Book } from '@models/book.type'
-import tw from '@utils/tailwind'
-import InteractionOptions from '@components/styled/InteractionOptions'
 import { fetchBook } from '@api/books/api.book'
-import { userAtom } from '@stores/user.state'
-import { useAtom } from 'jotai'
-import { bookAtom } from '@stores/books.state'
 import { checkReadingProgress, initialReadingProgress } from '@api/story/api.progress'
-import { lastPageProgressAtom, progressAtom, timeTakenInBookAtom } from '@stores/story.state'
-import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
-import Author from '@components/PageComponents/synopsis/Author'
-import { QueryKeys } from '@constants/QueryKeys'
-import { MutationKeys } from '@constants/MutationKeys'
 import { getCurrentPosition } from '@api/story/api.stories'
+import Author from '@components/PageComponents/synopsis/Author'
+import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
+import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
+import InteractionOptions from '@components/styled/InteractionOptions'
+import { QuickSandTextRegular, QuickSandTextSemiBold, SpaceMonoTextRegular } from '@components/styled/StyledText'
+import { View } from '@components/styled/Themed'
+import { dark, light } from '@constants/Color'
+import { MutationKeys } from '@constants/MutationKeys'
+import { QueryKeys } from '@constants/QueryKeys'
+import { Book } from '@models/book.type'
+import { bookAtom } from '@stores/books.state'
+import { lastPageProgressAtom, progressAtom, timeTakenInBookAtom } from '@stores/story.state'
+import { userAtom } from '@stores/user.state'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
+import { LinearGradient } from 'expo-linear-gradient'
+import { router, useLocalSearchParams } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+
+// ? check why book isnt being opened
 
 const synopsis = () => {
   const { synopsis } = useLocalSearchParams()
@@ -39,7 +41,7 @@ const synopsis = () => {
 
   const { data: progressData, isLoading: progressLoading } = useQuery({
     queryKey: [QueryKeys.initialProgress, book?.id],
-    queryFn: () => checkReadingProgress(book?.id as string, user?.id as string),
+    queryFn: async () => await checkReadingProgress(book?.id as string, user?.id as string),
     enabled: !!book && !!user,
   })
 
@@ -104,17 +106,17 @@ const synopsis = () => {
 						{/* {snapPoint === -1 ? <></> : <TouchableOpacity onPress={() => setSnapPoint(-1)} style={tw`bg-transparent flex-1`} />} */}
 						<View style={tw`bg-transparent`}>
 							{book?.creator_books?.[0]?.creators && ( <Author name={book.creator_books[0].creators.name} id={book.creator_books[0].creators.id} /> )}
-							<QuickSandText
+							<QuickSandTextSemiBold
 								style={tw`text-4xl p-2`}
 								lightColor={light.activeIconColor}
 								darkColor={dark.activeIconColor}
-							>{book?.title}</QuickSandText>
+							>{book?.title}</QuickSandTextSemiBold>
 							<ScrollView style={tw`max-h-1/2 my-2`} >
-								<MonoText
+								<SpaceMonoTextRegular
 									style={tw`text-sm p-2`}
 									lightColor={dark.text}
 									darkColor={dark.text}
-								>{book?.description}</MonoText>
+								>{book?.description}</SpaceMonoTextRegular>
 							</ScrollView>
 							<InteractionOptions user_id={user?.id as string} book_id={book?.id as string} openAndClose={() => setModalVisible(true)}  />
 							<TouchableOpacity
@@ -143,11 +145,11 @@ const synopsis = () => {
 									}
 								}}
 							>
-								<QuickSandText
+								<QuickSandTextSemiBold
 									style={[tw`text-base w-auto`, {
 										color: light.activeIconColor
 									}]}
-								>{progressLoading ? 'Loading...' : progress.paragraph_no > 1 ? 'Continue reading' : 'Start Reading'}</QuickSandText>
+								>{progressLoading ? 'Loading...' : progress.paragraph_no > 1 ? 'Continue reading' : 'Start Reading'}</QuickSandTextSemiBold>
 								<FontAwesomeSixIcons name="arrow-right" color={light.activeIconColor} />
 							</TouchableOpacity>
 						</View>

@@ -1,6 +1,6 @@
 import { fetchBooksInProgress } from '@api/profile/api.user'
 import Genre from '@components/styled/Genre'
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextLight, QuickSandTextRegular } from '@components/styled/StyledText'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
 import Foundation from '@expo/vector-icons/Foundation'
@@ -55,7 +55,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
         const { books, current_paragraph, last_updated_at } = data
       
         return (
-          <View key={index} style={tw`p-4 rounded-lg rounded-2xl mb-4 ${theme === 'light' ? 'border-dark' : 'border-light'}}`}>
+          <View key={index} style={tw`p-4 rounded-lg rounded-2xl mb-4 bg-transparent`}>
             {/* Container with relative positioning to overlay content */}
             <View style={tw`overflow-hidden rounded-lg mb-4 relative`}>
               <Image
@@ -78,12 +78,12 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
             </View>
 
             {/* Other book details */}
-            <QuickSandTextRegular style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextBold style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandTextRegular>
-            <QuickSandTextRegular style={tw`text-base my-2`} numberOfLines={4}>
+            </QuickSandTextBold>
+            <QuickSandTextLight style={tw`text-base my-2`} numberOfLines={4}>
               {books.description}
-            </QuickSandTextRegular>
+            </QuickSandTextLight>
             <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               {convertTime(last_updated_at, is24Hr)}
             </QuickSandTextRegular>

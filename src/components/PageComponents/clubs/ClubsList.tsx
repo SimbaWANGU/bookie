@@ -1,13 +1,6 @@
-import {
-  View,
-  SectionList,
-  ActivityIndicator,
-  Text,
-  useColorScheme
-} from 'react-native'
-import React, { Dispatch, SetStateAction } from 'react'
+import { SectionList, ActivityIndicator, Text, useColorScheme } from 'react-native'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { supabase } from '@utils/supabase'
 import { userAtom } from '@stores/user.state'
 import { useAtom } from 'jotai'
 import tw from '@utils/tailwind'
@@ -15,6 +8,7 @@ import { QueryKeys } from '@constants/QueryKeys'
 import BookClubCard from './BookClubCard'
 import { BookClubMember } from '@models/club.type'
 import { getMyClubList } from '@api/clubs/api.clubs'
+import { QuickSandTextMedium, QuickSandTextRegular } from '@components/styled/StyledText'
 
 const ClubsList = () => {
   const [user] = useAtom(userAtom)
@@ -49,15 +43,15 @@ const ClubsList = () => {
       contentContainerStyle={tw`px-4 pb-10`}
       stickySectionHeadersEnabled={false}
       renderSectionHeader={({ section: { title } }) => (
-        <Text style={tw`text-lg font-bold android:my-4 ios:my-1 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
+        <QuickSandTextMedium style={tw`text-lg font-bold android:my-4 ios:my-1 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
           {title}
-        </Text>
+        </QuickSandTextMedium>
       )}
       renderItem={({ index, item }) => <BookClubCard key={`${index}-${item.book_club_id}`} item={item} />}
       ListEmptyComponent={
-        <Text style={tw`text-center text-gray-500 mt-10`}>
+        <QuickSandTextMedium style={tw`text-center text-gray-500 mt-10`}>
           You are not part of any book clubs yet.
-        </Text>
+        </QuickSandTextMedium>
       }
     />
   )

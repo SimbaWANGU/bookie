@@ -1,12 +1,12 @@
-import { fetchOtherUser } from '@api/profile/api.user'
+import { View } from 'react-native'
+import React from 'react'
 import { QuickSandTextRegular } from '@components/styled/StyledText'
-import { QueryKeys } from '@constants/QueryKeys'
-import { userAtom } from '@stores/user.state'
-import { useQuery } from '@tanstack/react-query'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
-import React from 'react'
-import { View } from 'react-native'
+import { userAtom } from '@stores/user.state'
+import { fetchOtherUser } from '@api/profile/api.user'
+import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from '@constants/QueryKeys'
 
 interface BioProps {
   id?: string

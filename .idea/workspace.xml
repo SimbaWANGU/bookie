@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2c174fdc-d177-4753-81ba-4ca7148b5040" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.expo/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/types/router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/types/router.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/mcp.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/mcp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(home)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(home)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(home)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(home)/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/audio/[audio].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/audio/[audio].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/book/[synopsis].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/book/[synopsis].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/book/story.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/book/story.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usersprofile/[user].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/usersprofile/[user].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/activity/api.homeactivity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/activity/api.homeactivity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/books/api.books.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/books/api.books.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/Main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/clubs/BookClubCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/clubs/BookClubCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/clubs/ClubsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/clubs/ClubsList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/ContinueReading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/home/ContinueReading.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/FeaturedBooks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/home/FeaturedBooks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/FeaturedBooksItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/home/FeaturedBooksItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/OtherStartedReading.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/ReadingProgress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/home/ReadingProgress.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/UserActivities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/home/UserActivities.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/UserBookLiked.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/home/UserBookReview.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/onboard/OnboardItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/onboard/OnboardItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/otherUser/LeadProfileSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/otherUser/LeadProfileSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/otherUser/ProfilePicture.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/otherUser/ProfilePicture.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/Bio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/Bio.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/CompletedBooks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/CompletedBooks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/InProgress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/InProgress.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/LikedBooks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/LikedBooks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/Names.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/Names.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/ProfilePicture.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/ProfilePicture.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/profile/ReviewedBooks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/profile/ReviewedBooks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/search/ExploreResults.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/search/ExploreResults.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/search/Genre.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/search/Genre.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageComponents/synopsis/Author.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageComponents/synopsis/Author.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/headers/modalsHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/headers/modalsHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/Functions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Functions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/QueryKeys.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/QueryKeys.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/author.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/author.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/book.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/book.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/user.state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/user.state.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2y1y7qfLrCaB2LIS8aSYa84zbsG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Version---#0.1.2&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/eugenesimba/Documents/Personal/My Apps/Bookie System/bookie/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2c174fdc-d177-4753-81ba-4ca7148b5040" name="Changes" comment="" />
+      <created>1749016210098</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749016210098</updated>
+      <workItem from="1749016211438" duration="2304000" />
+      <workItem from="1749018550224" duration="19938000" />
+      <workItem from="1749281467419" duration="986000" />
+      <workItem from="1749539408312" duration="18272000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/PageComponents/home/ContinueReading.tsx</url>
+          <line>38</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

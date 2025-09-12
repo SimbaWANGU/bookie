@@ -1,14 +1,15 @@
 // api/booksApi.ts
+import { Book } from '@models/book.type'
 import { supabase } from '@utils/supabase'
 
-const featuredBooks = async () => {
+const featuredBooks = async (): Promise<Book[]> => {
   const { data, error } = await supabase.from('books').select(`
     *,
     book_genres (
       genres (name)
     ),
     creator_books (
-      creators (name)
+      creators ( id, name, avatar_url )
     )
   `)
   .eq('is_audio', false)

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Slot, SplashScreen, router } from 'expo-router'
+import { Slot, SplashScreen, Stack, router } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import * as Notifications from 'expo-notifications'
@@ -100,7 +100,41 @@ const Main = () => {
   // 8) Now that user & splash are settled, render your routes
   return (
     <ErrorBoundary FallbackComponent={CustomFallBack}>
-      <Slot />
+      <Stack
+				screenOptions={{
+					headerShown: false,
+				}}
+			>
+				<Stack.Screen
+          name={'(home)'}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='audio'
+          options={{ headerShown: false }}
+          dangerouslySingular={true}
+        />
+        <Stack.Screen
+          name='auth'
+          options={{ headerShown: false }}
+          dangerouslySingular={true}
+        />
+        <Stack.Screen
+          name='book'
+          options={{ headerShown: false }}
+          dangerouslySingular={true}
+        />
+        <Stack.Screen
+          name='usersprofile'
+          options={{ headerShown: false }}
+          dangerouslySingular={true}
+        />
+        <Stack.Screen
+          name='authorsprofile'
+          options={{ headerShown: false }}
+          dangerouslySingular={true}
+        />
+			</Stack>
     </ErrorBoundary>
   )
 }

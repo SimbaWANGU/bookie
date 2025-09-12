@@ -1,5 +1,5 @@
 import { fetchLikedBooks } from '@api/profile/api.user'
-import { QuickSandTextRegular } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextLight, QuickSandTextRegular } from '@components/styled/StyledText'
 import { convertTime } from '@constants/Functions'
 import { QueryKeys } from '@constants/QueryKeys'
 import { timeFormatAtom } from '@stores/settings.state'
@@ -51,7 +51,7 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
         const { books, created_at } = data
       
         return (
-          <View key={index} style={tw`bg-white/90 p-4 rounded-lg shadow mb-4`}>
+          <View key={index} style={tw`bg-transparent p-4 rounded-lg shadow mb-4`}>
             {/* Container with relative positioning to overlay content */}
             <View style={tw`overflow-hidden rounded-lg mb-4 relative`}>
               <Image
@@ -81,12 +81,12 @@ const LikedBooks: React.FC<LikedBooksProps> = ({ id }) => {
             </View>
 
             {/* Other book details */}
-            <QuickSandTextRegular style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextBold style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandTextRegular>
-            <QuickSandTextRegular style={tw`text-base my-2`} numberOfLines={4}>
+            </QuickSandTextBold>
+            <QuickSandTextLight style={tw`text-base my-2`} numberOfLines={4}>
               {books.description}
-            </QuickSandTextRegular>
+            </QuickSandTextLight>
             <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               {convertTime(created_at, is24Hr)}
             </QuickSandTextRegular>

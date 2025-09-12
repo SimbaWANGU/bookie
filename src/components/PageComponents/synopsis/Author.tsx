@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import { Image } from 'expo-image'
-import { useQuery } from '@tanstack/react-query'
-import tw from '@utils/tailwind'
-import { QuickSandText } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextRegular } from '@components/styled/StyledText'
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
-import { supabase } from '@utils/supabase'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
 import { CreatorWithFollow } from '@models/follows/author.type'
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import { TouchableOpacity, View } from 'react-native'
 
 interface AuthorProps {
   uri?: string
@@ -16,21 +16,21 @@ interface AuthorProps {
   id: string // creator_id
 }
 
-const Author: React.FC<AuthorProps> = ({ uri, name, id }) => {
+const Author: React.FC<AuthorProps> = ({ name, id }) => {
   const [user] = useAtom(userAtom)
   const [isFollowing, setFollowing] = useState(false)
   const { data: authorData, isLoading: authorDataLoading, error: authorDataError } = useQuery<CreatorWithFollow>({
-    queryKey: ['author', id],
+    queryKey: ['author_follows', id],
     queryFn: async () => {
-        const { data, error } = await supabase
-      .rpc('get_creator_with_follow', {
-        _creator_id: id,
-        _user_id: user?.id,
-      })
-      .single(); // .single() since it returns exactly one row
+      const { data, error } = await supabase
+        .rpc('get_creator_with_follow', {
+          _creator_id: id,
+          _user_id: user?.id,
+        })
+        .single(); // .single() since it returns exactly one row
 
-    if (error) throw error;
-    return data as CreatorWithFollow; 
+      if (error) throw error;
+      return data as CreatorWithFollow; 
     }
   })
 
@@ -72,13 +72,13 @@ const Author: React.FC<AuthorProps> = ({ uri, name, id }) => {
 
 
   return (
-    <View style={tw`flex flex-row gap-2 bg-transparent mb-4`}>
+    <View style={tw`flex flex-row gap-2 bg-transparent mb-2`}>
       <Image source={{ uri: authorData?.avatar_url }} style={tw`h-10 aspect-square rounded-full`} />
 
       <View style={tw`flex px-2 h-10 flex-col gap-1 bg-transparent`}>
-        <QuickSandText style={tw`text-sm text-light`}>@{name}</QuickSandText>
+        <QuickSandTextBold style={tw`text-sm text-light`}>@{name}</QuickSandTextBold>
         <View style={tw`bg-accent/40 px-2 rounded-lg absolute bottom-0`}>
-          <QuickSandText style={tw`text-xs text-light`}>Author</QuickSandText>
+          <QuickSandTextRegular style={tw`text-xs text-light`}>Author</QuickSandTextRegular>
         </View>
       </View>
 

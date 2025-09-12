@@ -29,7 +29,10 @@ enum QueryKeys {
   inviteUsers = 'invite-users-list',
   initalParagraph = 'initial-paragraph',
   clubDetails = 'club-details',
-  exploreBooks = 'explore-books'
+  exploreBooks = 'explore-books',
+  feed = 'my-feed',
+  feedBookStats = 'feed-book-stats',
+  feedBookLikes = 'feed-book-stats-likes'
 }
 
 export {
