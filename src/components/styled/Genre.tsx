@@ -1,9 +1,9 @@
-import { Platform, View } from 'react-native'
-import React from 'react'
-import tw from '@utils/tailwind'
-import { QuickSandText } from './StyledText'
-import { useAtom } from 'jotai'
 import { bookPreferencesAtom } from '@stores/preference.state'
+import tw from '@utils/tailwind'
+import { useAtom } from 'jotai'
+import React from 'react'
+import { View } from 'react-native'
+import { QuickSandTextRegular } from './StyledText'
 
 interface GenreProps {
   genre: string
@@ -22,14 +22,14 @@ const Genre: React.FC<GenreProps> = ({ genre }) => {
           : 'bg-gray-300 dark:bg-gray-700'
       )}
     >
-      <QuickSandText
+      <QuickSandTextRegular
         style={tw.style(
           'text-xs font-bold',
           isPreferred ? 'text-light' : 'text-dark dark:text-light'
         )}
       >
         {genre}
-      </QuickSandText>
+      </QuickSandTextRegular>
     </View>
   )
 }

@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import React from 'react'
-import { QuickSandText } from '@components/styled/StyledText'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
 import { userAtom } from '@stores/user.state'
@@ -22,18 +22,18 @@ const Bio: React.FC<BioProps> = ({ id }) => {
   if (id !== user?.id) {
     return (
       <View style={tw`bg-transparent my-2`}>
-      <QuickSandText style={tw`text-sm`}>
+      <QuickSandTextRegular style={tw`text-sm`}>
         {otherUser?.bio}
-      </QuickSandText>
+      </QuickSandTextRegular>
     </View>
     )
   }
 
   return (
     <View style={tw`bg-transparent my-2`}>
-      <QuickSandText style={tw`text-sm`}>
+      <QuickSandTextRegular style={tw`text-sm`}>
         {user?.bio}
-      </QuickSandText>
+      </QuickSandTextRegular>
     </View>
   )
 }

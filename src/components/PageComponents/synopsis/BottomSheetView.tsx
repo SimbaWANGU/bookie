@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
-import { View, Modal, KeyboardAvoidingView, Platform } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Image } from 'expo-image'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import tw from '@utils/tailwind'
 import { fetchReviews } from '@api/books/api.reviews'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import ShimmerPlaceHolder from '@components/styled/Shimmer'
 import ModalHeader from '@components/headers/modalsHeader'
-import { BookReview } from '@models/reviews.type'
-import ReviewInput from './ReviewInput'
-import { supabase } from '@utils/supabase'
+import ShimmerPlaceHolder from '@components/styled/Shimmer'
+import { QuickSandTextRegular, SpaceMonoTextRegular } from '@components/styled/StyledText'
 import { QueryKeys } from '@constants/QueryKeys'
+import { BookReview } from '@models/reviews.type'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { supabase } from '@utils/supabase'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
+import React, { useEffect } from 'react'
+import { KeyboardAvoidingView, Modal, Platform, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import ReviewInput from './ReviewInput'
 
 interface BottomSheetViewProps {
   book_id: string
@@ -87,12 +87,12 @@ const BottomSheetView: React.FC<BottomSheetViewProps> = ({ book_id, modalVisible
                   style={tw`w-12 h-12 rounded-full mr-3`}
                 />
                 <View style={tw`flex-1`}>
-                  <MonoText style={tw`text-gray-400`}>
+                  <SpaceMonoTextRegular style={tw`text-gray-400`}>
                     {item.users?.name || item.users?.user_name || 'username'}
-                  </MonoText>
-                  <QuickSandText style={tw`mt-1 text-gray-600`}>
+                  </SpaceMonoTextRegular>
+                  <QuickSandTextRegular style={tw`mt-1 text-gray-600`}>
                     {item.review}
-                  </QuickSandText>
+                  </QuickSandTextRegular>
                 </View>
               </View>
             ))}

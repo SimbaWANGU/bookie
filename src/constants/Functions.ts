@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native'
 import { achievementTimeThresholds } from './Achievements'
 import { Achievement } from '@models/achievement.type'
+import { UserFeedItem, GroupedFeedItem } from '@models/feed.type'
 
 const referenceWidth = 600
 const referenceHeight = 958
@@ -94,11 +95,41 @@ function getNewAchievements(
   )
 }
 
+function groupFeedItemsByBook(feedItems: UserFeedItem[]): GroupedFeedItem[] {
+  const map = new Map<string, GroupedFeedItem>();
+
+  for (const item of feedItems) {
+    const bookId = item.book_id;
+    const existing = map.get(bookId);
+
+    const activity = {
+      activity_type: item.activity_type,
+      actors: item.actors,
+      actor_ids: item.actor_ids,
+			created_at: item.created_at,
+			updated_at: item.updated_at,
+      review: item.review,
+    };
+
+    if (existing) {
+      existing.activities.push(activity);
+    } else {
+      map.set(bookId, {
+        book: item.books,
+        activities: [activity],
+      });
+    }
+  }
+
+  return Array.from(map.values());
+}
+
 export {
 	getDynamicValue,
 	getRandomItems,
 	convertToTime,
 	calculateElapsedPercentage,
 	convertTime,
-	getNewAchievements
+	getNewAchievements,
+	groupFeedItemsByBook
 }

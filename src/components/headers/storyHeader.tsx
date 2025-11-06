@@ -1,5 +1,5 @@
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { QuickSandText } from '@components/styled/StyledText'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { getDynamicValue } from '@constants/Functions'
@@ -51,13 +51,13 @@ const StoryHeader = () => {
       )}
 
       {/* Book title */}
-      <QuickSandText
+      <QuickSandTextRegular
         numberOfLines={1}
         ellipsizeMode="tail"
         style={tw`text-sm flex-1 ${theme === 'light' ? 'text-dark' : 'text-light'}`}
       >
         {cachedBook?.title}
-      </QuickSandText>
+      </QuickSandTextRegular>
     </View>
   )
 }

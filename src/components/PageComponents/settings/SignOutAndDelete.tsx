@@ -1,9 +1,9 @@
-import React from 'react'
-import { MonoText } from '@components/styled/StyledText'
+import { SpaceMonoTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
-import { light, dark } from '@constants/Color'
-import { Pressable } from 'react-native'
+import { dark, light } from '@constants/Color'
 import tw from '@utils/tailwind'
+import React from 'react'
+import { Pressable } from 'react-native'
 
 const SignOutAndDelete = () => {
 	// const signOutMutation = useMutation({
@@ -42,22 +42,22 @@ const SignOutAndDelete = () => {
 				}]}
 				onPress={() => {}}
 			>
-				<MonoText
+				<SpaceMonoTextRegular
 					style={tw`text-center text-lg p-1`}
 					lightColor={dark.text}  
 					darkColor={dark.text}
-				>Sign Out</MonoText>
+				>Sign Out</SpaceMonoTextRegular>
 			</Pressable>
 
 			<Pressable
 				style={tw`p-2 w-5/12 rounded-lg bg-red-500`}
 				onPress={() => {}}
 			>
-				<MonoText
+				<SpaceMonoTextRegular
 					style={tw`text-center text-lg p-1`}
 					lightColor={dark.text}  
 					darkColor={dark.text}
-				>Delete Account</MonoText>
+				>Delete Account</SpaceMonoTextRegular>
 			</Pressable>
 		</View>
 	)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import tw from '@utils/tailwind'
 import { getDynamicValue } from '@constants/Functions'
 import { SimpleLineIcons } from '@expo/vector-icons'
@@ -14,10 +14,9 @@ import { QueryKeys } from '@constants/QueryKeys'
 
 interface FollowableProfilePictureProps {
   id?: string;
-  setModalProfileUpdateModal: (visible: boolean) => void;
 }
 
-const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalProfileUpdateModal }) => {
+const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id }) => {
   const [user] = useAtom(userAtom)
   const queryClient = useQueryClient()
 
@@ -60,11 +59,7 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
   })
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={id === user?.id ? () => null : () => setModalProfileUpdateModal(true)}
-      style={tw`relative`}
-    >
+    <View style={tw`relative`} >
       <Image
         source={{ uri: otherUser?.avatar_url }}
         style={[
@@ -99,7 +94,7 @@ const ProfilePicture: React.FC<FollowableProfilePictureProps> = ({ id, setModalP
           <SimpleLineIcons name="user-follow" style={tw`text-xl text-accent`} color="black" />
         </TouchableOpacity>
       )}
-    </TouchableOpacity>
+    </View>
   )
 }
 

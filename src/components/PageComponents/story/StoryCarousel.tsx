@@ -101,9 +101,9 @@ const StoryPagerView: React.FC<StoryCarouselProps> = ({ story, hasNextPage, fetc
         onPageSelected={(e) => handlePageChange(e.nativeEvent.position)}
       >
         {story.map((paragraph, index) => {
-          const { content, paragraph_no } = paragraph
+          const { content, paragraph_no, metadata } = paragraph
           return (
-            <Page key={`${index}-${paragraph_no}`} content={content} />
+            <Page key={`${index}-${paragraph_no}`} content={content} metadata={metadata} />
           )
         })}
       </PagerView>

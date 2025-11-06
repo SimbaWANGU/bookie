@@ -1,18 +1,17 @@
-import { View, ActivityIndicator, useColorScheme } from 'react-native'
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { QuickSandText } from '@components/styled/StyledText'
-import tw from '@utils/tailwind'
-import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { Image } from 'expo-image'
-import { convertTime } from '@constants/Functions'
 import { fetchBooksInProgress } from '@api/profile/api.user'
-import Foundation from '@expo/vector-icons/Foundation'
-import { QueryKeys } from '@constants/QueryKeys'
 import Genre from '@components/styled/Genre'
-import { light } from '@constants/Color'
+import { QuickSandTextBold, QuickSandTextLight, QuickSandTextRegular } from '@components/styled/StyledText'
+import { convertTime } from '@constants/Functions'
+import { QueryKeys } from '@constants/QueryKeys'
+import Foundation from '@expo/vector-icons/Foundation'
 import { timeFormatAtom } from '@stores/settings.state'
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
+import { Image } from 'expo-image'
+import { useAtom } from 'jotai'
+import React from 'react'
+import { ActivityIndicator, View, useColorScheme } from 'react-native'
 
 interface InProgressBooksProps {
   id?: string
@@ -43,9 +42,9 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
   if (inprogressbooks.length === 0) {
     return (
       <View style={tw``}>
-        <QuickSandText style={tw`text-base text-gray-400`}>
+        <QuickSandTextRegular style={tw`text-base text-gray-400`}>
           Opened books will appear here
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
     )
   }
@@ -56,7 +55,7 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
         const { books, current_paragraph, last_updated_at } = data
       
         return (
-          <View key={index} style={tw`p-4 rounded-lg rounded-2xl mb-4 ${theme === 'light' ? 'border-dark' : 'border-light'}}`}>
+          <View key={index} style={tw`p-4 rounded-lg rounded-2xl mb-4 bg-transparent`}>
             {/* Container with relative positioning to overlay content */}
             <View style={tw`overflow-hidden rounded-lg mb-4 relative`}>
               <Image
@@ -66,9 +65,9 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
               {/* Current paragraph badge at top right */}
               <View style={tw`absolute top-2 right-2 bg-white bg-opacity-75 px-2 py-1 rounded-full flex-row items-center`}>
                 <Foundation name="page-multiple" size={16} style={tw`text-accent mr-1`} />
-                <QuickSandText style={tw`text-xs text-accentlight`}>
+                <QuickSandTextRegular style={tw`text-xs text-accentlight`}>
                   {current_paragraph}
-                </QuickSandText>
+                </QuickSandTextRegular>
               </View>
               {/* Overlay for genres */}
               <View style={tw`absolute bottom-0 left-0 right-0 flex-row flex-wrap p-2`}>
@@ -79,15 +78,15 @@ const InProgressBooks: React.FC<InProgressBooksProps> = ({ id }) => {
             </View>
 
             {/* Other book details */}
-            <QuickSandText style={tw`text-xl font-bold mb-2`}>
+            <QuickSandTextBold style={tw`text-xl font-bold mb-2`}>
               {books.title}
-            </QuickSandText>
-            <QuickSandText style={tw`text-base my-2`} numberOfLines={4}>
+            </QuickSandTextBold>
+            <QuickSandTextLight style={tw`text-base my-2`} numberOfLines={4}>
               {books.description}
-            </QuickSandText>
-            <QuickSandText style={tw`text-xs text-gray-500`}>
+            </QuickSandTextLight>
+            <QuickSandTextRegular style={tw`text-xs text-gray-500`}>
               {convertTime(last_updated_at, is24Hr)}
-            </QuickSandText>
+            </QuickSandTextRegular>
           </View>
           // <BookContainer book={books} />
         )

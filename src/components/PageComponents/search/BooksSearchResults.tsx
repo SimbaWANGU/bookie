@@ -1,16 +1,20 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native'
+import React, { useRef } from 'react'
 import { Book } from '@models/book.type'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
+import { LegendList, LegendListRef } from "@legendapp/list"
 
 interface BooksSearchResultsProps {
   item: Book[]
 }
 
 const BooksSearchResults: React.FC<BooksSearchResultsProps> = ({ item }) => {
+  const listRef = useRef<LegendListRef | null>(null)
+
   return (
-    <FlatList
+    <LegendList
+      ref={listRef}
       data={item}
       contentContainerStyle={tw`px-4`}
       keyExtractor={(item) => `${item.id}-${item.title}`}

@@ -18,11 +18,11 @@ const Genre: React.FC<GenreProps> = () => {
 	// 		}]}
 	// 		onPress={() => selectedGenre === genre ? setSelectedGenre('') :setSelectedGenre(genre)}
 	// 	>
-	// 		<MonoText
+	// 		<SpaceMonoTextRegular
   //       style={[tw`text-sm p-2`, {
 	// 				color: selectedGenre === genre ? theme === 'light' ? dark.text : light.text : theme === 'light' ? light.text : dark.text
 	// 			}]}
-	// 		>{genre}</MonoText>
+	// 		>{genre}</SpaceMonoTextRegular>
 	// 	</Pressable>
 	// )
 }

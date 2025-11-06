@@ -12,6 +12,7 @@ interface BookGenre {
 interface Creator {
   id: string
   name: string;
+  avatar_url: string
 }
 
 // Represents the junction table object for creator_books
@@ -37,6 +38,11 @@ interface Book {
   description: string;
   cover_image_url: string
   is_audio?: boolean;
+  is_featured: boolean
+  hits: number
+  completion_rate: number
+  average_reading_time: number
+  trending_Score: number
   // Include any additional book columns as needed
   book_genres?: BookGenre[];
   creator_books?: CreatorBook[];

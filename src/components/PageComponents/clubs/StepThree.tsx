@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import React, { Dispatch, SetStateAction, useRef } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 import tw from '@utils/tailwind'
 import { Image } from 'expo-image'
 import { Book } from '@models/book.type'
 import { ClubFormData } from './CreateClubModal'
 import { UseFormHandleSubmit } from 'react-hook-form'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 interface StepThreeProps {
   books: Book[]
@@ -16,11 +17,14 @@ interface StepThreeProps {
 }
 
 const StepThree: React.FC<StepThreeProps> = ({ books, selectedBookId, setSelectedBookId, onSubmit, setStep, handleSubmit }) => {
+  const listRef = useRef<LegendListRef | null>(null)
+
   return (
     <View style={tw`flex-1`}>
       <Text style={tw`text-xl font-bold mb-4`}>Optional: Select a Book</Text>
 
-      <FlatList
+      <LegendList
+        ref={listRef}
         data={books}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (

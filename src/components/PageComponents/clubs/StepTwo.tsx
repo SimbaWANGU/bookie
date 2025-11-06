@@ -1,9 +1,10 @@
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useRef } from 'react'
 import tw from '@utils/tailwind'
 import { ClubFormData } from './CreateClubModal'
 import { UseFormHandleSubmit } from 'react-hook-form'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 interface StepTwoProps {
   usersList: { id: string; avatar_url: string; expo_push_token: string; user_name: string }[]
@@ -15,11 +16,13 @@ interface StepTwoProps {
 }
 
 const StepTwo: React.FC<StepTwoProps> = ({ usersList, selectedUsers, toggleUser, setStep }) => {
+  const listRef = useRef<LegendListRef | null>(null)
+
   return (
     <>
       <Text style={tw`text-xl font-bold mb-4`}>Step 2: Invite Members</Text>
-
-      <FlatList
+      <LegendList
+        ref={listRef}
         data={usersList}
         keyExtractor={item => item.id}
         renderItem={({ item }) => {

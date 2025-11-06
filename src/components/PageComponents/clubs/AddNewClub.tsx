@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { Dispatch, SetStateAction } from 'react'
+import { QuickSandTextRegular } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
-import { QuickSandText } from '@components/styled/StyledText'
+import React, { Dispatch, SetStateAction } from 'react'
+import { TouchableOpacity } from 'react-native'
 
 interface AddNewClubProps {
   onAddNewClub: Dispatch<SetStateAction<boolean>>
@@ -14,7 +14,7 @@ const AddNewClub: React.FC<AddNewClubProps> = ({ onAddNewClub }) => {
       activeOpacity={.8}
       onPress={() => onAddNewClub(true)}
     >
-      <QuickSandText style={tw`text-lg text-light`}>Create Club</QuickSandText>
+      <QuickSandTextRegular style={tw`text-lg text-light`}>Create Club</QuickSandTextRegular>
     </TouchableOpacity>
   )
 }

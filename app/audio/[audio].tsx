@@ -1,23 +1,23 @@
-import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { useLocalSearchParams } from 'expo-router'
-import { useQuery } from '@tanstack/react-query'
-import { View } from '@components/styled/Themed'
-import { LinearGradient } from 'expo-linear-gradient'
-import { dark, light } from '@constants/Color'
-import { StatusBar } from 'expo-status-bar'
-import { MonoText, QuickSandText } from '@components/styled/StyledText'
-import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { Book } from '@models/audiobook.type'
-import tw from '@utils/tailwind'
-import InteractionOptions from '@components/styled/InteractionOptions'
 import { fetchAudioBook } from '@api/books/api.book'
-import { userAtom } from '@stores/user.state'
-import { useAtom } from 'jotai'
-import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
 import Author from '@components/PageComponents/synopsis/Author'
+import BottomSheetView from '@components/PageComponents/synopsis/BottomSheetView'
+import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
+import InteractionOptions from '@components/styled/InteractionOptions'
+import { QuickSandTextRegular, SpaceMonoTextRegular } from '@components/styled/StyledText'
+import { View } from '@components/styled/Themed'
+import { dark, light } from '@constants/Color'
 import { QueryKeys } from '@constants/QueryKeys'
+import { Book } from '@models/audiobook.type'
+import { userAtom } from '@stores/user.state'
+import { useQuery } from '@tanstack/react-query'
+import tw from '@utils/tailwind'
 import { useAudioPlayer } from 'expo-audio'
+import { LinearGradient } from 'expo-linear-gradient'
+import { useLocalSearchParams } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import { useAtom } from 'jotai'
+import React, { useState } from 'react'
+import { ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 
 const audio = () => {
 	const { audio } = useLocalSearchParams()
@@ -45,17 +45,17 @@ const audio = () => {
 					<View style={[tw`bg-transparent flex-1 flex-col-reverse pb-14 px-4`, { justifyContent: 'flex-start' }]}>
 						<View style={tw`bg-transparent`}>
 							<Author name={book?.creator_books![0].creators.name as string} id={book?.creator_books![0].creators.id as string} />
-							<QuickSandText
+							<QuickSandTextRegular
 								style={tw`text-4xl p-2`}
 								lightColor={light.activeIconColor}
 								darkColor={dark.activeIconColor}
-							>{book?.title}</QuickSandText>
+							>{book?.title}</QuickSandTextRegular>
 							<ScrollView style={tw`max-h-1/2 my-2`} >
-								<MonoText
+								<SpaceMonoTextRegular
 									style={tw`text-sm p-2`}
 									lightColor={dark.text}
 									darkColor={dark.text}
-								>{book?.description}</MonoText>
+								>{book?.description}</SpaceMonoTextRegular>
 							</ScrollView>
 							<InteractionOptions user_id={user?.id as string} book_id={book?.id as string} openAndClose={() => setModalVisible(true)}  />
 							<TouchableOpacity
@@ -65,11 +65,11 @@ const audio = () => {
 								}]}
 								onPress={() => player.play() }
 							>
-								{/* <QuickSandText
+								{/* <QuickSandTextRegular
 									style={[tw`text-base w-auto`, {
 										color: light.activeIconColor
 									}]}
-								>{2 > 3 ? 'Loading...' : progress.paragraph_no > 1 ? 'Continue reading' : 'Start Reading'}</QuickSandText> */}
+								>{2 > 3 ? 'Loading...' : progress.paragraph_no > 1 ? 'Continue reading' : 'Start Reading'}</QuickSandTextRegular> */}
 								<FontAwesomeSixIcons name="play" style={tw`ml-1 text-4xl self-center`} color={light.activeIconColor} />
 							</TouchableOpacity>
 						</View>

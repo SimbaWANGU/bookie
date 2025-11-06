@@ -1,12 +1,9 @@
-import { View } from 'react-native'
-import React from 'react'
-import { QuickSandText } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextSemiBold } from '@components/styled/StyledText'
+import { userAtom } from '@stores/user.state'
 import tw from '@utils/tailwind'
 import { useAtom } from 'jotai'
-import { userAtom } from '@stores/user.state'
-import { fetchOtherUser } from '@api/profile/api.user'
-import { useQuery } from '@tanstack/react-query'
-import { QueryKeys } from '@constants/QueryKeys'
+import React from 'react'
+import { View } from 'react-native'
 
 interface NamesProps {
   id?: string
@@ -17,8 +14,8 @@ const Names: React.FC<NamesProps> = () => {
 
   return (
     <View style={tw`bg-transparent flex flex-col`}>
-      <QuickSandText style={tw`text-3xl text-accent/90 font-bold`}>{user?.name as string}</QuickSandText>
-      <QuickSandText style={tw`text-base text-accent/40`}>{`@${user?.user_name as string}`}</QuickSandText>
+      <QuickSandTextBold style={tw`text-3xl text-accent/90 font-bold`}>{user?.name as string}</QuickSandTextBold>
+      <QuickSandTextSemiBold style={tw`text-base text-accent/40`}>{`@${user?.user_name as string}`}</QuickSandTextSemiBold>
     </View>
   )
 }

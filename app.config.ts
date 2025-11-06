@@ -1,23 +1,18 @@
-import 'dotenv/config'
-
 export default {
   expo: {
     name: 'Book Worms',
     slug: 'book-worms',
     scheme: 'book-worms',
-    version: '0.0.1',
-    icon: './assets/images/bookworms-logo.png',
+    version: '0.1.2',
+    icon: './assets/images/app_icon.png',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
-    newArchEnabled: true,
     runtimeVersion: '1.0.0',
-    splash: {
-      image: './assets/images/bookworms-logo.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
-    },
+    assetBundlePatterns: [
+      "**/*"
+    ],
     ios: {
-      googleServicesFile: process.env.GOOGLE_SERVICES_IOS,
+      googleServicesFile: "./GoogleService-Info.plist",
       supportsTablet: true,
       usesAppleSignIn: true,
       bundleIdentifier: 'com.simberella.bookie',
@@ -26,46 +21,43 @@ export default {
       }
     },
     android: {
-      googleServicesFile: process.env.GOOGLE_SERVICES_ANDROID,
+      googleServicesFile: "./google-services.json",
       softwareKeyboardLayoutMode: 'pan',
+      edgeToEdgeEnabled: true,
       adaptiveIcon: {
         foregroundImage: './assets/images/bookworms2048.png',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#002B36'
       },
-      versionCode: 2,
       permissions: [
         'android.permission.RECORD_AUDIO',
         'android.permission.MODIFY_AUDIO_SETTINGS'
       ],
       package: 'com.simberella.bookie'
     },
-    web: {
-      bundler: 'metro',
-      output: 'static',
-      favicon: './assets/images/favicon.png'
-    },
     plugins: [
       'expo-router',
       'expo-font',
       'expo-secure-store',
       'expo-apple-authentication',
+      '@react-native-google-signin/google-signin',
       'expo-asset',
       [
         'expo-build-properties',
         {
-          ios: {
-            newArchEnabled: true
-          },
           android: {
-            newArchEnabled: true
+            compileSdkVersion: 35,
+            targetSdkVersion: 35,
+            minSdkVersion: 27
+          },
+          ios: {
+            useFrameworks: 'static'
           }
         }
       ],
       [
         'expo-image-picker',
         {
-          photosPermission:
-            'Bookie accesses your photos to let you set your profile picture.'
+          photosPermission: 'Bookie accesses your photos to let you set your profile picture.'
         }
       ],
       'expo-audio',
@@ -76,15 +68,23 @@ export default {
           defaultChannel: 'default',
           enableBackgroundRemoteNotifications: false
         }
-      ]
+      ],
+      [
+        "expo-splash-screen",
+        {
+          backgroundColor: "#002B36",
+          image: './assets/images/bookworms-logo.png',
+          imageWidth: 200,    
+          resizeMode: 'contain'      
+        }
+      ],
+      'react-native-edge-to-edge'
     ],
     experiments: {
       typedRoutes: true
     },
     extra: {
-      router: {
-        origin: false
-      },
+      router: {},
       eas: {
         projectId: '8757d84a-3a37-4f3a-a3b4-87ce159a960a'
       },

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Modal, FlatList, View, useColorScheme, SafeAreaView, Text } from 'react-native'
+import React, { useRef } from 'react'
+import { Modal, View, useColorScheme, SafeAreaView, Text } from 'react-native'
 import Reviewsheader from '@components/headers/modalsHeader'
 import tw from '@utils/tailwind'
 import { useQuery } from '@tanstack/react-query'
@@ -12,6 +12,7 @@ import {
 } from '@constants/Achievements'
 import type { Achievement } from '@models/achievement.type'
 import AchievementCard from './AchievementCard'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 interface AchievementsProps {
   achievementsModalVisisble: boolean
@@ -24,12 +25,10 @@ interface UserAchievement {
   user_id: string
 }
 
-const ModalAchievements: React.FC<AchievementsProps> = ({
-  achievementsModalVisisble,
-  setAchievementsModalVisible,
-}) => {
+const ModalAchievements: React.FC<AchievementsProps> = ({ achievementsModalVisisble,  setAchievementsModalVisible }) => {
   const theme = useColorScheme()
   const [user] = useAtom(userAtom)
+  const listRef = useRef<LegendListRef | null>(null)
 
   const { data: achievements, isLoading, error } = useQuery({
     queryKey: ['user_achievements', user?.id],
@@ -83,7 +82,7 @@ const ModalAchievements: React.FC<AchievementsProps> = ({
           setModalVisible={setAchievementsModalVisible}
           title="Achievements"
         />
-        <FlatList
+        <LegendList
           data={userAchievementsToDisplay}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => (

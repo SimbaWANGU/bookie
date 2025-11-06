@@ -9,6 +9,9 @@ import { CustomUser } from '@models/userProfile.type'
 import tw from '@utils/tailwind'
 import { router } from 'expo-router'
 
+const webClientId = process.env.EXPO_PUBLIC_WEB_CLIENT_ID ?? process.env.WEB_CLIENT_ID
+
+
 // ✅ Configure Google Sign-In ONCE outside the component
 GoogleSignin.configure({
   scopes: [
@@ -16,7 +19,7 @@ GoogleSignin.configure({
     'https://www.googleapis.com/auth/userinfo.email',
     'openid',
   ],
-  webClientId: '146168556921-adcpklmv2se434h6blc92ni5jamo5uvf.apps.googleusercontent.com',
+  webClientId,
   offlineAccess: true
 })
 

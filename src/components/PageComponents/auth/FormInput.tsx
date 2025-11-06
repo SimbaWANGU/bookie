@@ -1,6 +1,6 @@
-import React from 'react'
-import { MonoText } from '@components/styled/StyledText'
+import { SpaceMonoTextRegular } from '@components/styled/StyledText'
 import tw from '@utils/tailwind'
+import React from 'react'
 import { Controller } from 'react-hook-form'
 import { TextInput } from 'react-native'
 
@@ -22,7 +22,7 @@ const FormInput = ({ control, name, rules, ...inputProps }) => (
           value={value}
           {...inputProps}
         />
-        {error && <MonoText style={tw`text-sm text-red-500`}>{error.message}</MonoText>}
+        {error && <SpaceMonoTextRegular style={tw`text-sm text-red-500`}>{error.message}</SpaceMonoTextRegular>}
       </>
     )}
   />

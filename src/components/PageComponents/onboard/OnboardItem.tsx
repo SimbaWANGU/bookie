@@ -1,5 +1,5 @@
 import FontAwesomeSixIcons from '@components/icons/FontAwesomeSixIcons'
-import { QuickSandText } from '@components/styled/StyledText'
+import { QuickSandTextBold, QuickSandTextRegular } from '@components/styled/StyledText'
 import { View } from '@components/styled/Themed'
 import { dark, light } from '@constants/Color'
 import { firstTimeOnAppAtom } from '@stores/firstTimeonApp.state'
@@ -30,21 +30,21 @@ const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
 					style={tw`flex-1`}
 				>
 					<View style={tw`bg-transparent absolute flex flex-col bottom-50 px-4'`}>
-						<QuickSandText
+						<QuickSandTextRegular
 							style={tw`text-2xl`}
 							lightColor={dark.text}
 							darkColor={dark.text}
-						>{text[1]}</QuickSandText>
-						<QuickSandText
+						>{text[1]}</QuickSandTextRegular>
+						<QuickSandTextBold
 							style={tw`text-5xl font-bold my-2`}
 							lightColor={light.activeIconColor}
 							darkColor={dark.activeIconColor}
-						>{text[2]}</QuickSandText>
-						<QuickSandText
+						>{text[2]}</QuickSandTextBold>
+						<QuickSandTextRegular
 							style={tw`text-xl`}
 							lightColor={dark.text}
 							darkColor={dark.text}
-						>{text[3]}</QuickSandText>
+						>{text[3]}</QuickSandTextRegular>
 						<TouchableOpacity
 							style={[tw`flex flex-row py-4 mt-8 px-4 items-center justify-between w-7/12 rounded-full`, {
 								backgroundColor: dark.text
@@ -55,11 +55,11 @@ const OnboardItem: React.FC<OnboardItemProps> = ({ text }) => {
 								router.push('/auth/authenticate')
 							}}
 						>
-							<QuickSandText
+							<QuickSandTextRegular
 								style={[tw`text-base`, {
 									color: light.activeIconColor
 								}]}
-							>Start Reading</QuickSandText>
+							>Start Reading</QuickSandTextRegular>
 							<FontAwesomeSixIcons name="arrow-right" color={light.activeIconColor} />
 						</TouchableOpacity>
 					</View>

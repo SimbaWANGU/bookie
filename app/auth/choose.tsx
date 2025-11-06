@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, ScrollView, useColorScheme } from 'react-native';
-import tw from '@utils/tailwind';
-import { useQuery } from '@tanstack/react-query';
 import { getGenres } from '@api/books/api.genres';
 import GenreSelect from '@components/styled/GenreSelect';
+import { QuickSandTextRegular } from '@components/styled/StyledText';
 import { getDynamicValue } from '@constants/Functions';
-import { QuickSandText } from '@components/styled/StyledText';
-import { useAtom } from 'jotai';
 import { bookPreferencesAtom } from '@stores/preference.state';
+import { useQuery } from '@tanstack/react-query';
+import tw from '@utils/tailwind';
 import { router } from 'expo-router';
+import { useAtom } from 'jotai';
+import React, { useState } from 'react';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 
 interface Genre {
   id: string;
@@ -41,14 +41,14 @@ const choose = () => {
       <View style={[tw`items-center justify-center`, {
         height: getDynamicValue(200)
       }]}>
-        <QuickSandText style={tw`android:text-3xl ios:text-2xl font-bold text-center mt-4 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
+        <QuickSandTextRegular style={tw`android:text-3xl ios:text-2xl font-bold text-center mt-4 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
           Step into your favorite worlds
-        </QuickSandText>
-        <QuickSandText style={tw`android:text-xl ios:text-lg text-center mb-4 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
+        </QuickSandTextRegular>
+        <QuickSandTextRegular style={tw`android:text-xl ios:text-lg text-center mb-4 ${theme === 'light' ? 'text-dark' : 'text-light'}`}>
           Select at least 
-          <QuickSandText style={tw`font-bold`}> Three </QuickSandText> 
+          <QuickSandTextRegular style={tw`font-bold`}> Three </QuickSandTextRegular> 
           to shape your Book Worms journey
-        </QuickSandText>
+        </QuickSandTextRegular>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={tw`py-2`} >

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "146168556921",
+    "project_id": "bookie-9951d",
+    "storage_bucket": "bookie-9951d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146168556921:android:688d2df8476f5bf08f13a8",
+        "android_client_info": {
+          "package_name": "com.simberella.bookie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146168556921-5ov746j6plok4rofi9s8vaocov97qi86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simberella.bookie",
+            "certificate_hash": "e8d987c739e56b410ed6c9dc9186df8bc35c7a3d"
+          }
+        },
+        {
+          "client_id": "146168556921-ceme0b6alqq76i71q870fhbuiadsul0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simberella.bookie",
+            "certificate_hash": "6018a7bce57cdef51de0b71122854c1905ef6cf0"
+          }
+        },
+        {
+          "client_id": "146168556921-cth6893l8imjbtgbk8da1aup8090nmmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simberella.bookie",
+            "certificate_hash": "07e9326a4d70bd8158b94eaacba2df6864c0bb21"
+          }
+        },
+        {
+          "client_id": "146168556921-adcpklmv2se434h6blc92ni5jamo5uvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAQDzj1y2qpOPEkxnyw98dxSO_b1ievHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146168556921-adcpklmv2se434h6blc92ni5jamo5uvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146168556921-5dvdbqfl1ram32i54t0ipn04g220n080.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simberella.bookie"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

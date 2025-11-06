@@ -1,9 +1,9 @@
-// components/ActivityFilter.tsx
-import React from 'react'
-import { FlatList, Pressable, Text, View, useColorScheme } from 'react-native'
+import React, { useRef } from 'react'
+import { Pressable, Text, View, useColorScheme } from 'react-native'
 import { useAtom } from 'jotai'
 import tw from '@utils/tailwind'
 import { activityFilterAtom, ActivityFilter as ActivityType } from '@stores/filter.state'
+import { LegendList, LegendListRef } from '@legendapp/list'
 
 const FILTERS: { label: string; value: ActivityType }[] = [
   { label: 'All', value: '' },
@@ -15,10 +15,12 @@ const FILTERS: { label: string; value: ActivityType }[] = [
 const ActivityFilter = () => {
   const theme = useColorScheme()
   const [filter, setFilter] = useAtom(activityFilterAtom)
+  const listRef = useRef<LegendListRef | null>(null)
 
   return (
     <View style={tw`py-4 px-4 ${theme === 'light' ? 'bg-light' : 'bg-dark'}`}>
-      <FlatList
+      <LegendList
+        ref={listRef}
         horizontal
         data={FILTERS}
         keyExtractor={(item) => item.value || 'all'}
