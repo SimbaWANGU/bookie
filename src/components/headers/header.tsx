@@ -23,7 +23,6 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
   const height = getDynamicValue(140)
   const [, setShowCreateClubModal] = useAtom(showCreateClubModalAtom)
 
-
   // Conditionally use BlurView or View
   const Container = Platform.OS === 'android' ? View : BlurView
 
