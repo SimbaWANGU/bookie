@@ -1,6 +1,6 @@
-import React from 'react'
-import { View, Text, useColorScheme } from 'react-native'
 import tw from '@utils/tailwind'
+import React from 'react'
+import { Text, useColorScheme, View } from 'react-native'
 
 type Props = {
   vertical: boolean
@@ -11,7 +11,7 @@ type Props = {
 const PageIndicator = ({ vertical, current, total }: Props) => {
   const theme = useColorScheme()
   const textColor = theme === 'light' ? 'text-dark' : 'text-light'
-  const bgColor = theme === 'light' ? 'bg-white/80' : 'bg-dark/80'
+  const bgColor = 'bg-transparent'
 
   if (!current || !total) {
     return <></>
