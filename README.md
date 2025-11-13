@@ -1,6 +1,52 @@
-# Welcome to your Expo app 👋
+# 📚 Book Worms
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Discover a whole new way to read, connect, and grow with books.**  
+Book Worms isn’t just a reading app — it’s a vibrant community for book lovers, thinkers, and storytellers.  
+Whether you’re diving into fiction, exploring self-help, or discovering new authors, you’ll find more than just pages — you’ll find connection.
+
+---
+
+## ✨ Features
+
+### 📖 Interactive Reading  
+- Read books directly in the app with a smooth, focused experience.  
+- Highlight your favorite paragraphs and share them with your followers.
+
+### 💬 Review & Engage  
+- Leave reviews and join thoughtful discussions.  
+- See what others are saying — reading becomes a shared experience.
+
+### ⏱️ Track Your Reading Time  
+- Gain insights into how much time you spend reading.  
+- View detailed stats per book and per author to see what inspires you most.
+
+### 🌍 Discover and Follow  
+- Explore new authors and emerging voices from around the world.  
+- Follow authors and fellow readers whose thoughts resonate with you.
+
+### 🏆 Earn Achievements  
+- Unlock badges as you read, comment, and explore.  
+- Celebrate milestones with shareable achievements.
+
+### 📰 Personalized Feed  
+- Your home screen highlights comments and activity from readers you follow.  
+- Get inspired by what others are reading, loving, and discussing.
+
+### 🤝 Social Reading  
+- Connect with friends and fellow book lovers.  
+- Share insights, recommendations, and be part of a growing reader community.
+
+---
+
+## 🧩 Tech Stack
+
+- **Expo / React Native** – cross-platform mobile framework  
+- **Expo Router** – file-based navigation  
+- **TypeScript** – type-safe development  
+- **TanStack Query** – powerful caching and background updates  
+- **Supabase** – backend, database, authentication, and storage  
+- **Jotai** – minimal state management  
+- **Tailwind via twrnc** – modern utility-first styling  
 
 ## Get started
 
@@ -22,29 +68,3 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
